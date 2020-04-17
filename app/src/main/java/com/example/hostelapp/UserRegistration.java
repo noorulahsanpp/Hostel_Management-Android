@@ -111,7 +111,6 @@ public class UserRegistration extends AppCompatActivity {
         catch(Exception e)
                 {
                     System.out.println("Error is :" + e);
-                    System.out.println("Error is :" + e);
                 }
             }
         }
