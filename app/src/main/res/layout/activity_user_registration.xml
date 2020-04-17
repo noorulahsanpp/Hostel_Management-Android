@@ -24,7 +24,7 @@
             android:layout_width="266dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="290dp"
             android:layout_weight="1"
             android:text="Password" />
 
@@ -43,21 +43,21 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_marginLeft="170dp"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="280dp"
             android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="290dp"
+            android:layout_marginTop="200dp"
             android:layout_marginLeft="50dp"
             android:text="Email" />
 
         <EditText
             android:id="@+id/email"
             android:layout_marginLeft="170dp"
-            android:layout_marginTop="280dp"
+            android:layout_marginTop="190dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -83,13 +83,15 @@
         <Button
             android:id="@+id/button4"
             android:layout_marginTop="480dp"
+            android:layout_marginLeft="170dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="SignUp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_marginTop="550dp"
+            android:layout_marginLeft="125dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Already Registered? Click here" />

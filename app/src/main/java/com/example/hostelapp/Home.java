@@ -22,6 +22,8 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        auth = FirebaseAuth.getInstance();
+
         emailView = (TextView)findViewById(R.id.emailView);
 
 //        FirebaseUser user = auth.getCurrentUser();
@@ -33,7 +35,8 @@ public class Home extends AppCompatActivity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.getInstance().signOut();
+
+                auth.signOut();
                 finish();
                 startActivity(new Intent(Home.this, Login.class));
 

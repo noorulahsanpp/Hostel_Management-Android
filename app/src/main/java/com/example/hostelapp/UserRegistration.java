@@ -65,47 +65,54 @@ public class UserRegistration extends AppCompatActivity {
 
     }
 
-    private void registration()
-    {
-        try {
-            String name = mName.getText().toString().trim();
+    private void registration() {
+
+//          String name = mName.getText().toString().trim();
             String email = mEmail.getText().toString().trim();
             String password = mPassword.getText().toString().trim();
-            int phone = Integer.parseInt(mPhone.getText().toString().trim());
+//          int phone = Integer.parseInt(mPhone.getText().toString().trim());
 
-            progressDialog.setMessage("Registering...");
-            progressDialog.show();
 
             if (TextUtils.isEmpty(email)) {
                 mEmail.setError("Input Email");
                 mEmail.requestFocus();
                 return;
             }
-
-            if (TextUtils.isEmpty(password)) {
+            else if (TextUtils.isEmpty(password)) {
                 mPassword.setError("Input Password");
                 mPassword.requestFocus();
                 return;
             }
+            else if(password.length() < 6)
+            {
+                mPassword.setError("Invalid Password");
+                mPassword.requestFocus();
+                return;
+            }
+            else {
 
+                progressDialog.setMessage("Registering...");
+                progressDialog.show();
 
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), Home.class));
-                    } else {
-                        Toast.makeText(UserRegistration.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                try {
+                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), Home.class));
+                            } else {
+                                Toast.makeText(UserRegistration.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
-            });
+        catch(Exception e)
+                {
+                    System.out.println("Error is :" + e);
+                    System.out.println("Error is :" + e);
+                }
+            }
         }
-        catch (Exception e)
-        {
-            System.out.println("Error is :"+e);
-            System.out.println("Error is :"+e);
-        }
-    }
 }
