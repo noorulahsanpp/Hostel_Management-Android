@@ -14,8 +14,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class Home extends AppCompatActivity {
 
     private Button logoutBtn;
+    private Button NotificationBtn;
+    private Button AttendanceBtn;
+    private Button FeesBtn;
+    private Button MessoutBtn;
+    private Button SickBtn;
     private FirebaseAuth auth;
-    private TextView emailView;
+//    private TextView emailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +29,18 @@ public class Home extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        emailView = (TextView)findViewById(R.id.emailView);
+//        emailView = (TextView)findViewById(R.id.emailView);
 
 //        FirebaseUser user = auth.getCurrentUser();
 
 //        emailView.setText(user.getEmail());
 
         logoutBtn = (Button)findViewById(R.id.button2);
+        NotificationBtn = (Button)findViewById(R.id.button5);
+        AttendanceBtn = (Button)findViewById(R.id.button6);
+        FeesBtn = (Button)findViewById(R.id.button7);
+        MessoutBtn = (Button)findViewById(R.id.button8);
+        SickBtn = (Button)findViewById(R.id.button9);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,5 +52,39 @@ public class Home extends AppCompatActivity {
 
             }
         });
+
+        NotificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Notification.class));
+            }
+        });
+
+        AttendanceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Attendance.class));
+            }
+        });
+        FeesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Fees.class));
+            }
+        });
+       MessoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Messout.class));
+            }
+        });
+        SickBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this,Sick.class));
+            }
+        });
+
+
     }
 }
