@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Sick"></activity>
+        <activity android:name=".Profile"></activity>
+        <activity android:name=".Sick" />
         <activity android:name=".Messout" />
         <activity android:name=".Fees" />
         <activity android:name=".Attendance" />
