@@ -84,7 +84,6 @@ public class UserRegistration extends AppCompatActivity {
             String password = mPassword.getText().toString().trim();
             final String phone = mPhone.getText().toString().trim();
 
-
             if (TextUtils.isEmpty(email)) {
                 mEmail.setError("Input Email");
                 mEmail.requestFocus();
@@ -112,16 +111,13 @@ public class UserRegistration extends AppCompatActivity {
                 return;
             }
             else {
-
                 progressDialog.setMessage("Registering...");
                 progressDialog.show();
-
                 try {
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                try {
                                     userID = auth.getCurrentUser().getUid();
                                     DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
                                     Map<String, Object> user = new HashMap<>();
@@ -131,26 +127,23 @@ public class UserRegistration extends AppCompatActivity {
                                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-
+                                            progressDialog.dismiss();
                                             Toast.makeText(UserRegistration.this, "Created Successfully for : " + userID, Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            startActivity(new Intent(getApplicationContext(), Home.class));
                                         }
                                     })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
+                                                    progressDialog.dismiss();
                                                     Toast.makeText(UserRegistration.this, "Error!", Toast.LENGTH_SHORT).show();
                                                     Log.d("TAG", e.toString());
                                                 }
                                             });
-                                    progressDialog.dismiss();
-                                    finish();
-                                    startActivity(new Intent(getApplicationContext(), Home.class));
-                                }
-                                catch (Exception e)
-                                {
-                                    Toast.makeText(UserRegistration.this, "Error!" + e, Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
+                            }
+                            else {
+                                progressDialog.dismiss();
                                 Toast.makeText(UserRegistration.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }

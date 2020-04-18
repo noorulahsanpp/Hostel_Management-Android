@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.DatePicker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,7 +22,8 @@ public class Messout extends AppCompatActivity {
     private EditText txtfrm, txtTo , days;
    // private TextView days;
     private int mYear, mMonth, mDay;
-  //  private Date date1, date2;
+    private Date dateObj1, dateObj2;
+    private String fromDate, toDate;
 
 
     @Override
@@ -34,6 +37,8 @@ public class Messout extends AppCompatActivity {
         txtfrm = (EditText) findViewById(R.id.edittext14);
         txtTo = (EditText) findViewById(R.id.edittext15);
         days = (EditText) findViewById(R.id.edittext13);
+
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
 
 
         Frmbtn.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +54,13 @@ public class Messout extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         txtfrm.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
-
+                        fromDate = dayOfMonth + " " + (month + 1) + " " + year;
+                        try {
+                            dateObj1 = simpleDateFormat.parse(fromDate);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }, mYear, mMonth, mDay);
@@ -57,6 +68,7 @@ public class Messout extends AppCompatActivity {
 
             }
         });
+
 
         Tobtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +83,17 @@ public class Messout extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         txtTo.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                        toDate = dayOfMonth + " " + (month + 1) + " " + year;
+                        System.out.println("ToDate : "+toDate);
+                        try {
+                            dateObj2 = simpleDateFormat.parse(toDate);
+                            long diff = dateObj2.getTime()-dateObj1.getTime();
+                            int dateDiff = (int) (diff / (24 * 60 * 60 * 1000));
+                            days.setText(" "+dateDiff);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }, mYear, mMonth, mDay);
@@ -78,6 +101,10 @@ public class Messout extends AppCompatActivity {
 
             }
         });
+
+
+
+
 
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
