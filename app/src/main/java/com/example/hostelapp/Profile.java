@@ -1,5 +1,6 @@
 package com.example.hostelapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,13 +13,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
 
@@ -28,6 +36,7 @@ public class Profile extends AppCompatActivity {
     private EditText name, email, phone;
     private Button changePassword, editProfile;
     private String userID;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,17 @@ public class Profile extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
+
+        // get access to the root folder of the storage
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        StorageReference profileRef = storageReference.child("users/"+auth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profilePicture);
+            }
+        });
 
         profilePicture = findViewById(R.id.imageView);
         name = findViewById(R.id.editText);
@@ -75,9 +95,32 @@ public class Profile extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK)
             {
                 Uri imageUri = data.getData();
-                profilePicture.setImageURI(imageUri);
+                //profilePicture.setImageURI(imageUri);
+                uploadImageToFirebase(imageUri);
             }
 
         }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri)
+    {
+        final StorageReference fileReference = storageReference.child("users/"+auth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
+        fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profilePicture);
+                    }
+                });
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Profile.this, "Try again", Toast.LENGTH_SHORT);
+                    }
+                });
     }
 }
