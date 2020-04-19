@@ -32,7 +32,7 @@ public class Home extends AppCompatActivity {
     private String userName;
     private TextView userNameView;
     private ImageView profilePicture;
-    private StorageReference storageReference, profilePictureStorage;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
