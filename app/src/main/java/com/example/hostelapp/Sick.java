@@ -41,7 +41,6 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
                 startActivity(new Intent(Sick.this,Home.class));
             }
         });
-
     }
 
     @Override
