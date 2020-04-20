@@ -61,6 +61,7 @@ public class Home extends AppCompatActivity {
         MessoutBtn = (Button)findViewById(R.id.button8);
         SickBtn = (Button)findViewById(R.id.button9);
 
+
         DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -69,6 +70,8 @@ public class Home extends AppCompatActivity {
                 userNameView.setText("Welcome "+documentSnapshot.getString("Name"));
             }
         });
+
+
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
