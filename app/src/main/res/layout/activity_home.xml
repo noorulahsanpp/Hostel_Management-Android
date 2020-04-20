@@ -71,6 +71,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="300dp"
+                app:srcCompat="@android:drawable/sym_def_app_icon"
                 tools:srcCompat="@tools:sample/avatars" />
 
         </RelativeLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,30 +29,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserRegistration extends AppCompatActivity {
+import Utils.FirebaseMethods;
 
-    private EditText mName,mPassword,mEmail,mPhone;
+public class UserRegistration extends AppCompatActivity {
+    private static final String TAG = "UserRegistration";
+
+    private String admissionnumber, email, password, phone;
+    private EditText mName, mPassword, mEmail, mPhone;
+    private Context mContext;
     private Button signUpBtn;
     private FirebaseAuth auth;
     private ProgressDialog progressDialog;
     private TextView loginBtn;
     private FirebaseFirestore firebaseFirestore;
     private String userID;
+    private FirebaseMethods firebaseMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
 
-        signUpBtn = findViewById(R.id.button4);
-        mName = findViewById(R.id.name);
-        mEmail = findViewById(R.id.email);
-        mPassword = findViewById(R.id.password);
-        mPhone = findViewById(R.id.phone);
-        loginBtn = findViewById(R.id.textView);
-
+        mContext = UserRegistration.this;
+        firebaseMethods = new FirebaseMethods(mContext);
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        progressDialog = new ProgressDialog(this);
 
         if(auth.getCurrentUser()!=null)
         {
@@ -59,7 +62,6 @@ public class UserRegistration extends AppCompatActivity {
             startActivity(new Intent(UserRegistration.this, Home.class));
         }
 
-        progressDialog = new ProgressDialog(this);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,49 +70,71 @@ public class UserRegistration extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
+        initWidgets();
+        init();
+
+    }
+
+    private void init(){
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registration();
+                admissionnumber = mName.getText().toString().trim();
+                email = mEmail.getText().toString().trim();
+                password = mPassword.getText().toString().trim();
+                phone = mPhone.getText().toString().trim();
+                if(checkInputs(email, password, phone, admissionnumber)) {
+                    registration();
+                }
             }
         });
 
     }
 
+    private void initWidgets(){
+        Log.d("TAG", "initWidgets: Initialising widgets");
+        signUpBtn = findViewById(R.id.button4);
+        mName = findViewById(R.id.name);
+        mEmail = findViewById(R.id.email);
+        mPassword = findViewById(R.id.password);
+        mPhone = findViewById(R.id.phone);
+        loginBtn = findViewById(R.id.textView);
+    }
+
+    private boolean checkInputs(String email, String password, String phone, String admissionnumber)
+    {
+        Log.d(TAG, "checkInputs: checking inputs for null values.");
+        if (TextUtils.isEmpty(email)) {
+            mEmail.setError("Input Email");
+            mEmail.requestFocus();
+            return false;
+        }
+        else if (TextUtils.isEmpty(password)) {
+            mPassword.setError("Input Password");
+            mPassword.requestFocus();
+            return false;
+        }
+        else if (TextUtils.isEmpty(admissionnumber)) {
+            mPassword.setError("Input Password");
+            mPassword.requestFocus();
+            return false;
+        }
+        else if (TextUtils.isEmpty(phone)) {
+            mPassword.setError("Input Password");
+            mPassword.requestFocus();
+            return false;
+        }
+        else if(password.length() < 6)
+        {
+            mPassword.setError("Invalid Password");
+            mPassword.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     private void registration() {
 
-            final String name = mName.getText().toString().trim();
-            final String email = mEmail.getText().toString().trim();
-            String password = mPassword.getText().toString().trim();
-            final String phone = mPhone.getText().toString().trim();
-
-            if (TextUtils.isEmpty(email)) {
-                mEmail.setError("Input Email");
-                mEmail.requestFocus();
-                return;
-            }
-            else if (TextUtils.isEmpty(password)) {
-                mPassword.setError("Input Password");
-                mPassword.requestFocus();
-                return;
-            }
-            else if (TextUtils.isEmpty(name)) {
-                mPassword.setError("Input Password");
-                mPassword.requestFocus();
-                return;
-            }
-            else if (TextUtils.isEmpty(phone)) {
-                mPassword.setError("Input Password");
-                mPassword.requestFocus();
-                return;
-            }
-            else if(password.length() < 6)
-            {
-                mPassword.setError("Invalid Password");
-                mPassword.requestFocus();
-                return;
-            }
-            else {
                 progressDialog.setMessage("Registering...");
                 progressDialog.show();
                 try {
@@ -121,7 +145,7 @@ public class UserRegistration extends AppCompatActivity {
                                     userID = auth.getCurrentUser().getUid();
                                     DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("Name", name);
+                                    //user.put("Name", name);
                                     user.put("Email", email);
                                     user.put("Phone", phone);
                                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -153,6 +177,5 @@ public class UserRegistration extends AppCompatActivity {
                 {
                     System.out.println("Error is :" + e);
                 }
-            }
         }
 }
