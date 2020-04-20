@@ -44,7 +44,7 @@ public class Home extends AppCompatActivity {
         userID = auth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference profileRef = storageReference.child("users/"+auth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
+        StorageReference profileRef = storageReference.child("users/" + auth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -54,12 +54,12 @@ public class Home extends AppCompatActivity {
 
         profilePicture = findViewById(R.id.imageView2);
         userNameView = findViewById(R.id.textView5);
-        logoutBtn = (Button)findViewById(R.id.button2);
-        NotificationBtn = (Button)findViewById(R.id.button5);
-        AttendanceBtn = (Button)findViewById(R.id.button6);
-        FeesBtn = (Button)findViewById(R.id.button7);
-        MessoutBtn = (Button)findViewById(R.id.button8);
-        SickBtn = (Button)findViewById(R.id.button9);
+        logoutBtn = (Button) findViewById(R.id.button2);
+        NotificationBtn = (Button) findViewById(R.id.button5);
+        AttendanceBtn = (Button) findViewById(R.id.button6);
+        FeesBtn = (Button) findViewById(R.id.button7);
+        MessoutBtn = (Button) findViewById(R.id.button8);
+        SickBtn = (Button) findViewById(R.id.button9);
 
 
         DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
@@ -67,7 +67,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                userNameView.setText("Welcome "+documentSnapshot.getString("Name"));
+                userNameView.setText("Welcome " + documentSnapshot.getString("Name"));
             }
         });
 
@@ -94,35 +94,33 @@ public class Home extends AppCompatActivity {
         NotificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this,Notification.class));
+                startActivity(new Intent(Home.this, Notification.class));
             }
         });
 
         AttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this,Attendance.class));
+                startActivity(new Intent(Home.this, Attendance.class));
             }
         });
         FeesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this,Fees.class));
+                startActivity(new Intent(Home.this, Fees.class));
             }
         });
-       MessoutBtn.setOnClickListener(new View.OnClickListener() {
+        MessoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this,Messout.class));
+                startActivity(new Intent(Home.this, Messout.class));
             }
         });
         SickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this,Sick.class));
+                startActivity(new Intent(Home.this, Sick.class));
             }
         });
-
-
     }
 }

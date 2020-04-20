@@ -54,7 +54,7 @@ public class Profile extends AppCompatActivity {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profilePicture);
+                setProfilePicture(uri);
             }
         });
 
@@ -95,10 +95,8 @@ public class Profile extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK)
             {
                 Uri imageUri = data.getData();
-                //profilePicture.setImageURI(imageUri);
                 uploadImageToFirebase(imageUri);
             }
-
         }
     }
 
@@ -111,7 +109,7 @@ public class Profile extends AppCompatActivity {
                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profilePicture);
+                        setProfilePicture(uri);
                     }
                 });
             }
@@ -122,5 +120,10 @@ public class Profile extends AppCompatActivity {
                         Toast.makeText(Profile.this, "Try again", Toast.LENGTH_SHORT);
                     }
                 });
+    }
+
+    private void setProfilePicture(Uri uri)
+    {
+        Picasso.get().load(uri).into(profilePicture);
     }
 }
