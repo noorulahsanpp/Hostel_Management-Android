@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,8 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sick extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    Spinner spinner;
-    Button button14;
+   private Spinner spinner;
+    private Button button14;
+    private RadioButton breakfast, lunch, dinner;
+    private RadioGroup radiogroup;
+
 
 
     @Override
@@ -25,7 +30,19 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         setContentView(R.layout.activity_sick);
 
         spinner = (Spinner)findViewById(R.id.spinner);
+
         button14=(Button)findViewById(R.id.button14);
+        radiogroup=(RadioGroup)findViewById(R.id.groupradio);
+        radiogroup.clearCheck(); // reset radio buttons
+        breakfast=(RadioButton)findViewById(R.id.radioButton);
+        lunch=(RadioButton)findViewById(R.id.radioButton1);
+        dinner=(RadioButton)findViewById(R.id.radioButton2);
+
+
+        breakfast.setVisibility(View.INVISIBLE);
+        lunch.setVisibility(View.INVISIBLE);
+        dinner.setVisibility(View.INVISIBLE);
+
         spinner.setOnItemSelectedListener(this);
         List<String> categories = new ArrayList<>();
         categories.add("Full Day");
@@ -46,12 +63,34 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+" selected",Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(),item+" selected",Toast.LENGTH_LONG).show();
 
+    if (item == "Custom")
+    {
+        breakfast.setVisibility(View.VISIBLE);
+        lunch.setVisibility(View.VISIBLE);
+        dinner.setVisibility(View.VISIBLE);
+        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                int selectedId = radiogroup.getCheckedRadioButtonId();
+                RadioButton option = (RadioButton)radiogroup.findViewById(selectedId);
+
+               Toast.makeText(Sick.this,option.getText(),Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
+      
     }
 
+    
+    }
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> arg0) {
 
     }
+
+
 }

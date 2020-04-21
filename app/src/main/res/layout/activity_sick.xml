@@ -21,31 +21,31 @@
             tools:layout_editor_absoluteX="155dp"
             tools:layout_editor_absoluteY="58dp" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
+        <RadioGroup
+            android:id="@+id/groupradio"
+            android:layout_width="209dp"
+            android:layout_height="137dp"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="250dp"
-            android:text="Breakfast"
-            />
+            android:layout_marginTop="250dp">
 
-        <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="153dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="300dp"
-            android:text="Lunch"
-           />
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:text="Breakfast" />
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="91dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="350dp"
-            android:text="Dinner" />
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:text="Lunch" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:text="Dinner" />
+        </RadioGroup>
 
         <Spinner
             android:id="@+id/spinner"
@@ -69,5 +69,6 @@
             android:layout_marginLeft="100dp"
             android:layout_marginTop="450dp"
             android:text="OK" />
+
     </RelativeLayout>
 </LinearLayout>
