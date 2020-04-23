@@ -165,6 +165,7 @@ public class UserRegistration extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         toastMessage("Success");
+                                        progressDialog.dismiss();
                                     }
                                 });
 
