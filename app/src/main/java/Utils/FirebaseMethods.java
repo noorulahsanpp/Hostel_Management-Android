@@ -5,27 +5,53 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import models.User;
 
 public class FirebaseMethods {
     private static final String TAG = "FirebaseMethods";
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private String userID;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference myRef;
+    private DocumentReference documentReference;
+
+    private String userID, admission_number;
 
     private Context mContext;
     public FirebaseMethods(Context context)
     {
         mAuth = FirebaseAuth.getInstance();
         mContext = context;
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = firebaseDatabase.getReference();
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
@@ -56,11 +82,38 @@ public class FirebaseMethods {
                             Toast.makeText(mContext, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
+    }
+
+    public void checkAdmissionNumber(String admission_number)
+    {
+       documentReference = firebaseFirestore.collection("registered").document(admission_number);
+       documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+           @Override
+           public void onSuccess(DocumentSnapshot documentSnapshot) {
+               Log.d(TAG, "onComplete: Admssion number + "+documentSnapshot.get("adnumber"));
+               Toast.makeText(mContext, ""+documentSnapshot.get("adnumber"),Toast.LENGTH_SHORT);
+           }
+       })
+               .addOnFailureListener(new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception e) {
+                       Toast.makeText(mContext, "Didnt work",Toast.LENGTH_SHORT);
+                   }
+               });
 
     }
+
+public void addNewUser(String email, String phone, String profile_photo){
+    User user = new User(userID, phone, email, admission_number);
+    documentReference = firebaseFirestore.collection("users").document(userID);
+    Map<String, Object> userdata = new HashMap<>();
+    userdata.put("Email", email);
+    userdata.put("Phone", phone);
+    userdata.put("Admission_number", admission_number);
+    documentReference.set(userdata);
+
+}
 
 }

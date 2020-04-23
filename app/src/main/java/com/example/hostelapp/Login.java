@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         signUpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AdmisnNo.class));
+                startActivity(new Intent(getApplicationContext(), Verification.class));
             }
         });
     }
