@@ -64,8 +64,6 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
         hostel = intent.getStringExtra("hostel");
-
-
         DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(userID);
        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
          @Override
@@ -74,8 +72,6 @@ public class Home extends AppCompatActivity {
          userNameView.setText("Welcome " + userName);
      }
  });
-
-
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override

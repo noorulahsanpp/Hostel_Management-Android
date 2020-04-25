@@ -42,12 +42,12 @@ public class Verification extends AppCompatActivity {
         check = findViewById(R.id.button15);
         login = findViewById(R.id.Login);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        //login.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-           // public void onClick(View v) {
-            //    startActivity(new Intent(Verification.this,Login.class));
-           // }
-        //});
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Verification.this,Menu.class));
+            }
+        });
 
         check.setOnClickListener(new View.OnClickListener() {
             @Override

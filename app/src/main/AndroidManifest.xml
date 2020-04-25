@@ -27,6 +27,7 @@
         <activity android:name=".Notification" />
         <activity android:name=".UserRegistration" />
         <activity android:name=".Home" />
+        <activity android:name=".Menu"/>
         <activity android:name=".Login"></activity>
     </application>
 
