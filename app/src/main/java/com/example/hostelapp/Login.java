@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
     }
     private void getAdmissionNo(String userid)
     {
-        firebaseFirestore.collection("inmates").whereEqualTo("Admissionnumber", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("users").whereEqualTo("Userid", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful())
