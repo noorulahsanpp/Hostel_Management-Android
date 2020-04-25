@@ -55,7 +55,7 @@ public class Verification extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()){
                                 Toast.makeText(getApplicationContext(),""+document.getData(), Toast.LENGTH_LONG).show();
-                                adnumber =document.getId().toString();
+                                adnumber = document.getId().toString();
 
                                 Intent intent = new Intent(Verification.this, UserRegistration.class);
                                 intent.putExtra("adnumber", adnumber);

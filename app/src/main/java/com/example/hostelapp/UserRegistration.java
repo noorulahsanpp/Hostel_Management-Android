@@ -29,6 +29,7 @@ import com.google.firebase.firestore.WriteBatch;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class UserRegistration extends AppCompatActivity {
     private static final String TAG = "UserRegistration";
 
@@ -205,8 +206,6 @@ public class UserRegistration extends AppCompatActivity {
                     System.out.println("Error is :" + e);
                 }
         }
-
-
 
     /**
      * Customisable toast
