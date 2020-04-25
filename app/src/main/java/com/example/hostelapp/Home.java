@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class Home extends AppCompatActivity {
+    private static final String TAG = "Home";
 
     private Button logoutBtn, NotificationBtn, AttendanceBtn, FeesBtn, MessoutBtn, SickBtn, MenuBtn;
     private FirebaseAuth auth;
@@ -64,18 +66,20 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         userName = intent.getStringExtra("userName");
         hostel = intent.getStringExtra("hostel");
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(userID);
+            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-
-        DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(userID);
-       documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-         @Override
-       public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-         userNameView.setText("Welcome " + userName);
-     }
- });
-
-
+                    userNameView.setText("Welcome " + userName);
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            Log.d(TAG, "onCreate: "+e);
+        }
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override

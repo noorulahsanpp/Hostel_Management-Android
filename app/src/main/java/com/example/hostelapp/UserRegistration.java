@@ -183,11 +183,11 @@ getData(admisson);
                                 if(hostel.equals("LH")) {
                                     DocumentReference LH = inmates.document("LH").collection("users").document(admisson);
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("name", username);
-                                    user.put("admissionno", admisson);
-                                    user.put("userid", userID);
-                                    user.put("dept", dept);
-                                    user.put("batch", batch);
+                                    user.put("Name", username);
+                                    user.put("Admission No.", admisson);
+                                    user.put("Userid", userID);
+                                    user.put("Dept", dept);
+                                    user.put("Batch", batch);
 
                                     LH.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -201,11 +201,11 @@ getData(admisson);
                                 else {
                                     DocumentReference MH = inmates.document("MH").collection("users").document(admisson);
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("name", username);
-                                    user.put("admissionNo", admisson);
-                                    user.put("userid", userID);
-                                    user.put("dept", dept);
-                                    user.put("batch", batch);
+                                    user.put("Name", username);
+                                    user.put("Admission No.", admisson);
+                                    user.put("Userid", userID);
+                                    user.put("Dept", dept);
+                                    user.put("Batch", batch);
 
                                     MH.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
