@@ -44,6 +44,14 @@
                 android:text="Messout" />
 
             <Button
+                android:id="@+id/btnmenu"
+                android:layout_width="291dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="590dp"
+                android:text="Menu" />
+
+            <Button
                 android:id="@+id/button9"
                 android:layout_width="291dp"
                 android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hostelapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,20 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".Menu"></activity>
-        <activity android:name=".AdmisnNo" />
-=======
-        <activity android:name=".Verification">
+<activity android:name=".Verification">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
->>>>>>> ccb41a3d0d69fbdc87e854a89e61b067d080f965
-        <activity android:name=".Profile" />
+<activity android:name=".Profile" />
         <activity android:name=".Sick" />
         <activity android:name=".Messout" />
         <activity android:name=".Fees" />
