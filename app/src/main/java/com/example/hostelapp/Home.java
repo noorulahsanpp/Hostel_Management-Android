@@ -25,11 +25,11 @@ import com.squareup.picasso.Picasso;
 
 public class Home extends AppCompatActivity {
 
-    private Button logoutBtn, NotificationBtn, AttendanceBtn, FeesBtn, MessoutBtn, SickBtn;
+    private Button logoutBtn, NotificationBtn, AttendanceBtn, FeesBtn, MessoutBtn, SickBtn, MenuBtn;
     private FirebaseAuth auth;
     private FirebaseFirestore firebaseFirestore;
     private String userID;
-    private String userName;
+    private String userName,hostel;
     private TextView userNameView;
     private ImageView profilePicture;
     private StorageReference storageReference;
@@ -60,16 +60,20 @@ public class Home extends AppCompatActivity {
         FeesBtn = (Button) findViewById(R.id.button7);
         MessoutBtn = (Button) findViewById(R.id.button8);
         SickBtn = (Button) findViewById(R.id.button9);
+        MenuBtn = (Button)findViewById(R.id.btnmenu);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("userName");
+        hostel = intent.getStringExtra("hostel");
 
 
-        DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+        DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(userID);
+       documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+         @Override
+       public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                userNameView.setText("Welcome " + documentSnapshot.getString("Name"));
-            }
-        });
+         userNameView.setText("Welcome " + userName);
+     }
+ });
 
 
 
@@ -120,6 +124,17 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, Sick.class));
+            }
+        });
+        MenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Home.this, Menu.class);
+                intent.putExtra("userName",userName);
+                intent.putExtra("hostel",hostel);
+                startActivity(intent);
+
             }
         });
     }
