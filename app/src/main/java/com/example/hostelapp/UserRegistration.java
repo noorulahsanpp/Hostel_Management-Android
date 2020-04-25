@@ -35,7 +35,6 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class UserRegistration extends AppCompatActivity {
     private static final String TAG = "UserRegistration";
 
@@ -185,7 +184,7 @@ getData(admisson);
                                     DocumentReference LH = inmates.document("LH").collection("users").document(admisson);
                                     Map<String, Object> user = new HashMap<>();
                                     user.put("Name", username);
-                                    user.put("Admissionnumber", admisson);
+                                    user.put("Admission No.", admisson);
                                     user.put("Userid", userID);
                                     user.put("Dept", dept);
                                     user.put("Batch", batch);
@@ -203,7 +202,7 @@ getData(admisson);
                                     DocumentReference MH = inmates.document("MH").collection("users").document(admisson);
                                     Map<String, Object> user = new HashMap<>();
                                     user.put("Name", username);
-                                    user.put("Admissionnumber", admisson);
+                                    user.put("Admission No.", admisson);
                                     user.put("Userid", userID);
                                     user.put("Dept", dept);
                                     user.put("Batch", batch);
@@ -236,6 +235,8 @@ getData(admisson);
                     System.out.println("Error is :" + e);
                 }
         }
+
+
 
     /**
      * Customisable toast

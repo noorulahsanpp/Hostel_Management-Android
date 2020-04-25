@@ -135,8 +135,8 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Home.this, Menu.class);
-                intent.putExtra("userName",userName);
-                intent.putExtra("hostel",hostel);
+              //  intent.putExtra("userName",userName);
+               // intent.putExtra("hostel",hostel);
                 startActivity(intent);
 
             }

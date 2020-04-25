@@ -40,56 +40,53 @@ public class Verification extends AppCompatActivity {
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
-        login = findViewById(R.id.Login);
+        login = findViewById(R.id.login);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Verification.this,Menu.class));
-            }
-        });
+        //login.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+           // public void onClick(View v) {
+            //    startActivity(new Intent(Verification.this,Login.class));
+           // }
+        //});
 
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String number = num.getText().toString().trim();
 
-try
-{
                 documentReference = firebaseFirestore.collection("registered").document(number);
                 documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
+                            if (document.exists()){
 
-                                regn = document.get("regn").toString();
-                                if (regn.equals("yes")) {
-                                    Toast.makeText(getApplicationContext(), "Already registered", Toast.LENGTH_LONG).show();
+                                    regn = document.get("regn").toString();
+                                    if(regn.equals("yes"))
+                                    {
+                                        Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();
 
-                                } else {
+                                    }
+                                    else {
 
-                                    Toast.makeText(getApplicationContext(), "" + document.getData(), Toast.LENGTH_LONG).show();
-                                    adnumber = document.getId().toString();
+                                        Toast.makeText(getApplicationContext(), "" + document.getData(), Toast.LENGTH_LONG).show();
+                                        adnumber = document.getId().toString();
 
-                                    Intent intent = new Intent(Verification.this, UserRegistration.class);
-                                    intent.putExtra("adnumber", adnumber);
-                                    startActivity(intent);
-                                }
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Invalid registration number", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(Verification.this, UserRegistration.class);
+                                        intent.putExtra("adnumber", adnumber);
+                                        startActivity(intent);
+                                    }
                             }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                            else {
+                                Toast.makeText(getApplicationContext(),"Invalid registration number", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"Failed", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-            }
-                catch(Exception e)
-                {
-
-                }
             }
         });
     }
