@@ -30,7 +30,7 @@ public class Verification extends AppCompatActivity {
     private EditText num;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private Button check,login;
+    private Button check,btnlogin;
     private String adnumber,regn;
     private DocumentReference documentReference;
     @Override
@@ -40,15 +40,17 @@ public class Verification extends AppCompatActivity {
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
-        login = findViewById(R.id.Login);
+        btnlogin =findViewById(R.id.login);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        //login.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-           // public void onClick(View v) {
-            //    startActivity(new Intent(Verification.this,Login.class));
-           // }
-        //});
+        btnlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+
+                startActivity(new Intent(Verification.this, Menu.class));
+
+            }
+        });
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
