@@ -40,7 +40,7 @@ public class Verification extends AppCompatActivity {
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
-        login = findViewById(R.id.Login);
+        login = findViewById(R.id.login);
         firebaseFirestore = FirebaseFirestore.getInstance();
         //login.setOnClickListener(new View.OnClickListener() {
           //  @Override
