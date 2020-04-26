@@ -1,12 +1,15 @@
 package Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hostelapp.UserRegistration;
+import com.example.hostelapp.Verification;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,7 +42,6 @@ public class FirebaseMethods {
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference myRef;
     private DocumentReference documentReference;
 
     private String userID, admission_number;
@@ -50,8 +52,6 @@ public class FirebaseMethods {
         mAuth = FirebaseAuth.getInstance();
         mContext = context;
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = firebaseDatabase.getReference();
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
@@ -74,6 +74,7 @@ public class FirebaseMethods {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = user.getUid();
+
                             Log.d(TAG, "onComplete: Authstate changed : "+ userID);
                         }
                         else {
@@ -86,7 +87,7 @@ public class FirebaseMethods {
                 });
     }
 
-    public void checkAdmissionNumber(String admission_number)
+    public String checkAdmissionNumber(String admission_number)
     {
        documentReference = firebaseFirestore.collection("registered").document(admission_number);
        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -95,24 +96,21 @@ public class FirebaseMethods {
                Log.d(TAG, "onComplete: Admssion number + "+documentSnapshot.get("adnumber"));
                Toast.makeText(mContext, ""+documentSnapshot.get("adnumber"),Toast.LENGTH_SHORT);
            }
-       })
-               .addOnFailureListener(new OnFailureListener() {
+
+       }).addOnFailureListener(new OnFailureListener() {
                    @Override
                    public void onFailure(@NonNull Exception e) {
                        Toast.makeText(mContext, "Didnt work",Toast.LENGTH_SHORT);
                    }
                });
-
+       return admission_number;
     }
 
-public void addNewUser(String email, String phone, String profile_photo){
-    User user = new User(userID, phone, email, admission_number);
+
+public void addNewUser(String email, String phone, String admission_number, String room, String block, String hostel, String department, String name, String semester){
+    User user = new User(userID, phone, email, admission_number, room, block, hostel, semester, department, name);
     documentReference = firebaseFirestore.collection("users").document(userID);
-    Map<String, Object> userdata = new HashMap<>();
-    userdata.put("Email", email);
-    userdata.put("Phone", phone);
-    userdata.put("Admission_number", admission_number);
-    documentReference.set(userdata);
+    documentReference.set(user);
 
 }
 

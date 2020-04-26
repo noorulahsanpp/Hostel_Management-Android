@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +36,9 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
+import Utils.FirebaseMethods;
+import models.User;
+
 public class UserRegistration extends AppCompatActivity {
     private static final String TAG = "UserRegistration";
 
@@ -47,25 +51,28 @@ public class UserRegistration extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private TextView loginBtn;
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseMethods firebaseMethods;
     private String userID, username, room, block, admisson,batch,dept,hostel,regn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_user_registration);
 
         mContext = UserRegistration.this;
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(this);
-
+        firebaseMethods = new FirebaseMethods(mContext);
 
         Intent intent = getIntent();
         admisson = intent.getStringExtra("adnumber");
 
         initWidgets();
         init();
-getData(admisson);
+        getData(admisson);
 
     }
 
@@ -82,7 +89,6 @@ getData(admisson);
 //                    firebaseMethods.registerNewUser("", password, email);
                     registration();
                 }
-
 
             }
         });
@@ -131,43 +137,57 @@ getData(admisson);
     }
   public void getData(String admissionnumber)
    {
-       documentReference = firebaseFirestore.collection("registered").document(admissionnumber);
-      documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-        @Override
-        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful())
-               {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists())
-                    {
-                            username = document.get("name").toString();
-                            block = document.get("block").toString();
-                            dept = document.get("dept").toString();
-                            room = document.get("room").toString();
-                            hostel = document.get("hostel").toString();
-                            batch = document.get("batch").toString();
-                            String id = document.getId();
-                            setName(username);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("regn","yes");
-                            documentReference.set(user, SetOptions.merge());
+       try {
+           documentReference = firebaseFirestore.collection("registered").document(admissionnumber);
+           documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                   if (task.isSuccessful()) {
+                       DocumentSnapshot document = task.getResult();
+                       if (document.exists()) {
+                           username = document.get("name").toString();
+                           block = document.get("block").toString();
+                           dept = document.get("department").toString();
+                           room = document.get("room").toString();
+                           hostel = document.get("hostel").toString();
+                           batch = document.get("semester").toString();
+                           String id = document.getId();
+                           setName(username);
+                           Map<String, Object> user = new HashMap<>();
+                           user.put("app_registration", "yes");
+                           documentReference.set(user, SetOptions.merge());
+                       } else {
+                           Toast.makeText(getApplicationContext(), "Invalid registration number", Toast.LENGTH_LONG).show();
+                       }
+                   } else {
+                       Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
                    }
-                   else {
-                      Toast.makeText(getApplicationContext(),"Invalid registration number", Toast.LENGTH_LONG).show();
-                   }
-              }
-               else {
-                  Toast.makeText(getApplicationContext(),"Failed", Toast.LENGTH_LONG).show();
-              }
-           }
+               }
 
-       });
+           });
+       }
+       catch (Exception e){
+           Log.d(TAG, "getData: "+e);
+       }
+        }
+
+        public void setLoginDetails(String userid, String admissionnumber, String hostel)
+        {
+            try {
+                DocumentReference login = firebaseFirestore.collection("login").document(userid);
+                Map<String, Object> userlogin = new HashMap<>();
+                userlogin.put("user_id", userid);
+                userlogin.put("admission_number", admissionnumber);
+                userlogin.put("hostel", hostel);
+                login.set(userlogin);
+            }
+            catch (Exception e){
+                Log.d(TAG, "setLoginDetails: "+e);
+            }
         }
 
     private void registration() {
-
-                progressDialog.setMessage("Registering...");
-                progressDialog.show();
+        showProgress();
                 try {
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @RequiresApi(api = Build.VERSION_CODES.N)
@@ -181,43 +201,22 @@ getData(admisson);
                                 CollectionReference inmates = firebaseFirestore.collection("inmates");
 
                                 if(hostel.equals("LH")) {
-                                    DocumentReference LH = inmates.document("LH").collection("users").document(admisson);
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("Name", username);
-                                    user.put("Admission No.", admisson);
-                                    user.put("Userid", userID);
-                                    user.put("Dept", dept);
-                                    user.put("Batch", batch);
-
-                                    LH.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            toastMessage("Success");
-                                            progressDialog.dismiss();
-
-                                                                                    }
-                                    });
+                                    documentReference = inmates.document("LH").collection("users").document(admisson);
                                 }
                                 else {
-                                    DocumentReference MH = inmates.document("MH").collection("users").document(admisson);
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("Name", username);
-                                    user.put("Admission No.", admisson);
-                                    user.put("Userid", userID);
-                                    user.put("Dept", dept);
-                                    user.put("Batch", batch);
-
-                                    MH.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    documentReference = inmates.document("MH").collection("users").document(admisson);
+                                }
+                                User user = new User(userID, phone, mAuth.getCurrentUser().getEmail(), admisson, room, block, hostel, batch, dept, username);
+                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             toastMessage("Success");
+                                            setLoginDetails(userID, admisson, hostel);
                                             progressDialog.dismiss();
                                                                           }
                                     });
 
-                                }
-
-                                Intent intent = new Intent(UserRegistration.this, Home.class);
+                                Intent intent = new Intent(UserRegistration.this, Login.class);
                                 intent.putExtra("userName",username);
                                 intent.putExtra("hostel",hostel);
                                 startActivity(intent);
@@ -249,5 +248,11 @@ getData(admisson);
 
     private void setName(String name){
         mAdmissionumber.setText(name.toString());
+    }
+
+    private void showProgress()
+    {
+        progressDialog.setMessage("Registering...");
+        progressDialog.show();
     }
 }

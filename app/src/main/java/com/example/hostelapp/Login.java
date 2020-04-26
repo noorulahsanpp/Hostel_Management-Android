@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,18 +28,23 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
+    private static final String KEY_ADMISSIONNO = "admission_number";
+    private static final String KEY_HOSTEL = "hostel";
+    private static final String KEY_USERID = "user_dd";
 
     private TextView signUpTv;
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
-    private String userID,admissionNumber;
+    private String userID,admissionNumber, loginAdmission, loginHostel;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         progressdialog = new ProgressDialog(Login.this);
         auth = FirebaseAuth.getInstance();
@@ -85,7 +91,6 @@ public class Login extends AppCompatActivity {
             passwordEt.requestFocus();
             return;
         }
-
         progressdialog.setMessage("Logging in...");
         progressdialog.show();
 
@@ -95,22 +100,30 @@ public class Login extends AppCompatActivity {
                 userID = auth.getCurrentUser().getUid();
                 getAdmissionNo(userID);
                 progressdialog.dismiss();
-                startActivity(new Intent(Login.this, Home.class));
-                finish();
+
             }
         });
     }
     private void getAdmissionNo(String userid)
     {
-        firebaseFirestore.collection("inmates").whereEqualTo("Admissionnumber", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("login").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful())
                 {
                     for(QueryDocumentSnapshot document : task.getResult()){
                         Log.d(TAG, document.getId() + " => " + document.getData());
-                        admissionNumber = document.get("Userid").toString();
+                        loginAdmission = document.get("admission_number").toString();
+                        loginHostel = document.get("hostel").toString();
                     }
+                    Intent intent = new Intent(Login.this, Home.class);
+                    intent.putExtra("admission_number", loginAdmission);
+                    intent.putExtra("hostel", loginHostel);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Log.d(TAG, "onFailure: Query Unsuccessful");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

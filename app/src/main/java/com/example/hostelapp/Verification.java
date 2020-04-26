@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,23 +27,31 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import Utils.FirebaseMethods;
+
 public class Verification extends AppCompatActivity {
     private static final String TAG = "Verification";
     private EditText num;
+    private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private Button check,login;
     private String adnumber,regn;
     private DocumentReference documentReference;
+    private FirebaseMethods firebaseMethods;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_verification);
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
         login = findViewById(R.id.login);
+        mContext = Verification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseMethods = new FirebaseMethods(mContext);
         //login.setOnClickListener(new View.OnClickListener() {
           //  @Override
            // public void onClick(View v) {
@@ -53,7 +63,6 @@ public class Verification extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String number = num.getText().toString().trim();
-
                 documentReference = firebaseFirestore.collection("registered").document(number);
                 documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -62,7 +71,7 @@ public class Verification extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()){
 
-                                    regn = document.get("regn").toString();
+                                    regn = document.get("app_registration").toString();
                                     if(regn.equals("yes"))
                                     {
                                         Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();

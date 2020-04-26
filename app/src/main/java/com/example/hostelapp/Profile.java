@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,27 +31,33 @@ import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private ImageView profilePicture;
     private EditText name, email, phone;
     private Button changePassword, editProfile;
-    private String userID;
+    private String userID, hostel, admissionNumber;
     private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
 
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        userID = auth.getCurrentUser().getUid();
+        userID = mAuth.getCurrentUser().getUid();
 
         // get access to the root folder of the storage
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference profileRef = storageReference.child("users/"+auth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
+        Intent intent = getIntent();
+        hostel = intent.getStringExtra("hostel");
+        admissionNumber = intent.getStringExtra("admission_number");
+
+        StorageReference profileRef = storageReference.child("users/"+ mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -65,14 +72,14 @@ public class Profile extends AppCompatActivity {
         changePassword = findViewById(R.id.button12);
         editProfile = findViewById(R.id.button13);
 
-        DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
+        DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                name.setText(documentSnapshot.getString("Name"));
-                email.setText(documentSnapshot.getString("Email"));
-                phone.setText(documentSnapshot.getString("Phone"));
+                name.setText(documentSnapshot.getString("name"));
+                email.setText(documentSnapshot.getString("email"));
+                phone.setText(documentSnapshot.getString("phone_number"));
 
             }
         });
@@ -102,7 +109,7 @@ public class Profile extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri)
     {
-        final StorageReference fileReference = storageReference.child("users/"+auth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
+        final StorageReference fileReference = storageReference.child("users/"+ mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
