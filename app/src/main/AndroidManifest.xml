@@ -12,16 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<activity android:name=".Verification">
+        <activity android:name=".Verification">
 
         </activity>
-<activity android:name=".Profile" />
+        <activity android:name=".Profile" />
         <activity android:name=".Sick" />
         <activity android:name=".Messout" />
         <activity android:name=".Fees" />
         <activity android:name=".Attendance" />
         <activity android:name=".Notification" />
         <activity android:name=".UserRegistration" />
+        <activity android:name=".Menu" />
         <activity android:name=".Home" />
         <activity android:name=".Login">
             <intent-filter>

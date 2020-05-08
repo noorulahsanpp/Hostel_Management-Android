@@ -3,10 +3,12 @@ package com.example.hostelapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,6 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Menu extends AppCompatActivity {
 
@@ -22,8 +31,12 @@ public class Menu extends AppCompatActivity {
           TextView breakfast;
           TextView lunch;
           TextView snacks;
-          TextView dinner;
+          TextView dinner,date;
+
+    private Date dateObj1;
+    private String currentdate;
           FirebaseFirestore firebaseFirestore;
+          DocumentReference db;
           FirebaseAuth mAuth;
           String hostel,username,userID;
 
@@ -36,34 +49,43 @@ public class Menu extends AppCompatActivity {
                lunch = (TextView)findViewById(R.id.txtlunch);
                 snacks = (TextView)findViewById(R.id.txtevening);
                  dinner = (TextView)findViewById(R.id.txtdinner);
-                 back = (Button)findViewById(R.id.btnback);
-
-            Intent intent = getIntent();
-            username = intent.getStringExtra("userName");
-            hostel = intent.getStringExtra("hostel");
+                back = (Button)findViewById(R.id.btnback);
+                date = (TextView)findViewById(R.id.date);
 
 
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String currentDateandTime = simpleDateFormat.format(new Date());
+            date.setText(currentDateandTime);
 
 
-        DocumentReference db = firebaseFirestore.collection("inmates").document(hostel).collection("menu").document();
-        db.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                               DocumentSnapshot document = task.getResult();
-                                               String brkfst= document.get("Breakfast").toString();
-                                               String lnch= document.get("Lunch").toString();
-                                               String snck= document.get("Snacks").toString();
-                                               String dnnr= document.get("Dinner").toString();
-                                               breakfast.setText(brkfst);
-                                               lunch.setText(lnch);
-                                               snacks.setText(snck);
-                                               dinner.setText(dnnr);
 
-                                           }
-                                       });
+                firebaseFirestore = FirebaseFirestore.getInstance();
+      firebaseFirestore.collection("inmates").document("LH").collection("foodmenu").whereEqualTo("date",currentDateandTime).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+          @Override
+          public void onComplete(@NonNull Task<QuerySnapshot> task) {
+              if (task.isSuccessful())
+              {
+                  for(QueryDocumentSnapshot document : task.getResult()){
+
+                      String brkfst = document.get("breakfast").toString();
+                      String dinnr = document.get("dinner").toString();
+                      String eveng = document.get("evening").toString();
+                      String lnch = document.get("lunch").toString();
+
+                    breakfast.setText(brkfst);
+                    dinner.setText(dinnr);
+                    snacks.setText(eveng);
+                    lunch.setText(lnch);
+
+                  }
+              }
+          }
+      });
 
 
-              back.setOnClickListener(new View.OnClickListener() {
+
+
+            back.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
                                               startActivity(new Intent(Menu.this, Home.class));

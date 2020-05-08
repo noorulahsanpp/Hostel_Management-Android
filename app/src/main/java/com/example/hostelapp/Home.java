@@ -58,6 +58,7 @@ public class Home extends AppCompatActivity {
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
+     //mAuth.signOut();
         Intent intent = getIntent();
         hostel = intent.getStringExtra("hostel");
         admissionNumber = intent.getStringExtra("admission_number");
