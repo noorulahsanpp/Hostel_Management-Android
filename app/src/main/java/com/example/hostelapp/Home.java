@@ -84,18 +84,18 @@ public class Home extends AppCompatActivity {
         viewFlipper.setFlipInterval(4000);
 
         viewFlipper.setAutoStart(true);
+        initWidgets();
 
-
-       mAuth = FirebaseAuth.getInstance();
+     /*  mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-      //  mAuth.signOut();
+        mAuth.signOut();
         Intent intent = getIntent();
         hostel = intent.getStringExtra("hostel");
         admissionNumber = intent.getStringExtra("admission_number");
-        initWidgets();
+
         getUserData(admissionNumber, hostel);
        /* profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +160,7 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    private void getUserData(String admissionNumber, String hostel){
+  /*  private void getUserData(String admissionNumber, String hostel){
         documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -171,7 +171,7 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
     private void initWidgets(){
        // profilePicture = findViewById(R.id.imageView2);
@@ -201,9 +201,9 @@ public class Home extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
         BottomNavigationViewHelper.enableNavigation(Home.this,bottomNavigationView);
-        android.view.Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
-        menuItem.setChecked(true);
+       android.view.Menu menu = bottomNavigationView.getMenu();
+       MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
+       menuItem.setChecked(true);
 
     }
 

@@ -34,7 +34,8 @@
             android:layout_width="189dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="90dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@color/maroon"
             android:text="Messout"
             android:textSize="40sp" />
 
@@ -45,6 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="40dp"
+            android:background="@color/maroon"
+            android:textColor="#FFFF"
         android:text="From"
         tools:layout_editor_absoluteX="31dp"
         tools:layout_editor_absoluteY="268dp" />
@@ -56,6 +59,8 @@
         android:layout_marginTop="270dp"
         android:layout_marginLeft="40dp"
         android:text="To"
+            android:textColor="#FFFF"
+            android:background="@color/maroon"
         tools:layout_editor_absoluteX="36dp"
         tools:layout_editor_absoluteY="328dp" />
 
@@ -65,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="350dp"
             android:layout_marginLeft="40dp"
+            android:textColor="@color/maroon"
             android:text="Total Number Of Days" />
 
         <EditText
@@ -81,6 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="400dp"
             android:layout_marginLeft="180dp"
+            android:background="@color/maroon"
+            android:textColor="#FFFF"
             android:text="OK" />
 
         <EditText

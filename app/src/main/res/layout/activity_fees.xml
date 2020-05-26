@@ -33,10 +33,11 @@
             android:id="@+id/Messbill"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="50dp"
             android:text="Messbill"
             android:textSize="40sp"
+            android:textColor="@color/maroon"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="37dp" />
 
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="180dp"
+            android:textColor="@color/maroon"
             android:text="Month" />
 
         <TextView
@@ -53,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="100dp"
+            android:textColor="@color/maroon"
+            android:layout_marginTop="180dp"
             android:text="..." />
 
         <TextView
@@ -61,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="230dp"
+            android:textColor="@color/maroon"
             android:text="Mess" />
 
         <TextView
@@ -69,7 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="230dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <TextView
@@ -77,23 +82,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="280dp"
+            android:textColor="@color/maroon"
             android:text="Common" />
 
         <TextView
             android:id="@+id/common"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/maroon"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="280dp"
             android:text="..." />
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/maroon"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="330dp"
             android:text="Extras" />
 
         <TextView
@@ -101,7 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="330dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <TextView
@@ -109,7 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="380dp"
+            android:textColor="@color/maroon"
             android:text="Rent" />
 
         <TextView
@@ -117,7 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="380dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
 
@@ -126,7 +137,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="430dp"
+            android:textColor="@color/maroon"
             android:text="Total" />
 
         <TextView
@@ -134,14 +146,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="350dp"
+            android:textColor="@color/maroon"
+            android:layout_marginTop="430dp"
             android:text="..." />
         <TextView
             android:id="@+id/textView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="400dp"
+            android:textColor="@color/maroon"
+            android:layout_marginTop="480dp"
             android:text="Due" />
 
         <TextView
@@ -149,7 +163,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="480dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
 
@@ -158,15 +173,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="450dp"
+            android:layout_marginTop="580dp"
+            android:textColor="@color/maroon"
             android:text="Pay Due" />
 
         <TextView
             android:id="@+id/grand"
+            android:textColor="@color/maroon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="530dp"
             android:text="Grand Total" />
 
         <TextView
@@ -174,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="530dp"
             android:text="..." />
 
         <Button
@@ -182,7 +199,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="250dp"
-            android:layout_marginTop="480dp"
+            android:layout_marginTop="580dp"
+            android:background="@color/maroon"
+            android:textColor="#FFFF"
             android:text="Pay Now" />
 
     </RelativeLayout>

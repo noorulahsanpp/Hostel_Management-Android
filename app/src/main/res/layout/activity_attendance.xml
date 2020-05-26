@@ -32,8 +32,10 @@
         android:id="@+id/textView6"
         android:layout_width="251dp"
         android:layout_height="69dp"
+        android:layout_marginLeft="80dp"
         android:text="Attendance"
         android:textSize="40sp"
+        android:textColor="#FFFF"
         tools:layout_editor_absoluteX="80dp"
         tools:layout_editor_absoluteY="46dp" />
     </RelativeLayout>

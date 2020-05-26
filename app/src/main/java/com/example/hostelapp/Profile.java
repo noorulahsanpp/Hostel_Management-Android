@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import Utils.BottomNavigationViewHelper;
 
 public class Profile extends AppCompatActivity {
     private static final String TAG = "Profile";
+    private static final int ACTIVITY_NUM = 2;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -52,7 +54,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setupBottomNavigationView();
 
-        mAuth = FirebaseAuth.getInstance();
+     /*   mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
@@ -70,7 +72,7 @@ public class Profile extends AppCompatActivity {
                 setProfilePicture(uri);
             }
         });
-
+*/
         profilePicture = findViewById(R.id.imageView);
         name = findViewById(R.id.editText);
         email = findViewById(R.id.editText3);
@@ -78,7 +80,7 @@ public class Profile extends AppCompatActivity {
         changePassword = findViewById(R.id.button12);
         editProfile = findViewById(R.id.button13);
 
-        DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber);
+    /*    DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -96,7 +98,7 @@ public class Profile extends AppCompatActivity {
                 Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(openGallery, 1000 );
             }
-        });
+        });*/
     }
 
 
@@ -105,11 +107,15 @@ public class Profile extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
         BottomNavigationViewHelper.enableNavigation(Profile.this,bottomNavigationView);
+       android.view.Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
+        menuItem.setChecked(true);
 
     }
 
 
-    @Override
+
+  /*  @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -148,5 +154,6 @@ public class Profile extends AppCompatActivity {
     private void setProfilePicture(Uri uri)
     {
         Picasso.get().load(uri).into(profilePicture);
-    }
+    }*/
+
 }

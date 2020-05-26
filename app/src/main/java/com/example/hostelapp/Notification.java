@@ -14,7 +14,7 @@ import Utils.BottomNavigationViewHelper;
 
 public class Notification extends AppCompatActivity {
     //private static final String TAG = "Notification";
-    private static final int ACTIVITY_NUM = 0;
+    private static final int ACTIVITY_NUM = 1;
 
 
     @Override

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".Sick">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,12 +30,13 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="168dp"
-            android:layout_height="82dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="80dp"
             android:text="Sick"
             android:textSize="40sp"
+            android:textColor="@color/maroon"
             tools:layout_editor_absoluteX="155dp"
             tools:layout_editor_absoluteY="58dp" />
 
@@ -50,18 +51,21 @@
                 android:id="@+id/radioButton"
                 android:layout_width="124dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/maroon"
                 android:text="Breakfast" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="153dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/maroon"
                 android:text="Lunch" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/maroon"
                 android:text="Dinner" />
         </RadioGroup>
 
@@ -77,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
+            android:textColor="@color/maroon"
             android:layout_marginTop="200dp"
             android:text="Select" />
 
@@ -86,6 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="450dp"
+            android:background="@color/maroon"
+            android:textColor="#FFFF"
             android:text="OK" />
 
     </RelativeLayout>

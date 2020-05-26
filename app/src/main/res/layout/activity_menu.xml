@@ -34,7 +34,8 @@
             android:layout_width="279dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="80dp"
+            android:textColor="@color/maroon"
             android:text="Today's Special"
             android:textSize="36sp"
             tools:layout_editor_absoluteX="172dp"
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="200dp"
+            android:textColor="@color/maroon"
             android:text="Breakfast" />
 
         <TextView
@@ -53,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="200dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <TextView
@@ -61,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="250dp"
+            android:textColor="@color/maroon"
             android:text="Lunch" />
 
         <TextView
@@ -69,7 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="250dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <TextView
@@ -77,7 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="300dp"
+            android:textColor="@color/maroon"
             android:text="Evening Snacks" />
 
         <TextView
@@ -85,7 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="300dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <TextView
@@ -93,7 +100,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="350dp"
+            android:textColor="@color/maroon"
             android:text="Dinner" />
 
         <TextView
@@ -101,15 +109,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200dp"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="350dp"
+            android:textColor="@color/maroon"
             android:text="..." />
 
         <Button
             android:id="@+id/btnback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="130dp"
             android:layout_marginTop="400dp"
+            android:background="@color/maroon"
+            android:textColor="#FFFF"
             android:text="Back" />
 
         <TextView
