@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,8 +14,12 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import Utils.BottomNavigationViewHelper;
 
 public class Sick extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
    private Spinner spinner;
@@ -37,7 +42,7 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         breakfast=(RadioButton)findViewById(R.id.radioButton);
         lunch=(RadioButton)findViewById(R.id.radioButton1);
         dinner=(RadioButton)findViewById(R.id.radioButton2);
-
+        setupBottomNavigationView();
 
         breakfast.setVisibility(View.INVISIBLE);
         lunch.setVisibility(View.INVISIBLE);
@@ -58,6 +63,14 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
                 startActivity(new Intent(Sick.this,Home.class));
             }
         });
+    }
+
+    private void setupBottomNavigationView() {
+
+        //  Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
+        BottomNavigationViewHelper.enableNavigation(Sick.this, bottomNavigationView);
     }
 
     @Override
@@ -84,6 +97,7 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         });
       
     }
+
 
     
     }

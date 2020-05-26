@@ -2,12 +2,16 @@ package com.example.hostelapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -18,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -26,11 +31,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Timer;
+
+import Utils.BottomNavigationViewHelper;
+
 public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
     private static final String KEY_ADMISSIONNO = "admission_number";
     private static final String KEY_HOSTEL = "hostel";
     private static final String KEY_USERID = "user_dd";
+
 
     private TextView signUpTv;
     private Button loginbtn;
@@ -39,6 +49,9 @@ public class Login extends AppCompatActivity {
     private String userID,admissionNumber, loginAdmission, loginHostel;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +68,10 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, Home.class));
         }
 
+
+
         signUpTv = findViewById(R.id.signupTv);
+        //setupBottomNavigationView();
         loginbtn = (Button)findViewById(R.id.button);
         emailEt = (EditText)findViewById(R.id.editText1);
         passwordEt = (EditText)findViewById(R.id.editText2);
@@ -133,4 +149,9 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
 }

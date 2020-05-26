@@ -12,9 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Verification">
 
-        </activity>
+        <activity android:name=".Verification" />
         <activity android:name=".Profile" />
         <activity android:name=".Sick" />
         <activity android:name=".Messout" />
@@ -30,6 +29,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
