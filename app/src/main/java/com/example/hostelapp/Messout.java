@@ -18,7 +18,8 @@ import java.util.Date;
 
 public class Messout extends AppCompatActivity {
 
-    private Button Frmbtn, Tobtn, Okbtn;
+    private EditText Frmbtn, Tobtn;
+    private Button Okbtn;
     private EditText txtfrm, txtTo , days;
    // private TextView days;
     private int mYear, mMonth, mDay;
@@ -31,11 +32,11 @@ public class Messout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_messout);
-        Frmbtn = (Button) findViewById(R.id.button10);
-        Tobtn = (Button) findViewById(R.id.button11);
+        Frmbtn = (EditText) findViewById(R.id.button10);
+        Tobtn = (EditText) findViewById(R.id.button11);
         Okbtn = (Button) findViewById(R.id.button3);
-        txtfrm = (EditText) findViewById(R.id.edittext14);
-        txtTo = (EditText) findViewById(R.id.edittext15);
+        //txtfrm = (EditText) findViewById(R.id.edittext14);
+        //txtTo = (EditText) findViewById(R.id.edittext15);
         days = (EditText) findViewById(R.id.edittext13);
 
             final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");

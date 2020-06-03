@@ -8,15 +8,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_style">
 
-        <RelativeLayout
+        <!--RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relLayout1">
             <include layout="@layout/layout_top_tabs"/>
 
-        </RelativeLayout>
+        </RelativeLayout-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="80dp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/headings"
+            android:textStyle="bold"
             android:text="Today's Special"
             android:textSize="36sp"
             tools:layout_editor_absoluteX="172dp"
@@ -47,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="200dp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/headings"
             android:text="Breakfast" />
 
         <TextView
@@ -65,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="250dp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/headings"
             android:text="Lunch" />
 
         <TextView
@@ -83,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="300dp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/headings"
             android:text="Evening Snacks" />
 
         <TextView
@@ -101,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="350dp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/headings"
             android:text="Dinner" />
 
         <TextView
@@ -113,15 +115,6 @@
             android:textColor="@color/maroon"
             android:text="..." />
 
-        <Button
-            android:id="@+id/btnback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="400dp"
-            android:background="@color/maroon"
-            android:textColor="#FFFF"
-            android:text="Back" />
 
         <TextView
             android:id="@+id/date"
@@ -129,5 +122,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"/>
+
+
+
+                <Button
+                    android:id="@+id/btnback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Back"
+                    android:theme="@style/Button"
+                    android:background="@drawable/button_style"
+                    android:layout_marginTop="450dp"
+                     />
+
+
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

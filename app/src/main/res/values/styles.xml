@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,6 +6,31 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name ="Button" parent="android:Widget.Button">
+        <item name="android:textColor">@color/headings</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:width">300dp</item>
+        <item name="android:height">30dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:ems">10</item>
+
+    </style>
+
+    <style name="EditText" parent = "android:Widget.EditText">
+        <item name="android:ems">10</item>
+        <item name="android:textSize">15dp</item>
+        <item name = "android:padding">10dp</item>
+        <item name="android:width">300dp</item>
+
+    <item name = "android:drawableTint" tools:targetApi="m">@color/tabs</item>
+
+    </style>
+    <style name = "AppTheme.PopMe">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
 </resources>

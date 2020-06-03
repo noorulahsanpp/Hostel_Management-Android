@@ -3,6 +3,7 @@ package com.example.hostelapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -92,6 +93,14 @@ public class UserRegistration extends AppCompatActivity {
 
             }
         });
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),Verification.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void initWidgets(){
@@ -103,6 +112,8 @@ public class UserRegistration extends AppCompatActivity {
         mPhone = findViewById(R.id.phone);
         loginBtn = findViewById(R.id.textView);
     }
+
+
 
     private boolean checkInputs(String email, String password, String phone, String admissionnumber)
     {

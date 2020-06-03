@@ -9,11 +9,11 @@
         android:left = "-4dp">
         <shape
             android:shape = "rectangle">
-        <stroke
+        <!--stroke
             android:width="3dp"
-            android:color="@color/grey"></stroke>
+            android:color=""></stroke-->
         <solid
-            android:color = "@color/maroon"></solid>
+            android:color = "@color/tabs"></solid>
 
         </shape>
     </item>

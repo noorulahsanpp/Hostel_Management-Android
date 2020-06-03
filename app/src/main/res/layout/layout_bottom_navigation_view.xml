@@ -14,7 +14,7 @@
             android:background="@drawable/maroon_grey_border_top"
             app:menu="@menu/bottom_navigation_menu"
             app:itemIconSize="30dp"
-            app:itemIconTint="#FFF"/>
+            app:itemIconTint="@color/headings"/>
 
 
     </RelativeLayout>

@@ -7,29 +7,41 @@
     tools:context=".Verification">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_style">
 
         <EditText
             android:id="@+id/editText5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:hint="Enter Registration no."
+
+            android:background="@drawable/textbox"
+            android:theme="@style/EditText"
+
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button15"
             android:layout_width="wrap_content"
-            android:layout_marginTop="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="25dp"
+            android:background="@color/tabs"
+            android:textColor="@color/headings"
             android:text="Button" />
 
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="150dp"
+            android:background="@color/tabs"
+            android:textColor="@color/headings"
             android:text="LOGIN" />
     </RelativeLayout>
 

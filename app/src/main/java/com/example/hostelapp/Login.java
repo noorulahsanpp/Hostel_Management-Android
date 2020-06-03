@@ -2,6 +2,7 @@ package com.example.hostelapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
@@ -42,7 +43,7 @@ public class Login extends AppCompatActivity {
 
 
     private TextView signUpTv;
-    private Button loginbtn;
+    private CardView loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
     private String userID,admissionNumber, loginAdmission, loginHostel;
@@ -71,7 +72,7 @@ public class Login extends AppCompatActivity {
 
         signUpTv = findViewById(R.id.signupTv);
         //setupBottomNavigationView();
-        loginbtn = (Button)findViewById(R.id.button);
+        loginbtn = (CardView) findViewById(R.id.button);
         emailEt = (EditText)findViewById(R.id.editText1);
         passwordEt = (EditText)findViewById(R.id.editText2);
 

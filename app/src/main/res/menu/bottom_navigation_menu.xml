@@ -5,15 +5,18 @@
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_action_home"
         android:title=""
+        android:iconTint="@color/headings"
         android:visible="true" />
     <item
         android:id="@+id/ic_notification"
         android:icon="@drawable/ic_action_notification"
+        android:iconTint="@color/headings"
         android:title=""
         android:visible="true" />
     <item
         android:id="@+id/ic_profile"
         android:icon="@drawable/ic_action_profile"
         android:title=""
+        android:iconTint="@color/headings"
         android:visible="true" />
 </menu>
