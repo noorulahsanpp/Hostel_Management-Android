@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity {
 
 
     private TextView signUpTv;
-    private CardView loginbtn;
+    private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
     private String userID,admissionNumber, loginAdmission, loginHostel;
@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
 
         signUpTv = findViewById(R.id.signupTv);
         //setupBottomNavigationView();
-        loginbtn = (CardView) findViewById(R.id.button);
+        loginbtn = (Button) findViewById(R.id.button);
         emailEt = (EditText)findViewById(R.id.editText1);
         passwordEt = (EditText)findViewById(R.id.editText2);
 

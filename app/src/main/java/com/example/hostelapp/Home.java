@@ -206,10 +206,4 @@ public class Home extends AppCompatActivity {
        menuItem.setChecked(true);
 
     }
-
-
-
-
-
-
 }
