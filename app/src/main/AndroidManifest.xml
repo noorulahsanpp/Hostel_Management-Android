@@ -16,8 +16,10 @@
             android:theme="@style/AppTheme.PopMe"/>
         <activity android:name=".Profile"/>
 
-        <activity android:name=".Sick" />
-        <activity android:name=".Messout" />
+        <activity android:name=".Sick"
+            android:theme="@style/AppTheme.PopMe"/>
+        <activity android:name=".Messout"
+            android:theme="@style/AppTheme.PopMe"/>
         <activity android:name=".Fees" />
         <activity android:name=".Attendance" />
         <activity android:name=".Notification" />

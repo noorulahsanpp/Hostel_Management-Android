@@ -4,25 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightsilver"
     tools:context=".Messout">
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/silver_style">
 
 
         <RelativeLayout
             android:id="@+id/relLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/relLayout1"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="200dp"
-            android:background="@color/lightsilver">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/textbox"
+            android:backgroundTint="@color/lightsilver">
+
             <include layout="@layout/layout_center_viewpage" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Messout"
+                android:textColor="@color/maroon"
+                android:textSize="40sp" />
 
 
             <TextView
@@ -30,16 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="170dp"
-                android:text="Total Number Of Days"
+                android:layout_marginTop="240dp"
+                android:text="Total Number Of Days  "
                 android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/edittext13"
                 android:layout_width="138dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="200dp"
-                android:layout_marginTop="155dp"
+                android:layout_toRightOf="@+id/textView12"
+                android:layout_marginTop="225dp"
                 android:text=""
                 android:theme="@style/EditText" />
 
@@ -48,53 +54,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="230dp"
+                android:layout_marginTop="300dp"
                 android:background="@drawable/button_style"
                 android:text="OK"
                 android:theme="@style/Button" />
 
-            <EditText
+            <TextView
                 android:id="@+id/button10"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:inputType="date"
-                android:theme="@style/EditText"
+                android:layout_marginTop="100dp"
                 android:background="@drawable/textbox"
-                android:hint="From"
                 android:drawableRight="@drawable/ic_action_calender"
-                android:text="" />
+               android:drawableTint="@color/background"
+                android:hint="From"
+                android:inputType="none"
+                android:text=""
+                android:theme="@style/EditText" />
 
-            <EditText
+            <TextView
                 android:id="@+id/button11"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:inputType="date"
-                android:theme="@style/EditText"
+                android:layout_marginTop="170dp"
                 android:background="@drawable/textbox"
-                android:hint="To"
+                android:drawableTint="@color/background"
                 android:drawableRight="@drawable/ic_action_calender"
-                android:text="" />
+                android:hint="To"
+                android:inputType="none"
+                android:text=""
+                android:theme="@style/EditText" />
+
+            <include layout="@layout/layout_bottom_navigation_view" />
 
 
         </RelativeLayout>
 
 
-        <include layout="@layout/layout_bottom_navigation_view" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="189dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="100dp"
-            android:text="Messout"
-            android:textColor="@color/maroon"
-            android:textSize="40sp" />
-
-
-    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

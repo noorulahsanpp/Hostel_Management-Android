@@ -4,8 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +24,7 @@ import java.util.Date;
 
 public class Messout extends AppCompatActivity {
 
-    private EditText Frmbtn, Tobtn;
+    private TextView Frmbtn, Tobtn;
     private Button Okbtn;
     private EditText txtfrm, txtTo , days;
    // private TextView days;
@@ -30,16 +36,36 @@ public class Messout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_messout);
-        Frmbtn = (EditText) findViewById(R.id.button10);
-        Tobtn = (EditText) findViewById(R.id.button11);
+        Frmbtn = (TextView) findViewById(R.id.button10);
+        Tobtn = (TextView) findViewById(R.id.button11);
         Okbtn = (Button) findViewById(R.id.button3);
         //txtfrm = (EditText) findViewById(R.id.edittext14);
         //txtTo = (EditText) findViewById(R.id.edittext15);
         days = (EditText) findViewById(R.id.edittext13);
 
-            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+
+       /*  pop up
+       DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int)(width*.9),(int)(height*.5));
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.gravity= Gravity.CENTER;
+        params.x=0;
+        params.y=-20;
+        getWindow().setAttributes(params);*/
+
+
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
 
 
         Frmbtn.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +80,7 @@ public class Messout extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        txtfrm.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                        Frmbtn.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                         fromDate = dayOfMonth + " " + (month + 1) + " " + year;
                         try {
                             dateObj1 = simpleDateFormat.parse(fromDate);
@@ -83,7 +109,7 @@ public class Messout extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        txtTo.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                        Tobtn.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                         toDate = dayOfMonth + " " + (month + 1) + " " + year;
                         System.out.println("ToDate : "+toDate);
                         try {

@@ -3,9 +3,15 @@ package com.example.hostelapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,6 +38,8 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_sick);
 
         spinner = (Spinner)findViewById(R.id.spinner);
@@ -42,11 +50,13 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         breakfast=(RadioButton)findViewById(R.id.radioButton);
         lunch=(RadioButton)findViewById(R.id.radioButton1);
         dinner=(RadioButton)findViewById(R.id.radioButton2);
-        setupBottomNavigationView();
+       // setupBottomNavigationView();
 
         breakfast.setVisibility(View.INVISIBLE);
         lunch.setVisibility(View.INVISIBLE);
         dinner.setVisibility(View.INVISIBLE);
+        radiogroup.setVisibility(View.INVISIBLE);
+
 
         spinner.setOnItemSelectedListener(this);
         List<String> categories = new ArrayList<>();
@@ -57,6 +67,24 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+
+        /*pop up
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int)(width*.9),(int)(height*.5));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.gravity= Gravity.CENTER;
+        params.x=0;
+        params.y=-20;
+        getWindow().setAttributes(params);*/
+
+
         button14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +93,13 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         });
     }
 
-    private void setupBottomNavigationView() {
+    //private void setupBottomNavigationView() {
 
         //  Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(Sick.this, bottomNavigationView);
-    }
+      //  BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+      //  BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
+      //  BottomNavigationViewHelper.enableNavigation(Sick.this, bottomNavigationView);
+    //}
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -83,6 +111,7 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         breakfast.setVisibility(View.VISIBLE);
         lunch.setVisibility(View.VISIBLE);
         dinner.setVisibility(View.VISIBLE);
+        radiogroup.setVisibility(View.VISIBLE);
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
