@@ -251,4 +251,7 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+/google-services.json
+.google-services.json
+
 # End of https://www.gitignore.io/api/android,windows,firebase,androidstudio
