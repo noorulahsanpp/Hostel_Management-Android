@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -29,11 +30,10 @@ import java.util.Date;
 public class Menu extends AppCompatActivity {
 
 
-    Button back;
           TextView breakfast;
           TextView lunch;
           TextView snacks;
-          TextView dinner,date;
+          TextView dinner;
 
     private Date dateObj1;
     private String currentdate;
@@ -45,19 +45,21 @@ public class Menu extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+            getSupportActionBar().hide();
             setContentView(R.layout.activity_menu);
 
                breakfast = (TextView)findViewById(R.id.txtbreakfast);
                lunch = (TextView)findViewById(R.id.txtlunch);
                 snacks = (TextView)findViewById(R.id.txtevening);
                  dinner = (TextView)findViewById(R.id.txtdinner);
-                back = (Button)findViewById(R.id.btnback);
-                date = (TextView)findViewById(R.id.date);
+
+
 
 
             final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String currentDateandTime = simpleDateFormat.format(new Date());
-            date.setText(currentDateandTime);
+
 
 
 
@@ -85,15 +87,6 @@ public class Menu extends AppCompatActivity {
       });
 
 
-
-
-            back.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              startActivity(new Intent(Menu.this, Home.class));
-
-                                                             }
-               });
         }
     }
 

@@ -52,10 +52,10 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         dinner=(RadioButton)findViewById(R.id.radioButton2);
        // setupBottomNavigationView();
 
-        breakfast.setVisibility(View.INVISIBLE);
-        lunch.setVisibility(View.INVISIBLE);
-        dinner.setVisibility(View.INVISIBLE);
-        radiogroup.setVisibility(View.INVISIBLE);
+        breakfast.setEnabled(false);
+       lunch.setEnabled(false);
+        dinner.setEnabled(false);
+
 
 
         spinner.setOnItemSelectedListener(this);
@@ -106,26 +106,33 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         String item = parent.getItemAtPosition(position).toString();
         Toast.makeText(getBaseContext(),item+" selected",Toast.LENGTH_LONG).show();
 
-    if (item == "Custom")
-    {
-        breakfast.setVisibility(View.VISIBLE);
-        lunch.setVisibility(View.VISIBLE);
-        dinner.setVisibility(View.VISIBLE);
-        radiogroup.setVisibility(View.VISIBLE);
+    if (item == "Custom") {
+        breakfast.setEnabled(true);
+        lunch.setEnabled(true);
+        dinner.setEnabled(true);
+
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 int selectedId = radiogroup.getCheckedRadioButtonId();
-                RadioButton option = (RadioButton)radiogroup.findViewById(selectedId);
+                RadioButton option = (RadioButton) radiogroup.findViewById(selectedId);
 
-               Toast.makeText(Sick.this,option.getText(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sick.this, option.getText(), Toast.LENGTH_SHORT).show();
             }
 
 
         });
-      
     }
+        else
+        {
+
+            breakfast.setEnabled(false);
+            lunch.setEnabled(false);
+            dinner.setEnabled(false);
+        }
+      
+
 
 
     

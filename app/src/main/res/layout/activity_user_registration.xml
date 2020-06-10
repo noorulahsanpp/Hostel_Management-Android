@@ -7,7 +7,7 @@
     tools:context=".UserRegistration">
 
     <RelativeLayout
-        android:layout_width="445dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/silver_style">
 
@@ -16,11 +16,11 @@
             android:id="@+id/reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
             android:layout_weight="1"
             android:fontFamily="@font/adamina"
-            android:text="Registration"
+            android:text="REGISTRATION"
             android:textColor="@color/tabs"
             android:textSize="30dp"
             android:textStyle="bold" />
@@ -32,11 +32,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="185dp"
             android:background="@drawable/textbox"
+            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_action_profile"
-            android:theme="@style/EditText"
             android:hint="Enter your name"
             android:inputType="textPersonName"
-             />
+            android:theme="@style/EditText" />
 
         <EditText
             android:id="@+id/password"
@@ -45,11 +45,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="250dp"
             android:background="@drawable/textbox"
+            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_action_lock"
-            android:theme="@style/EditText"
             android:hint="Password"
             android:inputType="textPassword"
-             />
+            android:theme="@style/EditText" />
 
         <EditText
             android:id="@+id/email"
@@ -59,11 +59,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="320dp"
             android:background="@drawable/textbox"
+            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_action_email"
-            android:theme="@style/EditText"
             android:hint="Email Id"
             android:inputType="textPersonName"
-            />
+            android:theme="@style/EditText" />
 
         <EditText
             android:id="@+id/phone"
@@ -72,25 +72,23 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="390dp"
             android:background="@drawable/textbox"
+            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_action_phone"
-            android:theme="@style/EditText"
             android:hint="Phone Number"
             android:inputType="number"
-            />
+            android:theme="@style/EditText" />
 
 
-
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_below="@+id/phone"
-                    android:theme="@style/Button"
-                    android:text="SIGNUP"
-                    android:background="@drawable/button_style"
-                    android:layout_marginTop="50dp"
-                     />
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_style"
+            android:text="SIGNUP"
+            android:theme="@style/Button" />
 
 
         <TextView
@@ -99,7 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="560dp"
-            android:text="Already Registered?Click here"
+            android:text="Already Registered? Click here"
+            android:textSize="18sp"
             android:textColor="@color/blue" />
 
 

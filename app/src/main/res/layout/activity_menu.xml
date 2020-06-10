@@ -18,6 +18,50 @@
             <include layout="@layout/layout_top_tabs"/>
 
         </RelativeLayout-->
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="185dp"
+            android:layout_marginLeft="180dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="20dp"
+                android:text=":"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:text=":"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text=":"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="140dp"
+                android:text=":"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="180dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text=":"/>
+
+        </RelativeLayout>
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,13 +76,14 @@
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="279dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
             android:textColor="@color/tabs"
             android:textStyle="bold"
-            android:text="Today's Special"
+            android:text="Today's Menu"
+            android:theme="@style/TextView"
             android:textSize="36sp"
             tools:layout_editor_absoluteX="172dp"
             tools:layout_editor_absoluteY="38dp" />
@@ -49,17 +94,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="200dp"
-            android:textColor="#000000"
-            android:text="Breakfast" />
+            android:theme="@style/TextView"
+            android:text="Breakfast " />
 
         <TextView
             android:id="@+id/txtbreakfast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="200dp"
             android:textColor="#000000"
-            android:text="..." />
+             />
 
         <TextView
             android:id="@+id/lunch"
@@ -67,17 +112,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="250dp"
-            android:textColor="#000000"
-            android:text="Lunch" />
+            android:theme="@style/TextView"
+            android:text="Lunch " />
 
         <TextView
             android:id="@+id/txtlunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="250dp"
             android:textColor="#000000"
-            android:text="..." />
+             />
 
         <TextView
             android:id="@+id/evening"
@@ -85,17 +130,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="300dp"
-            android:textColor="#000000"
-            android:text="Evening Snacks" />
+            android:theme="@style/TextView"
+            android:text="Snacks " />
 
         <TextView
             android:id="@+id/txtevening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="300dp"
             android:textColor="#000000"
-            android:text="..." />
+             />
 
         <TextView
             android:id="@+id/dinner"
@@ -103,38 +148,27 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="350dp"
-            android:textColor="#000000"
+            android:theme="@style/TextView"
             android:text="Dinner" />
 
         <TextView
             android:id="@+id/txtdinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="350dp"
             android:textColor="#000000"
-            android:text="..." />
+             />
 
 
-        <TextView
+        <!--TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"/>
-
-
-
-                <Button
-                    android:id="@+id/btnback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Back"
-                    android:theme="@style/Button"
-                    android:background="@drawable/button_style"
-                    android:layout_marginTop="450dp"
-                     />
+            android:textStyle="bold"
+            android:textColor="@color/tabs"
+            android:layout_marginLeft="10dp"/-->
 
 
     </RelativeLayout>
