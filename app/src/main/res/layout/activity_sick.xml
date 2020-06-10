@@ -7,84 +7,94 @@
     android:layout_height="match_parent"
     android:background="@color/lightsilver"
     tools:context=".Sick">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="90dp"
+        android:theme="@style/TextView"
+        android:text="Sick"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/tabs" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:background="@color/lightsilver">
 
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Sick"
-            android:textSize="40sp"
-            android:textColor="@color/maroon"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="58dp" />
-
         <RadioGroup
             android:id="@+id/groupradio"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_width="294dp"
+            android:layout_height="131dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="80dp"
             android:background="@android:color/transparent">
 
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="124dp"
                 android:layout_height="30dp"
+                android:text="Breakfast"
                 android:textColor="@color/maroon"
-                android:text="Breakfast" />
+                android:textSize="15sp"
+                android:theme="@style/TextView" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="153dp"
                 android:layout_height="wrap_content"
+                android:text="Lunch"
                 android:textColor="@color/maroon"
-                android:text="Lunch" />
+                android:textSize="15sp"
+                android:theme="@style/TextView" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
-                android:layout_width="91dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:text="Dinner"
                 android:textColor="@color/maroon"
-                android:text="Dinner" />
+                android:textSize="15sp"
+                android:theme="@style/TextView" />
         </RadioGroup>
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="190dp"
             android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/textView10"
-            android:layout_marginTop="100dp"
+            android:background="@drawable/spinner_style"
+            android:gravity="center_horizontal"
             android:hint="select"
             android:spinnerMode="dropdown"
-            android:background="@drawable/spinner_style"
-            />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:textColor="@color/maroon"
-            android:layout_marginTop="100dp"
-            android:text="Select    " />
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="20dp"
+            android:text="Select    "
+            android:theme="@style/TextView" />
 
         <Button
             android:id="@+id/button14"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="290dp"
-            android:background="@color/maroon"
+            android:layout_marginTop="240dp"
+            android:background="@drawable/button_style"
+            android:text="OK"
             android:textColor="#FFFF"
-            android:text="OK" />
+            android:theme="@style/Button" />
+
         <include layout="@layout/layout_bottom_navigation_view" />
 
     </RelativeLayout>

@@ -3,10 +3,12 @@ package com.example.hostelapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -16,11 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import Utils.FirebaseMethods;
 
 public class Messout extends AppCompatActivity {
 
@@ -30,7 +42,16 @@ public class Messout extends AppCompatActivity {
    // private TextView days;
     private int mYear, mMonth, mDay;
     private Date dateObj1, dateObj2;
-    private String fromDate, toDate;
+    private String fromDate;
+    private String toDate;
+    private int month1,month2;
+
+
+    private Context mContext;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private DocumentReference documentReference;
+    private FirebaseMethods firebaseMethods;
 
 
     @Override
@@ -39,12 +60,17 @@ public class Messout extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide();
         setContentView(R.layout.activity_messout);
-        Frmbtn = (TextView) findViewById(R.id.button10);
-        Tobtn = (TextView) findViewById(R.id.button11);
+        Frmbtn = (TextView) findViewById(R.id.txtfrom);
+        Tobtn = (TextView) findViewById(R.id.txtto);
         Okbtn = (Button) findViewById(R.id.button3);
         //txtfrm = (EditText) findViewById(R.id.edittext14);
         //txtTo = (EditText) findViewById(R.id.edittext15);
         days = (EditText) findViewById(R.id.edittext13);
+
+
+        mContext = Messout.this;
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseMethods = new FirebaseMethods(mContext);
 
 
        /*  pop up
@@ -76,12 +102,16 @@ public class Messout extends AppCompatActivity {
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog =  new DatePickerDialog(Messout.this,new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        Frmbtn.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+
+
+                final DatePickerDialog datePickerDialog =  new DatePickerDialog(Messout.this,new DatePickerDialog.OnDateSetListener() {
+
+                  @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    Frmbtn.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                         fromDate = dayOfMonth + " " + (month + 1) + " " + year;
+                        month1 = month;
                         try {
                             dateObj1 = simpleDateFormat.parse(fromDate);
                         }
@@ -91,8 +121,8 @@ public class Messout extends AppCompatActivity {
 
                     }
                 }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+               datePickerDialog.show();
             }
         });
 
@@ -103,7 +133,7 @@ public class Messout extends AppCompatActivity {
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
+                mDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog datePickerDialog =  new DatePickerDialog(Messout.this,new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -111,19 +141,40 @@ public class Messout extends AppCompatActivity {
 
                         Tobtn.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                         toDate = dayOfMonth + " " + (month + 1) + " " + year;
+                        month2= month;
                         System.out.println("ToDate : "+toDate);
-                        try {
+                        if(month1==month2)
+                        {                        try {
+
                             dateObj2 = simpleDateFormat.parse(toDate);
                             long diff = dateObj2.getTime()-dateObj1.getTime();
                             int dateDiff = (int) (diff / (24 * 60 * 60 * 1000));
-                            days.setText(" "+dateDiff);
+                            if (dateDiff > 15) {
+                                Toast.makeText(getBaseContext(), " cannot select more than 15 days", Toast.LENGTH_LONG).show();
+                                days.setText("");
+                                Tobtn.setText("");
+                            }
+                            else {
+                                days.setText(" " + dateDiff);
+                            }
                         }
+
                         catch (ParseException e) {
                             e.printStackTrace();
+                        }}
+                        else{
+                            Toast.makeText(getBaseContext(), "Select current month", Toast.LENGTH_LONG).show();
+                            days.setText("");
+                            Tobtn.setText("");
+
+
                         }
+
 
                     }
                 }, mYear, mMonth, mDay);
+
+                datePickerDialog.getDatePicker().setMinDate(dateObj1.getTime());
                 datePickerDialog.show();
 
             }
@@ -136,7 +187,24 @@ public class Messout extends AppCompatActivity {
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Messout.this, Home.class));
+
+                String from = Frmbtn.getText().toString();
+                String to = Tobtn.getText().toString();
+                String ndays = days.getText().toString();
+
+                if (ndays.matches("")) {
+                    Toast.makeText(getBaseContext(), "Select valid date", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    documentReference = firebaseFirestore.collection("inmates").document("LH").collection("users").document("LH002").collection("messout").document("june");
+                    Map<String, Object> messout = new HashMap<>();
+                    messout.put("from", from);
+                    messout.put("to", to);
+                    messout.put("days", ndays);
+                    documentReference.set(messout);
+                    startActivity(new Intent(Messout.this, Home.class));
+                }
             }
         });
     }
