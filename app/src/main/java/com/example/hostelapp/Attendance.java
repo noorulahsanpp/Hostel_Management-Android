@@ -73,16 +73,14 @@ public class Attendance extends AppCompatActivity {
         present = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         documentReference = firebaseFirestore.collection("inmates").document("LH").collection("users").document("LH002").collection("messout").document("june").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-
-            @SuppressLint("ResourceType")
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if(document.exists()) {
+                if(task.isSuccessful()) {
+
+                        DocumentSnapshot document = task.getResult();
+
                         Date from = document.getDate("from");
-                       Date to = document.getDate("to");
+                        Date to = document.getDate("to");
 
                         Calendar cal1 = Calendar.getInstance();
                         cal1.setTime(from);
@@ -94,28 +92,25 @@ public class Attendance extends AppCompatActivity {
 
                         while(!cal1.after(cal2))
                         {
-                          //  int solidColor = calendarView.getSolidColor(R.id.tabs);
+                            //  int solidColor = calendarView.getSolidColor(R.id.tabs);
                             cal1.add(Calendar.DATE,1);
-                   absent = absent+1;
-                   }
-                       absnt.setText(" "+absent);
+                            absent = absent+1;
+                        }
+                        absnt.setText(" "+absent);
                         int p = present - absent;
                         prsnt.setText(" "+p);
+                 }
 
-                            }
-
-
-
-        }
 
                 }
 
-            });
+                    });
+                }
 }
 
 
 
-        }
+
 
 
 

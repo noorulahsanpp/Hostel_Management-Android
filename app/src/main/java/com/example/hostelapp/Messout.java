@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -144,11 +145,12 @@ public class Messout extends AppCompatActivity {
                         month2= month;
                         System.out.println("ToDate : "+toDate);
                         if(month1==month2)
-                        {                        try {
+                        {
+                            try {
 
                             dateObj2 = simpleDateFormat.parse(toDate);
                             long diff = dateObj2.getTime()-dateObj1.getTime();
-                            int dateDiff = (int) (diff / (24 * 60 * 60 * 1000));
+                            int dateDiff = ((int) (diff / (24 * 60 * 60 * 1000)))+1;
                             if (dateDiff > 15) {
                                 Toast.makeText(getBaseContext(), " cannot select more than 15 days", Toast.LENGTH_LONG).show();
                                 days.setText("");
@@ -180,16 +182,12 @@ public class Messout extends AppCompatActivity {
             }
         });
 
-
-
-
-
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String from = Frmbtn.getText().toString();
-                String to = Tobtn.getText().toString();
+                Date from = dateObj1;
+                Date to = dateObj2;
                 String ndays = days.getText().toString();
 
                 if (ndays.matches("")) {
