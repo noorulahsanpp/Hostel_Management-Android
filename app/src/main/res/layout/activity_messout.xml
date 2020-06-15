@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:layout_marginLeft="60dp"
-                android:text="From  "
+                android:text="From "
                 android:textStyle="bold"
                 android:theme="@style/TextView"/>
             <TextView
@@ -78,21 +78,23 @@
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:layout_toRightOf="@id/from"
+                android:textSize="10sp"
                 android:layout_marginTop="100dp"
+                android:clickable="true"
                 android:background="@drawable/textbox"
                 android:textAlignment="center"
                 android:drawableRight="@drawable/ic_action_calender"
                android:drawableTint="@color/tabs"
                 android:inputType="none"
-                android:theme="@style/EditText"
+                android:theme="@style/TextView"
                 android:gravity="center_horizontal" />
             <TextView
                 android:id="@+id/to"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="170dp"
                 android:layout_marginLeft="60dp"
-                android:text="To    "
+                android:text="To      "
                 android:textStyle="bold"
                 android:theme="@style/TextView"/>
 
@@ -103,14 +105,16 @@
                 android:layout_toRightOf="@+id/to"
                 android:layout_marginTop="170dp"
                 android:textAlignment="center"
+                android:textSize="10sp"
+                android:clickable="true"
                 android:background="@drawable/textbox"
                 android:drawableTint="@color/tabs"
                 android:drawableRight="@drawable/ic_action_calender"
                 android:inputType="none"
-                android:theme="@style/EditText"
+                android:theme="@style/TextView"
                 android:gravity="center_horizontal" />
 
-            <include layout="@layout/layout_bottom_navigation_view" />
+            <!--include layout="@layout/layout_bottom_navigation_view" /-->
 
 
         </RelativeLayout>
