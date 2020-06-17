@@ -1,10 +1,12 @@
 package com.example.hostelapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,19 +15,28 @@ import android.widget.TextView;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Utils.FirebaseMethods;
@@ -47,6 +58,8 @@ public class Messout extends AppCompatActivity {
     private DocumentReference documentReference;
     private FirebaseMethods firebaseMethods;
     final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+    ArrayList<Timestamp> mark = new ArrayList<>();
+    int flag = 0;
 
 
     @Override
@@ -153,7 +166,6 @@ public class Messout extends AppCompatActivity {
                         days.setText("");
                         txtTo.setText("");
 
-
                     }
 
 
@@ -196,11 +208,43 @@ public class Messout extends AppCompatActivity {
         System.out.print("Date does not exist");
         for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
             messout.put("date", new Timestamp(date));
-            messout.put("absents", FieldValue.arrayUnion("LH001"));
+            messout.put("absents", FieldValue.arrayUnion("LH002"));
             messout.put("total_absentees", FieldValue.increment(1));
             documentReference.collection("attendance").document(date + "").set(messout, SetOptions.merge());
         }
     }
+
+    public boolean test(Calendar start, Calendar end){
+        for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+            mark.add(new Timestamp(date));
+        }
+       CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+        Query query = collectionReference.whereArrayContains("absents", "LH001").whereIn("date", mark);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots.isEmpty()){
+                    Log.d(TAG, "////////////////////////////No Data");
+                    flag =1;
+                }
+                else{
+                }
+//                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+//                    String id = documentSnapshot.getId();
+//                    Date date = documentSnapshot.getDate("date");
+//                    List<Type> types = documentSnapshot
+//
+//                }
+            }
+        });
+        if (flag == 1)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
 }
 
 
