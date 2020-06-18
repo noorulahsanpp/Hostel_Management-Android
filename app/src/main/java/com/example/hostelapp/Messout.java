@@ -3,8 +3,11 @@ package com.example.hostelapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,8 +59,9 @@ public class Messout extends AppCompatActivity {
     private FirebaseMethods firebaseMethods;
     final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
     private CollectionReference collectionReference;
-    int flag = 0;
-    ArrayList<Date> dd;
+    private int flag = 0;
+    private ArrayList<Date> dd;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,7 @@ public class Messout extends AppCompatActivity {
 
         collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
         dd = new ArrayList<>();
+        builder = new AlertDialog.Builder(this);
         getData();
 
         txtFrm.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +93,6 @@ public class Messout extends AppCompatActivity {
                 setFromDate();
             }
         });
-
 
         txtTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +104,20 @@ public class Messout extends AppCompatActivity {
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMessout();
+                builder.setMessage("Do you want to mark messout?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setMessout();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setTitle("Messout");
+                alertDialog.show();
             }
         });
     }
@@ -174,11 +191,11 @@ public class Messout extends AppCompatActivity {
 
             datePickerDialog.getDatePicker().setMinDate(dateObj1.getTime());
             datePickerDialog.show();
-
         }
     }
 
     public void setMessout(){
+
         String ndays = days.getText().toString();
         if (ndays.matches("")) {
             Toast.makeText(getBaseContext(), "Select valid date", Toast.LENGTH_LONG).show();
@@ -205,7 +222,6 @@ public class Messout extends AppCompatActivity {
             {
                 saveData();
             }
-
         }
     }
 
@@ -216,8 +232,6 @@ public class Messout extends AppCompatActivity {
                 break;
             }
         }
-
-
     }
     public void saveData(){
         Date startDate = new Date();
@@ -238,8 +252,9 @@ public class Messout extends AppCompatActivity {
             messout.put("absents", FieldValue.arrayUnion("LH002"));
             messout.put("total_absentees", FieldValue.increment(1));
             collectionReference.document(date + "").set(messout, SetOptions.merge());
-
         }
+        Toast.makeText(getBaseContext(), " Messout successfully marked", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(Messout.this, Home.class));
         getData();
     }
 
