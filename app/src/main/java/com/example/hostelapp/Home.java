@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,7 +56,7 @@ public class Home extends AppCompatActivity {
     private StorageReference storageReference;
     private CardView fees,sick,attendance,messout,menu;
 
-    ViewFlipper viewFlipper;
+    private ViewFlipper viewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +69,17 @@ public class Home extends AppCompatActivity {
         int[] images =new int[]{R.drawable.download, R.drawable.images,R.drawable.mh};
 
         viewFlipper = findViewById(R.id.viewflipper);
-        for (int i = 0; i < images.length; i++) {
+        viewFlipper.setFlipInterval(2000);
+        viewFlipper.startFlipping();
+        viewFlipper.setAutoStart(true);
+        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        viewFlipper.setInAnimation(in);
 
+        for (int i = 0; i < images.length; i++) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(images[i]);
             viewFlipper.addView(imageView);
         }
-
-        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-        // Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
-
-        viewFlipper.setInAnimation(in);
-        //  viewFlipper.setOutAnimation(out);
-
-        viewFlipper.setFlipInterval(4000);
-
-        viewFlipper.setAutoStart(true);
         initWidgets();
 
      /*  mAuth = FirebaseAuth.getInstance();

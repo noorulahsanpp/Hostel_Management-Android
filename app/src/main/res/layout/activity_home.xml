@@ -32,13 +32,9 @@
             android:layout_height="250dp"
             android:layout_below="@+id/relLayout1"
             android:autoStart="true"
-            android:flipInterval="2000">
+            android:inAnimation="@android:anim/slide_in_left"
+            android:outAnimation="@android:anim/slide_out_right">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@+id/relLayout1" />
 
         </ViewFlipper>
 
