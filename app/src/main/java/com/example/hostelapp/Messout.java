@@ -3,8 +3,11 @@ package com.example.hostelapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,21 +19,23 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,12 +55,13 @@ public class Messout extends AppCompatActivity {
     private int month1,month2;
 
     private Context mContext;
-    private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private DocumentReference documentReference;
     private FirebaseMethods firebaseMethods;
     final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
-    int flag = 0;
+    private CollectionReference collectionReference;
+    private int flag = 0;
+    private ArrayList<Date> dd;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +74,18 @@ public class Messout extends AppCompatActivity {
         Okbtn = (Button) findViewById(R.id.button3);
         days = (EditText) findViewById(R.id.edittext13);
 
-
         mContext = Messout.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true).setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
+                .build();
+        firebaseFirestore.setFirestoreSettings(settings);
+
+        collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+        dd = new ArrayList<>();
+        builder = new AlertDialog.Builder(this);
+        getData();
 
         txtFrm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +93,6 @@ public class Messout extends AppCompatActivity {
                 setFromDate();
             }
         });
-
 
         txtTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,16 +104,29 @@ public class Messout extends AppCompatActivity {
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMessout();
+                builder.setMessage("Do you want to mark messout?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setMessout();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setTitle("Messout");
+                alertDialog.show();
             }
         });
     }
+
     public void setFromDate(){
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
         final DatePickerDialog datePickerDialog =  new DatePickerDialog(Messout.this,new DatePickerDialog.OnDateSetListener() {
 
@@ -159,21 +185,17 @@ public class Messout extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "Select current month", Toast.LENGTH_LONG).show();
                         days.setText("");
                         txtTo.setText("");
-
                     }
-
-
                 }
             }, mYear, mMonth, mDay);
 
             datePickerDialog.getDatePicker().setMinDate(dateObj1.getTime());
             datePickerDialog.show();
-
         }
-
     }
 
     public void setMessout(){
+
         String ndays = days.getText().toString();
         if (ndays.matches("")) {
             Toast.makeText(getBaseContext(), "Select valid date", Toast.LENGTH_LONG).show();
@@ -191,41 +213,59 @@ public class Messout extends AppCompatActivity {
             start.setTime(startDate);
             Calendar end = Calendar.getInstance();
             end.setTime(endDate);
-
             validate(start, end);
-            if(flag == 1){
-return;
+            if (flag == 1){
+                Toast.makeText(getBaseContext(), " Attendance already marked in this date", Toast.LENGTH_LONG).show();
+                flag = 0;
             }
-            else{
-                saveData(start, end);
+            else
+            {
+                saveData();
             }
-
         }
     }
 
-    public void saveData(@org.jetbrains.annotations.NotNull Calendar start, Calendar end){
-        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+    public void validate(@NotNull Calendar start, Calendar end){
+        for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+            if (dd.contains(date)){
+                flag = 1;
+                break;
+            }
+        }
+    }
+    public void saveData(){
+        Date startDate = new Date();
+        Date endDate = new Date();
+        try {
+            startDate = simpleDateFormat.parse(fromDate);
+            endDate = simpleDateFormat.parse(toDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar start = Calendar.getInstance();
+        start.setTime(startDate);
+        Calendar end = Calendar.getInstance();
+        end.setTime(endDate);
         Map<String, Object> messout = new HashMap<>();
-        System.out.print("Date does not exist");
         for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
             messout.put("date", date);
             messout.put("absents", FieldValue.arrayUnion("LH002"));
             messout.put("total_absentees", FieldValue.increment(1));
             collectionReference.document(date + "").set(messout, SetOptions.merge());
         }
+        Toast.makeText(getBaseContext(), " Messout successfully marked", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(Messout.this, Home.class));
+        getData();
     }
 
-    public void validate(@NotNull Calendar start, @NotNull Calendar end){
-        Date startDate = start.getTime();
-        Date endDate = end.getTime();
-        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-        Query query = collectionReference.whereArrayContains("absents", "LH002").whereGreaterThanOrEqualTo("date", startDate).whereLessThanOrEqualTo("date", endDate);
+    public void getData(){
+        Query query = collectionReference.whereArrayContains("absents", "LH002");
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        flag = 1;
+                        dd.add(document.getDate("date"));
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -233,8 +273,4 @@ return;
             }
         });
     }
-
 }
-
-
-
