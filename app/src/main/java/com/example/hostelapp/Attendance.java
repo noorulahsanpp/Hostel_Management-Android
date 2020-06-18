@@ -13,6 +13,7 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 import Utils.FirebaseMethods;
 
@@ -42,7 +41,6 @@ public class Attendance extends AppCompatActivity {
     private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private Task<DocumentSnapshot> documentReference;
     private FirebaseMethods firebaseMethods;
     private CalendarView calendarView;
     private  Date d1, d2;
@@ -103,7 +101,7 @@ public class Attendance extends AppCompatActivity {
 //
 //                    });
 
-        getAttendace();
+        tine();
 
     }
                 public void getAttendace(){
@@ -136,11 +134,45 @@ public class Attendance extends AppCompatActivity {
                     });
                 }
 
-                public void tine() throws ParseException {
-                    String string = "June 1, 2020";
-                    DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                    Date date = format.parse(string);
-                    System.out.println(date);
+                public void tine() {
+                    String fromDate = 1 + " " + 6 + " " + 2020;
+                    String toDate = 30 + " " + 6 + " " + 2020;
+                    Date startDate = new Date();
+                    Date endDate = new Date();
+                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+                    try {
+                        startDate = simpleDateFormat.parse(fromDate);
+                        endDate = simpleDateFormat.parse(toDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar start = Calendar.getInstance();
+                    start.setTime(startDate);
+                    Calendar end = Calendar.getInstance();
+                    end.setTime(endDate);
+                    Date date1 = start.getTime();
+                    Date date2 = end.getTime();
+
+                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+                    Query query = collectionReference.whereArrayContains("absents", "LH002").whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
+                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    count = count+1;
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                            absnt.setText(count+"");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "Error getting documents: ", e);
+                        }
+                    });
                 }
 }
 
