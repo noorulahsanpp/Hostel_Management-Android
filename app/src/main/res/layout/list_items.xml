@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/linearlayout1"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic"
+        android:textSize="17sp"
+         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginRight="150dp"
+        android:paddingTop="10sp"
+        android:drawableLeft="@drawable/ic_action_bulletin"
+        android:drawablePadding="5sp"
+            />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="270dp"
+        android:paddingTop="10sp"
+        android:paddingRight="5sp"
+        android:id="@+id/date"
+        android:textSize="15sp"/>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.borjabravo.readmoretextview.ReadMoreTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:textSize="15sp"
+        app:trimExpandedText="@string/read_less"
+        app:trimCollapsedText="@string/read_more"
+        app:trimMode="trimModeLength"
+        app:trimLength="70"
+        android:layout_marginLeft="20dp"
+        android:paddingTop="8sp"
+        android:paddingBottom="5sp"
+        app:colorClickableText="@color/tabs"
+        android:textStyle="normal"/>
+        <!--TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/attachment"
+            android:layout_below="@+id/description"
+            android:textSize="15sp"
+            android:layout_marginLeft="20dp"
+            android:drawableLeft="@drawable/ic_action_download"
+            android:padding="5sp"/-->
+    </RelativeLayout>
+
+
+
+</LinearLayout>
