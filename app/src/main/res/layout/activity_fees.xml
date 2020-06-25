@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/Messbill"
-            android:layout_width="190dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="50dp"
@@ -38,7 +38,7 @@
             tools:layout_editor_absoluteY="37dp" />
 
         <TextView
-            android:id="@+id/month"
+            android:id="@+id/txtmonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -48,11 +48,11 @@
             android:textSize="15sp" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/month"
             android:layout_width="120dp"
             android:layout_height="30dp"
-            android:layout_toRightOf="@+id/month"
-            android:layout_marginTop="145dp"
+            android:layout_toRightOf="@+id/txtmonth"
+            android:layout_marginTop="155dp"
             android:layout_marginLeft="20dp"
             android:spinnerMode="dropdown"
             android:background="@drawable/spinner_style"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/year"
-            android:layout_marginTop="145dp"
+            android:layout_marginTop="155dp"
 
             />
         <TextView
@@ -80,7 +80,7 @@
             android:textSize="15sp" />
         <TextView
             android:id="@+id/txtstatus"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/status"
@@ -93,7 +93,7 @@
             android:id="@+id/duedate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="200dp"
             android:layout_toRightOf="@+id/txtstatus"
             android:text="Due date"
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="20dp"
-
+                android:text="0"
                 android:theme="@style/TextView"
                 android:textSize="15sp" />
 
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="60dp"
-
+                android:text="0"
                 android:theme="@style/TextView"
                 android:textSize="15sp"/>
 
@@ -224,9 +224,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="100dp"
-
+                android:text="0"
                 android:theme="@style/TextView"
                 android:textSize="15sp" />
+
 
             <TextView
                 android:id="@+id/textView20"
@@ -243,10 +244,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
+                android:text="0"
                 android:layout_marginTop="140dp"
-
-                android:theme="@style/TextView"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:theme="@style/TextView" />
 
 
             <TextView
@@ -265,9 +266,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="180dp"
-
-                android:theme="@style/TextView"
-                android:textSize="15sp"/>
+                android:text="0"
+                android:textSize="15sp"
+                android:theme="@style/TextView" />
 
 
         </RelativeLayout>
@@ -275,14 +276,12 @@
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/spinner"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/month"
             android:layout_marginTop="150dp"
             android:text="Year"
             android:theme="@style/TextView"
             android:textSize="15sp" />
-
-
 
 
         <TextView
@@ -291,9 +290,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="230dp"
             android:layout_marginTop="480dp"
-
-            android:theme="@style/TextView"
-            android:textSize="15sp"/>
+            android:text="0"
+            android:textSize="15sp"
+            android:theme="@style/TextView" />
 
 
         <CheckBox
@@ -333,6 +332,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="230dp"
             android:layout_marginTop="530dp"
+            android:text="0"
             android:theme="@style/TextView"
             android:textSize="15sp"
            />
@@ -346,6 +346,9 @@
             android:background="@color/tabs"
             android:textColor="#FFFF"
             android:text="Pay Now" />
+
+
+
         <include layout="@layout/layout_bottom_navigation_view" />
 
     </RelativeLayout>
