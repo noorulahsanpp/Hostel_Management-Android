@@ -41,7 +41,6 @@ public class FirebaseMethods {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    FirebaseDatabase firebaseDatabase;
     private DocumentReference documentReference;
 
     private String userID, admission_number;

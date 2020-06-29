@@ -68,6 +68,22 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         spinner.setAdapter(adapter);
 
 
+        /*pop up
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int)(width*.9),(int)(height*.5));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.gravity= Gravity.CENTER;
+        params.x=0;
+        params.y=-20;
+        getWindow().setAttributes(params);*/
+
 
         button14.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +93,13 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         });
     }
 
+    //private void setupBottomNavigationView() {
 
+        //  Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
+      //  BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+      //  BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
+      //  BottomNavigationViewHelper.enableNavigation(Sick.this, bottomNavigationView);
+    //}
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
