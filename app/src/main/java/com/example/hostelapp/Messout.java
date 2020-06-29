@@ -19,7 +19,6 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
@@ -29,7 +28,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.Source;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,11 +75,6 @@ public class Messout extends AppCompatActivity {
         mContext = Messout.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true).setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
-
         collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
         dd = new ArrayList<>();
         builder = new AlertDialog.Builder(this);
@@ -104,7 +97,16 @@ public class Messout extends AppCompatActivity {
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                builder.setMessage("Do you want to mark messout?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                if (txtFrm.getText()==""||txtTo.getText()==""){
+                    toastMessage(" Invalid date.");
+                    return;
+                }
+                String from1;
+                String to1;
+                    from1 = new SimpleDateFormat("EEE, MMM d").format(dateObj1);
+                    to1 = new SimpleDateFormat("EEE, MMM d").format(dateObj2);
+
+                builder.setMessage("Do you want to mark messout from "+from1+" to "+to1+" ?" ).setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         setMessout();
@@ -150,7 +152,8 @@ public class Messout extends AppCompatActivity {
 
     public void setToDate(){
         if (txtFrm.getText() == " ") {
-            Toast.makeText(getBaseContext(), " Please select from date", Toast.LENGTH_LONG).show();
+            toastMessage(" Please select from date");
+            txtFrm.requestFocus();
         }
         else {
             final Calendar c = Calendar.getInstance();
@@ -172,7 +175,7 @@ public class Messout extends AppCompatActivity {
                             long diff = dateObj2.getTime() - dateObj1.getTime();
                             int dateDiff = ((int) (diff / (24 * 60 * 60 * 1000))) + 1;
                             if (dateDiff > 15) {
-                                Toast.makeText(getBaseContext(), " cannot select more than 15 days", Toast.LENGTH_LONG).show();
+                                toastMessage("cannot select more than 15 days");
                                 days.setText("");
                                 txtTo.setText("");
                             } else {
@@ -182,7 +185,7 @@ public class Messout extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     } else {
-                        Toast.makeText(getBaseContext(), "Select current month", Toast.LENGTH_LONG).show();
+                        toastMessage("Select current month");
                         days.setText("");
                         txtTo.setText("");
                     }
@@ -198,7 +201,7 @@ public class Messout extends AppCompatActivity {
 
         String ndays = days.getText().toString();
         if (ndays.matches("")) {
-            Toast.makeText(getBaseContext(), "Select valid date", Toast.LENGTH_LONG).show();
+            toastMessage("Select a valid date");
         }
         else {
             Date startDate = new Date();
@@ -215,7 +218,7 @@ public class Messout extends AppCompatActivity {
             end.setTime(endDate);
             validate(start, end);
             if (flag == 1){
-                Toast.makeText(getBaseContext(), " Attendance already marked in this date", Toast.LENGTH_LONG).show();
+                toastMessage(" Attendance already marked in this date");
                 flag = 0;
             }
             else
@@ -253,9 +256,9 @@ public class Messout extends AppCompatActivity {
             messout.put("total_absentees", FieldValue.increment(1));
             collectionReference.document(date + "").set(messout, SetOptions.merge());
         }
-        Toast.makeText(getBaseContext(), " Messout successfully marked", Toast.LENGTH_LONG).show();
+        toastMessage(" Messout successfully marked");
         startActivity(new Intent(Messout.this, Home.class));
-        getData();
+//        getData();
     }
 
     public void getData(){
@@ -272,5 +275,9 @@ public class Messout extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void toastMessage(String message){
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
     }
 }
