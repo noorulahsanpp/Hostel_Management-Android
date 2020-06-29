@@ -54,17 +54,17 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setupBottomNavigationView();
 
-     /*   mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
         // get access to the root folder of the storage
-
-
-        Intent intent = getIntent();
-        hostel = intent.getStringExtra("hostel");
-        admissionNumber = intent.getStringExtra("admission_number");*/
         storageReference = FirebaseStorage.getInstance().getReference();
+
+//        Intent intent = getIntent();
+//        hostel = intent.getStringExtra("hostel");
+//        admissionNumber = intent.getStringExtra("admission_number");
+
         StorageReference profileRef = storageReference.child("users/"+ mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -92,13 +92,15 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+     */
+
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(openGallery, 1000 );
             }
-        });*/
+        });
     }
 
 
@@ -113,9 +115,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
-
-
-  /*  @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -149,7 +149,7 @@ public class Profile extends AppCompatActivity {
                         Toast.makeText(Profile.this, "Try again", Toast.LENGTH_SHORT);
                     }
                 });
-    }*/
+    }
 
     private void setProfilePicture(Uri uri)
     {
