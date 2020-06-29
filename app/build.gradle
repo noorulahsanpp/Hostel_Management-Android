@@ -51,6 +51,8 @@ dependencies {
     implementation 'sun.bob:mcalendarview:1.0.0'
     implementation 'com.applandeo:material-calendar-view:1.4.0'
     implementation 'com.borjabravo:readmoretextview:2.0.1'
+    implementation 'com.prolificinteractive:material-calendarview:1.4.2'
+
 
 
 }

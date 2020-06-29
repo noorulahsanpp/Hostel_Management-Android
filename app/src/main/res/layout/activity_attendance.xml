@@ -9,29 +9,15 @@
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/relLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/relLayout1">
+        android:layout_height="match_parent"
+        >
 
 
-            <TextView
-                android:id="@+id/SelectMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="160dp"
-                android:theme="@style/TextView"/>
-
-        </RelativeLayout>
 
 
         <include layout="@layout/layout_bottom_navigation_view" />
 
-        <TextView
+        <!--TextView
             android:id="@+id/textView6"
             android:layout_width="251dp"
             android:layout_height="69dp"
@@ -40,7 +26,7 @@
             android:textColor="@color/tabs"
             android:textSize="40sp"
             android:layout_marginTop="30dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true" /-->
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -76,15 +62,20 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:clickable="false"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true" />
+        </RelativeLayout>
 
 
-
-    <CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_marginTop="150dp"
-        app:layout_anchor="@+id/relativeLayout3"
-        app:layout_anchorGravity="center"></CalendarView>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

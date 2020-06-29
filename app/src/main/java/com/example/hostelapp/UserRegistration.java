@@ -14,8 +14,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,12 @@ import com.google.firebase.firestore.WriteBatch;
 
 import org.w3c.dom.Document;
 
+import java.lang.reflect.Field;
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Utils.FirebaseMethods;
