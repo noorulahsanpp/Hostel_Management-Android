@@ -47,9 +47,7 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         button14=(Button)findViewById(R.id.button14);
         radiogroup=(RadioGroup)findViewById(R.id.groupradio);
         radiogroup.clearCheck(); // reset radio buttons
-        breakfast=(RadioButton)findViewById(R.id.radioButton);
-        lunch=(RadioButton)findViewById(R.id.radioButton1);
-        dinner=(RadioButton)findViewById(R.id.radioButton2);
+
        // setupBottomNavigationView();
 
         breakfast.setEnabled(false);

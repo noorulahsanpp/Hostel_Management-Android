@@ -79,36 +79,39 @@ public class Home extends AppCompatActivity {
       viewFlipper.setAutoStart(true);
        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
        viewFlipper.setInAnimation(in);
+   //     mAuth.signOut();
 
-
-   /*     documentReference = firebaseFirestore.collection("inmates").document("LH").collection("images").document("image").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+     /*  documentReference = firebaseFirestore.collection("inmates").document("LH").collection("images").document("image").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()){
-                        ImageView image = new ImageView(getApplicationContext());
-                        Picasso.get().load("image").into(image);
-                        viewFlipper.addView(image);
-                    }
+                    StringBuilder img= new StringBuilder("");
+                    img.append(document.getData());
+                    Picasso.get().load().into(imageView);
+
+
             }
 
             }
         });*/
-    //    for(int i = 0; i<images.length; i++) {
+  //     for(int i = 0; i<images.length; i++) {
+   //     ImageView image = new ImageView(getApplicationContext());
+    //       image.setImageResource(images[i]);
+      //  Picasso.get().load("image").into(image);
+      //  viewFlipper.addView(image);
 
-            //image.setImageResource(images[i]);
             //
             //
-//               }
+        //       }
 
-        storageReference = FirebaseStorage.getInstance().getReference();
+       storageReference = FirebaseStorage.getInstance().getReference();
 
         StorageReference imageRef = storageReference.child("LH/download.png");
         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                ImageView image = new ImageView(getApplicationContext());
+               ImageView image = new ImageView(getApplicationContext());
                 Picasso.get().load(uri).into(image);
                viewFlipper.addView(image);
 

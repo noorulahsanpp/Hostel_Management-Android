@@ -59,12 +59,12 @@ public class Profile extends AppCompatActivity {
         userID = mAuth.getCurrentUser().getUid();
 
         // get access to the root folder of the storage
-        storageReference = FirebaseStorage.getInstance().getReference();
+
 
         Intent intent = getIntent();
         hostel = intent.getStringExtra("hostel");
-        admissionNumber = intent.getStringExtra("admission_number");
-
+        admissionNumber = intent.getStringExtra("admission_number");*/
+        storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("users/"+ mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -72,7 +72,7 @@ public class Profile extends AppCompatActivity {
                 setProfilePicture(uri);
             }
         });
-*/
+
         profilePicture = findViewById(R.id.imageView);
         name = findViewById(R.id.editText);
         email = findViewById(R.id.editText3);
@@ -149,12 +149,12 @@ public class Profile extends AppCompatActivity {
                         Toast.makeText(Profile.this, "Try again", Toast.LENGTH_SHORT);
                     }
                 });
-    }
+    }*/
 
     private void setProfilePicture(Uri uri)
     {
         Picasso.get().load(uri).into(profilePicture);
-    }*/
+    }
 
 }
 
