@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,12 +45,13 @@ import Utils.FirebaseMethods;
 public class Messout extends AppCompatActivity {
 
     private static final String TAG = "Messout";
+    public static final String MyPREFERENCES = "MyPrefs";
     private TextView txtFrm, txtTo;
     private Button Okbtn;
     private EditText days;
     private int mYear, mMonth, mDay;
     private Date dateObj1, dateObj2;
-    private String fromDate, toDate;
+    private String fromDate, toDate, hostel, admissionNo;
     private int month1,month2;
 
     private Context mContext;
@@ -60,6 +62,7 @@ public class Messout extends AppCompatActivity {
     private int flag = 0;
     private ArrayList<Date> dd;
     private AlertDialog.Builder builder;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +70,16 @@ public class Messout extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide();
         setContentView(R.layout.activity_messout);
-       txtFrm = (TextView) findViewById(R.id.txtfrom);
-       txtTo = (TextView) findViewById(R.id.txtto);
-        Okbtn = (Button) findViewById(R.id.button3);
-        days = (EditText) findViewById(R.id.edittext13);
+
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+
+        initWidgets();
+        getSharedPreference();
 
         mContext = Messout.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-        collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+        collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
         dd = new ArrayList<>();
         builder = new AlertDialog.Builder(this);
         getData();
@@ -236,6 +240,7 @@ public class Messout extends AppCompatActivity {
             }
         }
     }
+
     public void saveData(){
         Date startDate = new Date();
         Date endDate = new Date();
@@ -252,17 +257,16 @@ public class Messout extends AppCompatActivity {
         Map<String, Object> messout = new HashMap<>();
         for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
             messout.put("date", date);
-            messout.put("absents", FieldValue.arrayUnion("LH002"));
+            messout.put("absents", FieldValue.arrayUnion(admissionNo));
             messout.put("total_absentees", FieldValue.increment(1));
             collectionReference.document(date + "").set(messout, SetOptions.merge());
         }
         toastMessage(" Messout successfully marked");
         startActivity(new Intent(Messout.this, Home.class));
-//        getData();
     }
 
     public void getData(){
-        Query query = collectionReference.whereArrayContains("absents", "LH002");
+        Query query = collectionReference.whereArrayContains("absents", admissionNo);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -279,5 +283,18 @@ public class Messout extends AppCompatActivity {
 
     public void toastMessage(String message){
         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNo = sharedPreferences.getString("admissionno", "");
+    }
+
+    public void initWidgets(){
+        txtFrm = (TextView) findViewById(R.id.txtfrom);
+        txtTo = (TextView) findViewById(R.id.txtto);
+        Okbtn = (Button) findViewById(R.id.button3);
+        days = (EditText) findViewById(R.id.edittext13);
     }
 }

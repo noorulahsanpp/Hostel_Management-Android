@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +35,7 @@ import Utils.FirebaseMethods;
 
 public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
 
+    public static final String MyPREFERENCES = "MyPrefs" ;
     Spinner month, year;
     TextView mess, rent, extras, common, due, total, gtotal;
     String monthIndex,selectedYear;
@@ -42,6 +44,8 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseMethods firebaseMethods;
+    SharedPreferences sharedPreferences;
+    private String hostel, admissionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +60,12 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
 
         initWidgets();
         setAdapter();
+        getSharedPreference();
 
 
     }
 
     private void initWidgets() {
-
 
         month = (Spinner) findViewById(R.id.month);
         try {
@@ -96,7 +100,6 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
             years.add(Integer.toString(j));
         }
 
-
         ArrayAdapter<String> yearadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
         year.setAdapter(yearadapter);
 
@@ -127,7 +130,7 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
 
         String date = selectedYear + "-0" + monthIndex;
         System.out.println(date);
-        DocumentReference documentReference= firebaseFirestore.collection("inmates").document("LH").collection("fee").document(date);
+        DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel).collection("fee").document(date);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -151,6 +154,12 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNumber = sharedPreferences.getString("admissionno", "");
     }
 }
 

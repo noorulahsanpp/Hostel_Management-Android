@@ -2,8 +2,8 @@ package com.example.hostelapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -18,24 +18,26 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.time.*;
 
 public class Sick extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "Sick";
+    public static final String MyPREFERENCES = "MyPrefs" ;
+
     private Spinner spinner;
-   private Button button14;
-   private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
-   private boolean breakfast, lunch, evening, dinner;
-   private FirebaseFirestore firebaseFirestore;
-   private String item;
-   private String userId ="LH002";
+    private Button button14;
+    private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
+    private boolean breakfast, lunch, evening, dinner;
+    private FirebaseFirestore firebaseFirestore;
+    private String item;
+    private String admissionNo = "", hostel = "";
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,26 +45,12 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         getSupportActionBar().hide();
         setContentView(R.layout.activity_sick);
 
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         firebaseFirestore = FirebaseFirestore.getInstance();
+
         initWidgets();
         setSpinner();
-
-        /*pop up
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.9),(int)(height*.5));
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.gravity= Gravity.CENTER;
-        params.x=0;
-        params.y=-20;
-        getWindow().setAttributes(params);*/
-
+        getSharedPreference();
 
         button14.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +58,6 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                 getData();
                 setData();
-//                startActivity(new Intent(Sick.this,Home.class));
             }
         });
     }
@@ -139,20 +126,20 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void setData(){
-        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("sick");
+        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("sick");
         Map<String, Object> sick = new HashMap<>();
         if (item == "Custom"){
             if (breakfast){
-                sick.put("breakfast", FieldValue.arrayUnion("LH002"));
+                sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
             }
             else if (lunch){
-                sick.put("lunch", FieldValue.arrayUnion("LH002"));
+                sick.put("lunch", FieldValue.arrayUnion(admissionNo));
             }
             else if (evening){
-                sick.put("evening", FieldValue.arrayUnion("LH002"));
+                sick.put("evening", FieldValue.arrayUnion(admissionNo));
             }
             else if (dinner){
-                sick.put("dinner", FieldValue.arrayUnion("LH002"));
+                sick.put("dinner", FieldValue.arrayUnion(admissionNo));
             }
             else
             {
@@ -167,10 +154,10 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         }
         else{
             Date date = setDate();
-            sick.put("breakfast", FieldValue.arrayUnion("LH002"));
-            sick.put("lunch", FieldValue.arrayUnion("LH002"));
-            sick.put("evening", FieldValue.arrayUnion("LH002"));
-            sick.put("dinner", FieldValue.arrayUnion("LH002"));
+            sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
+            sick.put("lunch", FieldValue.arrayUnion(admissionNo));
+            sick.put("evening", FieldValue.arrayUnion(admissionNo));
+            sick.put("dinner", FieldValue.arrayUnion(admissionNo));
             sick.put("date", date);
             collectionReference.document(date+"").set(sick, SetOptions.merge());
         }
@@ -186,6 +173,11 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         return today;
     }
 
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNo = sharedPreferences.getString("admissionno", "");
+    }
 
 
 }

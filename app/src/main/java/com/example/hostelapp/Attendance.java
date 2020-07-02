@@ -1,11 +1,10 @@
 package com.example.hostelapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -15,21 +14,15 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,17 +30,20 @@ import Utils.FirebaseMethods;
 
 public class Attendance extends AppCompatActivity {
     private static final String TAG = "Messout";
+    public static final String MyPREFERENCES = "MyPrefs" ;
     static final long ONE_DAY = 24 * 60 * 60 * 1000L;
+
     private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseMethods firebaseMethods;
     private CalendarView calendarView;
-    private  Date d1, d2;
+    SharedPreferences sharedPreferences;
 
     private int absent=0,present,year,month;
     private TextView prsnt,absnt;
     int count = 0;
+    private String hostel,admissionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +52,7 @@ public class Attendance extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_attendance);
 
+        getSharedPreference();
         mContext = Attendance.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
@@ -117,8 +114,8 @@ public class Attendance extends AppCompatActivity {
 //                    catch (Exception e){
 //                        Log.d(TAG, "getAttendace: "+e);
 //                    }
-                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-                    Query query = collectionReference.whereArrayContains("absents", "LH001");
+                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
+                    Query query = collectionReference.whereArrayContains("absents", admissionNumber);
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -153,8 +150,8 @@ public class Attendance extends AppCompatActivity {
                     Date date1 = start.getTime();
                     Date date2 = end.getTime();
 
-                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-                    Query query = collectionReference.whereArrayContains("absents", "LH002").whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
+                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
+                    Query query = collectionReference.whereArrayContains("absents", admissionNumber).whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -174,6 +171,11 @@ public class Attendance extends AppCompatActivity {
                         }
                     });
                 }
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNumber = sharedPreferences.getString("admissionno", "");
+    }
 }
 
 
