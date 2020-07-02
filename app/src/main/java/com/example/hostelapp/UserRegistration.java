@@ -3,7 +3,6 @@ package com.example.hostelapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,9 +31,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.WriteBatch;
-
-import org.w3c.dom.Document;
 
 import java.lang.reflect.Field;
 import java.text.DateFormatSymbols;
@@ -95,7 +90,6 @@ public class UserRegistration extends AppCompatActivity {
                 password = mPassword.getText().toString().trim();
                 phone = mPhone.getText().toString().trim();
                 if(checkInputs(email, password, phone, admissionnumber)) {
-//                    firebaseMethods.registerNewUser("", password, email);
                     registration();
                 }
 
@@ -120,8 +114,6 @@ public class UserRegistration extends AppCompatActivity {
         mPhone = findViewById(R.id.phone);
         loginBtn = findViewById(R.id.textView);
     }
-
-
 
     private boolean checkInputs(String email, String password, String phone, String admissionnumber)
     {
@@ -234,10 +226,8 @@ public class UserRegistration extends AppCompatActivity {
                                             progressDialog.dismiss();
                                                                           }
                                     });
-
+                                mAuth.signOut();
                                 Intent intent = new Intent(UserRegistration.this, Login.class);
-                                intent.putExtra("userName",username);
-                                intent.putExtra("hostel",hostel);
                                 startActivity(intent);
                                 }
                                  else {
@@ -253,8 +243,6 @@ public class UserRegistration extends AppCompatActivity {
                     System.out.println("Error is :" + e);
                 }
         }
-
-
 
     /**
      * Customisable toast

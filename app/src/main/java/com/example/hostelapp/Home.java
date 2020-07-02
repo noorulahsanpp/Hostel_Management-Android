@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,14 +31,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import Utils.BottomNavigationViewHelper;
 import models.User;
@@ -61,7 +55,9 @@ public class Home extends AppCompatActivity {
     private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
     private CardView fees,sick,attendance,messout,menu;
+
     private ViewFlipper viewFlipper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +66,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG,"onCreate: starting");
         setupBottomNavigationView();
+        int[] images =new int[]{R.drawable.download, R.drawable.images,R.drawable.mh};
 
         viewFlipper = findViewById(R.id.viewflipper);
         viewFlipper.setFlipInterval(2000);
@@ -78,42 +75,36 @@ public class Home extends AppCompatActivity {
         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         viewFlipper.setInAnimation(in);
 
-   //    mAuth.signOut();
+        for (int i = 0; i < images.length; i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(images[i]);
+            viewFlipper.addView(imageView);
+        }
+        initWidgets();
 
-        final int[] array = new int[]{R.drawable.hostel};
+     /*  mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        userID = mAuth.getCurrentUser().getUid();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        final ImageView image = new ImageView(getApplicationContext());
-       storageReference = FirebaseStorage.getInstance().getReference();
+        mAuth.signOut();
+        Intent intent = getIntent();
+        hostel = intent.getStringExtra("hostel");
+        admissionNumber = intent.getStringExtra("admission_number");
 
-        StorageReference imageRef = storageReference.child("LH/download.png");
-        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        getUserData(admissionNumber, hostel);
+       /* profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(Uri uri) {
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, Profile.class);
+                intent.putExtra("hostel", hostel);
+                intent.putExtra("admission_number", admissionNumber);
+                startActivity(intent);
 
 
 
-                final ImageView[] images = new ImageView[]{image};
-                    ImageView img = new ImageView(getApplicationContext());
-                Glide.with(getApplicationContext()).load(uri).into(img);
-            //    for(int i = 0; i<images.length; i++) {
-              //      img.setImageResource(images[i]);
-                    viewFlipper.addView(img);
-            //    }
             }
-        });
-     //   for(int i = 0; i<images.length; i++) {
-
-           //      image.setImageResource(images[i]);
-             //  Picasso.get().load("image").into(image);
-         //     viewFlipper.addView(image);
-
-       //       }
-
-
-
-
-       initWidgets();
-
+        });*/
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,18 +156,18 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    private void getUserData(String admissionNumber, String hostel){
+  /*  private void getUserData(String admissionNumber, String hostel){
         documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
                    User user = documentSnapshot.toObject(User.class);
                    name = user.getName();
-                   setUserData(name);
+                  // setUserData(name);
                 }
             }
         });
-    }
+    }*/
 
     private void initWidgets(){
        // profilePicture = findViewById(R.id.imageView2);
@@ -191,16 +182,16 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private void setUserData(String name){
+   /* private void setUserData(String name){
         userNameView.setText("Welcome " + name);
         StorageReference profileRef = storageReference.child("users/"+mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-            //    Picasso.get().load(uri).into(profilePicture);
+                Picasso.get().load(uri).into(profilePicture);
             }
         });
-    }
+    }*/
     private void setupBottomNavigationView(){
         Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);

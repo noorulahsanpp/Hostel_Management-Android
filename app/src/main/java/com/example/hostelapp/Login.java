@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
     private static final String KEY_USERID = "user_dd";
 
 
-    private TextView signUpTv,forgotTv;
+    private TextView signUpTv;
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
@@ -71,7 +71,6 @@ public class Login extends AppCompatActivity {
 
 
         signUpTv = findViewById(R.id.signupTv);
-        forgotTv=findViewById(R.id.forgot);
         //setupBottomNavigationView();
         loginbtn = (Button) findViewById(R.id.button);
         emailEt = (EditText)findViewById(R.id.editText1);
@@ -90,20 +89,7 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Verification.class));
             }
         });
-
-        forgotTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forgotpassword();
-            }
-        });
     }
-
-    private void forgotpassword() {
-            startActivity(new Intent(this,forgotpassword.class));
-
-    }
-
 
     private void loginUser()
     {
