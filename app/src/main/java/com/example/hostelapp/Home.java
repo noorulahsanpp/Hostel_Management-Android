@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -61,8 +62,6 @@ public class Home extends AppCompatActivity {
     private StorageReference storageReference;
     private CardView fees,sick,attendance,messout,menu;
     private ViewFlipper viewFlipper;
-    //private ViewFlipper viewFlipper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,52 +70,44 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG,"onCreate: starting");
         setupBottomNavigationView();
-        final int[] images =new int[]{R.drawable.hostel,R.drawable.colour};
 
         viewFlipper = findViewById(R.id.viewflipper);
-      viewFlipper.setFlipInterval(2000);
-       viewFlipper.startFlipping();
-      viewFlipper.setAutoStart(true);
-       Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-       viewFlipper.setInAnimation(in);
-   //     mAuth.signOut();
+        viewFlipper.setFlipInterval(2000);
+        viewFlipper.startFlipping();
+        viewFlipper.setAutoStart(true);
+        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        viewFlipper.setInAnimation(in);
 
-     /*  documentReference = firebaseFirestore.collection("inmates").document("LH").collection("images").document("image").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    StringBuilder img= new StringBuilder("");
-                    img.append(document.getData());
-                    Picasso.get().load().into(imageView);
+   //    mAuth.signOut();
 
+        final int[] array = new int[]{R.drawable.hostel};
 
-            }
-
-            }
-        });*/
-  //     for(int i = 0; i<images.length; i++) {
-   //     ImageView image = new ImageView(getApplicationContext());
-    //       image.setImageResource(images[i]);
-      //  Picasso.get().load("image").into(image);
-      //  viewFlipper.addView(image);
-
-            //
-            //
-        //       }
-
+        final ImageView image = new ImageView(getApplicationContext());
        storageReference = FirebaseStorage.getInstance().getReference();
 
         StorageReference imageRef = storageReference.child("LH/download.png");
         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-               ImageView image = new ImageView(getApplicationContext());
-                Picasso.get().load(uri).into(image);
-               viewFlipper.addView(image);
 
+
+
+                final ImageView[] images = new ImageView[]{image};
+                    ImageView img = new ImageView(getApplicationContext());
+                Glide.with(getApplicationContext()).load(uri).into(img);
+            //    for(int i = 0; i<images.length; i++) {
+              //      img.setImageResource(images[i]);
+                    viewFlipper.addView(img);
+            //    }
             }
         });
+     //   for(int i = 0; i<images.length; i++) {
+
+           //      image.setImageResource(images[i]);
+             //  Picasso.get().load("image").into(image);
+         //     viewFlipper.addView(image);
+
+       //       }
 
 
 
@@ -174,18 +165,18 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-  /*  private void getUserData(String admissionNumber, String hostel){
+    private void getUserData(String admissionNumber, String hostel){
         documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
                    User user = documentSnapshot.toObject(User.class);
                    name = user.getName();
-                  // setUserData(name);
+                   setUserData(name);
                 }
             }
         });
-    }*/
+    }
 
     private void initWidgets(){
        // profilePicture = findViewById(R.id.imageView2);
@@ -200,16 +191,16 @@ public class Home extends AppCompatActivity {
 
     }
 
-   /* private void setUserData(String name){
+    private void setUserData(String name){
         userNameView.setText("Welcome " + name);
         StorageReference profileRef = storageReference.child("users/"+mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profilePicture);
+            //    Picasso.get().load(uri).into(profilePicture);
             }
         });
-    }*/
+    }
     private void setupBottomNavigationView(){
         Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);

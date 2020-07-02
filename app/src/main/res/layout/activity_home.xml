@@ -26,7 +26,7 @@
         </RelativeLayout-->
 
 
-        <!--ViewFlipper
+        <ViewFlipper
             android:id="@+id/viewflipper"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -36,13 +36,8 @@
             android:outAnimation="@android:anim/slide_out_right">
 
 
-        </ViewFlipper-->
+        </ViewFlipper>
 
-        <ViewFlipper
-            android:id="@+id/viewflipper"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@+id/relLayout1"/>
 
 
 
@@ -109,16 +104,7 @@
 
 
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="600dp"
-            android:drawableTop="@drawable/ic_action_profile"
-            android:background="@android:color/transparent"
-            android:text="Logout"
-            tools:visibility="visible" />
+
 
 
         <RelativeLayout
@@ -282,6 +268,16 @@
 
 
         </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="600dp"
+            android:drawableTop="@drawable/ic_action_profile"
+            android:background="@android:color/transparent"
+            android:text="Logout"
+            tools:visibility="visible" />
     </RelativeLayout>
 
 

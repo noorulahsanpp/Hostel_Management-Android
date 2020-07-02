@@ -10,88 +10,203 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/background_style">
+        android:background="@color/lightsilver">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/colour"
-            android:orientation="vertical">
+            android:layout_below="@id/relLayout1"
+            android:orientation="vertical"
+            android:showDividers="end">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp">
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="145dp"
+                    android:layout_marginTop="20dp"
                     android:text="My Profile"
-                    android:textColor="#FFFF"
+                    android:textColor="#000000"
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/admno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/name"
                     android:layout_marginTop="6dp"
+                    android:layout_marginLeft="145dp"
                     android:text="LH no"
-                    android:textColor="#FFFF"
+                    android:textColor="#000000"
                     android:textSize="14sp" />
+                <RelativeLayout
+                    android:id="@+id/profilelayout"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp">
+                <FrameLayout
+                    android:id="@+id/frame1"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/myCardView"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        app:cardCornerRadius="70dp"
+                        app:cardPreventCornerOverlap="false">
 
-                <ImageView
+                    <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="62dp"
-                    android:layout_height="62dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="140dp"
-                    android:layout_marginTop="10dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
                     app:srcCompat="@android:drawable/btn_dialog"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@drawable/ic_action_profile" >
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageView"
-                    android:layout_marginLeft="300dp"
-                    android:background="@android:color/transparent"
-                    android:text="Logout"
-                    android:textColor="#FFFF" />
+                    </ImageView>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+
+                </FrameLayout>
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:background="@drawable/background_color_circle_selector"
+                    android:layout_marginLeft="90dp"
+                    android:backgroundTint="@color/tabs"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center"
+                    android:layout_height="45dp">
+
+                    <ImageView
+                        android:id="@+id/edit"
+                        android:layout_width="wrap_content"
+                        android:tint="#FFFFFF"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_photo"
+                        />
+
+                </RelativeLayout>
+                </RelativeLayout>
+
+
+
 
 
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/black"/>
+
 
         </LinearLayout>
 
 
-        <!--RelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relLayout1">
             <include layout="@layout/layout_top_tabs"/>
 
-        </RelativeLayout-->
-
-        <include layout="@layout/layout_bottom_navigation_view" />
 
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:background="@drawable/textbox"
-            android:theme="@style/EditText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="250dp"
-            android:hint="Enter your name"
-            android:inputType="textPersonName"
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/emailicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+           android:drawableLeft="@drawable/ic_action_email"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="280dp"
+
             />
+        <TextView
+            android:id="@+id/phoneicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_phone"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="380dp"
+
+            />
+        <TextView
+            android:id="@+id/logouticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_logout"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="480dp"
+
+            />
+        <TextView
+            android:id="@+id/cpicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_lock"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="580dp"
+
+            />
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="260dp">
+    <TextView
+        android:id="@+id/emailid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="Email Id"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+
+        />
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingTop="5dp"
+            android:layout_marginLeft="50dp"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+           
+            />
+    <View
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:background="#938E8E"/>
+
+</LinearLayout>
+
 
         <!--TextView
             android:layout_width="wrap_content"
@@ -99,67 +214,134 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="300dp"
             android:text="Name"/-->
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:background="@drawable/textbox"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="310dp"
-            android:layout_weight="1"
-            android:hint="Enter email"
-            android:theme="@style/EditText"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:background="@drawable/textbox"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="370dp"
-            android:theme="@style/EditText"
-            android:hint="Phone number"
-            android:inputType="phone" />
-
-
-                <Button
-                    android:id="@+id/button13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:text="Save Profile"
-                    android:layout_below="@+id/editText4"
-                    android:theme="@style/Button"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/button_style"
-                    android:layout_centerInParent="true"/>
-
-                <Button
-                    android:id="@+id/button12"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linear1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="360dp">
+        <TextView
+            android:id="@+id/phoneno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="Mobile Number"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+            <TextView
+                android:id="@+id/phone"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="30dp"
+                android:background="@drawable/textbox"
+                android:paddingTop="5dp"
+                android:backgroundTint="@color/lightsilver"
+                android:layout_marginLeft="50dp"
+                android:drawablePadding="28dp"
+                android:textSize="15sp"
+                android:layout_centerHorizontal="true"/>
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="#938E8E"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linear2"
+            android:layout_below="@id/linear1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:id="@+id/logoutTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Log out"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/logout"
+                android:paddingTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/textbox"
+                android:backgroundTint="@color/lightsilver"
+                android:layout_marginLeft="50dp"
+                android:text="Log out from Hostel App"
+                android:textSize="15sp"
+                android:layout_centerHorizontal="true"/>
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="#938E8E"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linear3"
+            android:layout_below="@id/linear2"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:id="@+id/ChangePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:text="Change Password"
-                    android:theme="@style/Button"
-                    android:layout_below="@+id/button13"
-                    android:background="@drawable/button_style"
-                    android:layout_marginTop="30dp"
-                android:layout_centerInParent="true"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/chngepswd"
+                android:paddingTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/textbox"
+                android:backgroundTint="@color/lightsilver"
+                android:layout_marginLeft="50dp"
+                android:text="Reset current password"
+                android:textSize="15sp"
+                android:layout_centerHorizontal="true"/>
+            <!--View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/black"/-->
+
+        </LinearLayout>
 
 
 
 
-    <RelativeLayout
-        android:id="@+id/relLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_anchor="@+id/relativeLayout2"
-        app:layout_anchorGravity="center">
-
-        <include layout="@layout/layout_center_viewpage" />
 
 
-    </RelativeLayout>
+
+        <!--Button
+            android:id="@+id/button13"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Save Profile"
+            android:layout_below="@+id/editText4"
+            android:theme="@style/Button"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_style"
+            android:layout_centerInParent="true"/-->
+
+
+
+
+
+
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
