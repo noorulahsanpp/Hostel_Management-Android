@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -44,6 +45,7 @@ public class Home extends AppCompatActivity {
     private static final String KEY_HOSTEL = "hostel";
     private static final String KEY_USERID = "user_dd";
     private static final int ACTIVITY_NUM = 0;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
 
     private Button logoutBtn;
@@ -54,6 +56,7 @@ public class Home extends AppCompatActivity {
     private TextView userNameView;
     private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
+    SharedPreferences sharedPreferences;
     private CardView fees,sick,attendance,messout,menu;
 
     private ViewFlipper viewFlipper;
@@ -66,7 +69,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Log.d(TAG,"onCreate: starting");
         setupBottomNavigationView();
-        int[] images =new int[]{R.drawable.download, R.drawable.images,R.drawable.mh};
+        int[] images =new int[]{};
 
         viewFlipper = findViewById(R.id.viewflipper);
         viewFlipper.setFlipInterval(2000);
@@ -82,7 +85,7 @@ public class Home extends AppCompatActivity {
         }
         initWidgets();
 
-     /*  mAuth = FirebaseAuth.getInstance();
+       mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -91,6 +94,8 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         hostel = intent.getStringExtra("hostel");
         admissionNumber = intent.getStringExtra("admission_number");
+        getSharedPreference();
+
 
         getUserData(admissionNumber, hostel);
        /* profilePicture.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +161,7 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-  /*  private void getUserData(String admissionNumber, String hostel){
+    private void getUserData(String admissionNumber, String hostel){
         documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -167,7 +172,7 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
-    }*/
+    }
 
     private void initWidgets(){
        // profilePicture = findViewById(R.id.imageView2);
@@ -201,5 +206,16 @@ public class Home extends AppCompatActivity {
        MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
        menuItem.setChecked(true);
 
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        getSharedPreference();
+    }
+
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNumber = sharedPreferences.getString("admissionno", "");
     }
 }

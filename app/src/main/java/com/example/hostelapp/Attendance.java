@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -38,16 +39,18 @@ import Utils.FirebaseMethods;
 public class Attendance extends AppCompatActivity {
     private static final String TAG = "Messout";
     static final long ONE_DAY = 24 * 60 * 60 * 1000L;
+    public static final String MyPREFERENCES = "MyPrefs" ;
     private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseMethods firebaseMethods;
     private CalendarView calendarView;
     private  Date d1, d2;
-
+    SharedPreferences sharedPreferences;
     private int absent=0,present,year,month;
     private TextView prsnt,absnt;
     int count = 0;
+    private String hostel,admissionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class Attendance extends AppCompatActivity {
         setContentView(R.layout.activity_attendance);
 
         mContext = Attendance.this;
+        getSharedPreference();
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
         calendarView = (CalendarView)findViewById(R.id.calendar);
@@ -174,6 +179,11 @@ public class Attendance extends AppCompatActivity {
                         }
                     });
                 }
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNumber = sharedPreferences.getString("admissionno", "");
+    }
 }
 
 

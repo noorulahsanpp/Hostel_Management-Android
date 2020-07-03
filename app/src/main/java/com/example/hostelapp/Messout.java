@@ -107,8 +107,8 @@ public class Messout extends AppCompatActivity {
                 }
                 String from1;
                 String to1;
-                    from1 = new SimpleDateFormat("EEE, MMM d").format(dateObj1);
-                    to1 = new SimpleDateFormat("EEE, MMM d").format(dateObj2);
+                from1 = new SimpleDateFormat("EEE, MMM d").format(dateObj1);
+                to1 = new SimpleDateFormat("EEE, MMM d").format(dateObj2);
 
                 builder.setMessage("Do you want to mark messout from "+from1+" to "+to1+" ?" ).setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override

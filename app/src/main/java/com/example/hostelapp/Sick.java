@@ -2,6 +2,7 @@ package com.example.hostelapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,11 +30,15 @@ import java.time.*;
 
 public class Sick extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "Sick";
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedPreferences;
+
     private Spinner spinner;
    private Button button14;
    private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
    private boolean breakfast, lunch, evening, dinner;
    private FirebaseFirestore firebaseFirestore;
+    private String admissionNo = "", hostel = "";
    private String item;
    private String userId ="LH002";
     @Override
@@ -46,6 +51,8 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         firebaseFirestore = FirebaseFirestore.getInstance();
         initWidgets();
         setSpinner();
+        getSharedPreference();
+
 
         /*pop up
         DisplayMetrics dm = new DisplayMetrics();
@@ -185,6 +192,13 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         Date today = start.getTime();
         return today;
     }
+
+    public void getSharedPreference(){
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        hostel = sharedPreferences.getString("hostel", "");
+        admissionNo = sharedPreferences.getString("admissionno", "");
+    }
+
 
 
 
