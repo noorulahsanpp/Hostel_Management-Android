@@ -90,14 +90,8 @@ public class Home extends AppCompatActivity {
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        mAuth.signOut();
-        Intent intent = getIntent();
-        hostel = intent.getStringExtra("hostel");
-        admissionNumber = intent.getStringExtra("admission_number");
         getSharedPreference();
 
-
-        getUserData(admissionNumber, hostel);
        /* profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +115,6 @@ public class Home extends AppCompatActivity {
 
             }
         });
-
 
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +140,6 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Home.this, Menu.class);
-              //  intent.putExtra("userName",userName);
-               // intent.putExtra("hostel",hostel);
                 startActivity(intent);
 
             }
@@ -161,24 +152,11 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    private void getUserData(String admissionNumber, String hostel){
-        documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
-                   User user = documentSnapshot.toObject(User.class);
-                   name = user.getName();
-                  // setUserData(name);
-                }
-            }
-        });
-    }
+
 
     private void initWidgets(){
-       // profilePicture = findViewById(R.id.imageView2);
         userNameView = findViewById(R.id.textView5);
         logoutBtn = (Button) findViewById(R.id.button2);
-      //  NotificationBtn = (Button) findViewById(R.id.button5);
         attendance= (CardView) findViewById(R.id.attendance);
         fees= (CardView) findViewById(R.id.fees);
         sick = (CardView) findViewById(R.id.sick);

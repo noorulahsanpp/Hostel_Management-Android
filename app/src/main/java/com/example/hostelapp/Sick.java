@@ -40,7 +40,6 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
    private FirebaseFirestore firebaseFirestore;
     private String admissionNo = "", hostel = "";
    private String item;
-   private String userId ="LH002";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,24 +51,6 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         initWidgets();
         setSpinner();
         getSharedPreference();
-
-
-        /*pop up
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.9),(int)(height*.5));
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.gravity= Gravity.CENTER;
-        params.x=0;
-        params.y=-20;
-        getWindow().setAttributes(params);*/
-
 
         button14.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,20 +127,20 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void setData(){
-        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("sick");
+        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("sick");
         Map<String, Object> sick = new HashMap<>();
         if (item == "Custom"){
             if (breakfast){
-                sick.put("breakfast", FieldValue.arrayUnion("LH002"));
+                sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
             }
             else if (lunch){
-                sick.put("lunch", FieldValue.arrayUnion("LH002"));
+                sick.put("lunch", FieldValue.arrayUnion(admissionNo));
             }
             else if (evening){
-                sick.put("evening", FieldValue.arrayUnion("LH002"));
+                sick.put("evening", FieldValue.arrayUnion(admissionNo));
             }
             else if (dinner){
-                sick.put("dinner", FieldValue.arrayUnion("LH002"));
+                sick.put("dinner", FieldValue.arrayUnion(admissionNo));
             }
             else
             {
@@ -174,10 +155,10 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         }
         else{
             Date date = setDate();
-            sick.put("breakfast", FieldValue.arrayUnion("LH002"));
-            sick.put("lunch", FieldValue.arrayUnion("LH002"));
-            sick.put("evening", FieldValue.arrayUnion("LH002"));
-            sick.put("dinner", FieldValue.arrayUnion("LH002"));
+            sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
+            sick.put("lunch", FieldValue.arrayUnion(admissionNo));
+            sick.put("evening", FieldValue.arrayUnion(admissionNo));
+            sick.put("dinner", FieldValue.arrayUnion(admissionNo));
             sick.put("date", date);
             collectionReference.document(date+"").set(sick, SetOptions.merge());
         }

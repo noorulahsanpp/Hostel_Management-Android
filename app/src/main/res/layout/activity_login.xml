@@ -36,13 +36,6 @@
             android:drawablePadding="5dp"
             android:background="@drawable/textbox"
             android:inputType="textPersonName" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@id/editText2"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/editText2"

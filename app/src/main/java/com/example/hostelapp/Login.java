@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,7 +39,7 @@ public class Login extends AppCompatActivity {
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
-    private String userID,loginPhone, loginAdmission, loginHostel, loginName;
+    private String userID,loginPhone, loginAdmission, loginHostel, loginName, loginEmail;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
 
@@ -62,10 +63,7 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, Home.class));
         }
 
-        signUpTv = findViewById(R.id.signupTv);
-        loginbtn = (Button) findViewById(R.id.button);
-        emailEt = (EditText)findViewById(R.id.editText1);
-        passwordEt = (EditText)findViewById(R.id.editText2);
+        initWidgets();
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +78,12 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Verification.class));
             }
         });
+    }
+    public void initWidgets(){
+        signUpTv = findViewById(R.id.signupTv);
+        loginbtn = (Button) findViewById(R.id.button);
+        emailEt = (EditText)findViewById(R.id.editText1);
+        passwordEt = (EditText)findViewById(R.id.editText2);
     }
 
     private void loginUser()
@@ -105,11 +109,12 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 userID = auth.getCurrentUser().getUid();
-                getUserData(userID);
-                setSharedPreferences();
+
+                getHostel(userID);
                 progressdialog.dismiss();
                 Intent intent = new Intent(Login.this, Home.class);
                 startActivity(intent);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -123,55 +128,48 @@ public class Login extends AppCompatActivity {
 
     private void getUserData(String userid)
     {
-        getHostel(userid);
-        firebaseFirestore.collection("inmates").document(loginHostel).collection("users").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("inmates").document(loginHostel+"").collection("users").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful())
                 {
                     for(QueryDocumentSnapshot document : task.getResult()){
                         Log.d(TAG, document.getId() + " => " + document.getData());
-                        loginAdmission = document.get("admission_number").toString();
+                        loginAdmission = document.get("admission_no").toString();
                         loginHostel = document.get("hostel").toString();
                         loginName = document.get("name").toString();
-                        loginPhone = document.get("phone_number").toString();
+                        loginPhone = document.get("phone").toString();
+                        loginEmail = document.get("email").toString();
                     }
+                    setSharedPreferences();
+                }
 
-                }
-                else
-                {
-                    Log.d(TAG, "onFailure: Query Unsuccessful");
-                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: Query failed");
+                Log.d(TAG, "onFailure: Query failed"+e);
             }
         });
     }
 
-    private void getHostel(String userid)
+    private void getHostel(final String userid)
     {
-        firebaseFirestore.collection("login").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("login").document(userid+"").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
                         loginHostel = document.get("hostel").toString();
+                        getUserData(userid);
                     }
-                }
-                else
-                {
-                    Log.d(TAG, "onFailure: Query Unsuccessful");
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: Query failed");
+                Log.d(TAG, "onFailure: "+e);
             }
         });
     }
@@ -183,6 +181,7 @@ public class Login extends AppCompatActivity {
         editor.putString("admissionno", loginAdmission);
         editor.putString("phone", loginPhone);
         editor.putString("name", loginName);
+        editor.putString("email", loginEmail);
         editor.commit();
     }
 
