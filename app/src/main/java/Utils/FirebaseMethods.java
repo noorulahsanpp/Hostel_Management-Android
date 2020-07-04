@@ -112,5 +112,21 @@ public void addNewUser(String email, String phone, String admission_number, Stri
     documentReference.set(user);
 
 }
+String loginHostel="";
+    public String getHostel(String userid)
+    {
+        firebaseFirestore.collection("login").document(userid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        loginHostel = document.get("hostel").toString();
+                    }
+                }
+            }
+        });
+        return loginHostel;
+    }
 
 }

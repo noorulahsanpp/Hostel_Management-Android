@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,17 +31,15 @@ import java.time.*;
 public class Sick extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "Sick";
     public static final String MyPREFERENCES = "MyPrefs" ;
-
-    private Spinner spinner;
-    private Button button14;
-    private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
-    private boolean breakfast, lunch, evening, dinner;
-    private FirebaseFirestore firebaseFirestore;
-    private String item;
-    private String userId ="LH002";
-    private String admissionNo = "", hostel = "";
     SharedPreferences sharedPreferences;
 
+    private Spinner spinner;
+   private Button button14;
+   private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
+   private boolean breakfast, lunch, evening, dinner;
+   private FirebaseFirestore firebaseFirestore;
+    private String admissionNo = "", hostel = "";
+   private String item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,25 +47,9 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         getSupportActionBar().hide();
         setContentView(R.layout.activity_sick);
 
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         firebaseFirestore = FirebaseFirestore.getInstance();
-
         initWidgets();
         setSpinner();
-
-        /*pop up
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int)(width*.9),(int)(height*.5));
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.gravity= Gravity.CENTER;
-        params.x=0;
-        params.y=-20;
-        getWindow().setAttributes(params);*/
-
         getSharedPreference();
 
         button14.setOnClickListener(new View.OnClickListener() {
@@ -79,15 +62,17 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
             }
         });
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         item = parent.getItemAtPosition(position).toString();
-        if (item == "Custom") {
-            checkBreakfast.setEnabled(true);
-            checkLunch.setEnabled(true);
-            checkEvening.setEnabled(true);
-            checkDinner.setEnabled(true);
-        }
+
+    if (item == "Custom") {
+        checkBreakfast.setEnabled(true);
+        checkLunch.setEnabled(true);
+        checkEvening.setEnabled(true);
+        checkDinner.setEnabled(true);
+    }
         else
         {
             checkBreakfast.setEnabled(false);
@@ -98,7 +83,9 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
+
     }
+
     public void initWidgets(){
         spinner = (Spinner)findViewById(R.id.spinner);
         button14=(Button)findViewById(R.id.button14);
@@ -106,20 +93,24 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         checkLunch =findViewById(R.id.checkBox2);
         checkEvening =findViewById(R.id.checkBox3);
         checkDinner =findViewById(R.id.checkBox4);
+
         checkBreakfast.setEnabled(false);
         checkLunch.setEnabled(false);
         checkEvening.setEnabled(false);
         checkDinner.setEnabled(false);
     }
+
     public void setSpinner(){
         spinner.setOnItemSelectedListener(this);
         List<String> categories = new ArrayList<>();
         categories.add("Full Day");
         categories.add("Custom");
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
+
     public void getData(){
         if (checkBreakfast.isChecked()){
             breakfast = true;
@@ -136,30 +127,26 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void setData(){
-
         CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("sick");
         Map<String, Object> sick = new HashMap<>();
         if (item == "Custom"){
             if (breakfast){
-                sick.put("breakfast", FieldValue.arrayUnion("LH002"));
                 sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
             }
             else if (lunch){
-                sick.put("lunch", FieldValue.arrayUnion("LH002"));
                 sick.put("lunch", FieldValue.arrayUnion(admissionNo));
             }
             else if (evening){
-                sick.put("evening", FieldValue.arrayUnion("LH002"));
                 sick.put("evening", FieldValue.arrayUnion(admissionNo));
             }
             else if (dinner){
-                sick.put("dinner", FieldValue.arrayUnion("LH002"));
                 sick.put("dinner", FieldValue.arrayUnion(admissionNo));
             }
             else
             {
                 Toast.makeText(getBaseContext(), "Invalid input", Toast.LENGTH_LONG).show();
             }
+
             if (breakfast||lunch||evening||dinner){
                 Date date = setDate();
                 sick.put("date", date);
@@ -168,10 +155,6 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         }
         else{
             Date date = setDate();
-            sick.put("breakfast", FieldValue.arrayUnion("LH002"));
-            sick.put("lunch", FieldValue.arrayUnion("LH002"));
-            sick.put("evening", FieldValue.arrayUnion("LH002"));
-            sick.put("dinner", FieldValue.arrayUnion("LH002"));
             sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
             sick.put("lunch", FieldValue.arrayUnion(admissionNo));
             sick.put("evening", FieldValue.arrayUnion(admissionNo));
@@ -196,6 +179,8 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         hostel = sharedPreferences.getString("hostel", "");
         admissionNo = sharedPreferences.getString("admissionno", "");
     }
+
+
 
 
 }

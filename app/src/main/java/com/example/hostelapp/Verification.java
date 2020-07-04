@@ -51,11 +51,15 @@ public class Verification extends AppCompatActivity {
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
-       // login = findViewById(R.id.login);
+        login = findViewById(R.id.login);
         mContext = Verification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Verification.this,Login.class)); }
+        });
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

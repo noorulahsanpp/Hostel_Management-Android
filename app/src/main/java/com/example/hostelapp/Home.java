@@ -1,4 +1,5 @@
 package com.example.hostelapp;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,15 +35,17 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
 import Utils.BottomNavigationViewHelper;
 import models.User;
+
 public class Home extends AppCompatActivity {
     private static final String TAG = "Home";
     private static final String KEY_ADMISSIONNO = "admission_number";
     private static final String KEY_HOSTEL = "hostel";
     private static final String KEY_USERID = "user_dd";
-    public static final String MyPREFERENCES = "MyPrefs" ;
     private static final int ACTIVITY_NUM = 0;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
 
     private Button logoutBtn;
@@ -52,9 +56,9 @@ public class Home extends AppCompatActivity {
     private TextView userNameView;
     private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
+    SharedPreferences sharedPreferences;
     private CardView fees,sick,attendance,messout,menu;
 
-    SharedPreferences sharedPreferences;
     private ViewFlipper viewFlipper;
 
     @Override
@@ -66,12 +70,14 @@ public class Home extends AppCompatActivity {
         Log.d(TAG,"onCreate: starting");
         setupBottomNavigationView();
         int[] images =new int[]{};
+
         viewFlipper = findViewById(R.id.viewflipper);
         viewFlipper.setFlipInterval(2000);
         viewFlipper.startFlipping();
         viewFlipper.setAutoStart(true);
         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         viewFlipper.setInAnimation(in);
+
         for (int i = 0; i < images.length; i++) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(images[i]);
@@ -79,17 +85,13 @@ public class Home extends AppCompatActivity {
         }
         initWidgets();
 
-     /*  mAuth = FirebaseAuth.getInstance();*/
        mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-       /* mAuth.signOut();
-        Intent intent = getIntent();
-        hostel = intent.getStringExtra("hostel");
-        admissionNumber = intent.getStringExtra("admission_number");
-        getUserData(admissionNumber, hostel);
+        getSharedPreference();
+
        /* profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,49 +99,53 @@ public class Home extends AppCompatActivity {
                 intent.putExtra("hostel", hostel);
                 intent.putExtra("admission_number", admissionNumber);
                 startActivity(intent);
+
+
+
             }
         });*/
-        getSharedPreference();
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mAuth.signOut();
                 finish();
                 startActivity(new Intent(Home.this, Login.class));
+
             }
         });
+
+
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, Attendance.class));
             }
         });
-
         fees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, Fees.class));
             }
         });
+
         sick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, Sick.class));
             }
         });
-
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(Home.this, Menu.class);
-                 intent.putExtra("userName",userName);
-                 intent.putExtra("hostel",hostel);
                 startActivity(intent);
 
             }
         });
+
         messout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,30 +153,21 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-  /*  private void getUserData(String admissionNumber, String hostel){
-        documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
-                   User user = documentSnapshot.toObject(User.class);
-                   name = user.getName();
-                  // setUserData(name);
-                }
-            }
-        });
-    }*/
+
 
     private void initWidgets(){
-        // profilePicture = findViewById(R.id.imageView2);
+       // profilePicture = findViewById(R.id.imageView2);
         userNameView = findViewById(R.id.textView5);
         logoutBtn = (Button) findViewById(R.id.button2);
-        //  NotificationBtn = (Button) findViewById(R.id.button5);
+      //  NotificationBtn = (Button) findViewById(R.id.button5);
         attendance= (CardView) findViewById(R.id.attendance);
         fees= (CardView) findViewById(R.id.fees);
         sick = (CardView) findViewById(R.id.sick);
         menu = (CardView) findViewById(R.id.menu);
         messout = (CardView)findViewById(R.id.messout);
+
     }
+
    /* private void setUserData(String name){
         userNameView.setText("Welcome " + name);
         StorageReference profileRef = storageReference.child("users/"+mAuth.getCurrentUser().getUid()+"/profile_picture/profile.jpg");
@@ -181,18 +178,16 @@ public class Home extends AppCompatActivity {
             }
         });
     }*/
-
     private void setupBottomNavigationView(){
         Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
         BottomNavigationViewHelper.enableNavigation(Home.this,bottomNavigationView);
-        android.view.Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
-        menuItem.setChecked(true);
+       android.view.Menu menu = bottomNavigationView.getMenu();
+       MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
+       menuItem.setChecked(true);
 
     }
-
     @Override
     protected void onResume(){
         super.onResume();
