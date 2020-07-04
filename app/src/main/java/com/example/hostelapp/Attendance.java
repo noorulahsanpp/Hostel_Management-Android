@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.CalendarView;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -38,8 +37,9 @@ import Utils.FirebaseMethods;
 
 public class Attendance extends AppCompatActivity {
     private static final String TAG = "Messout";
-    static final long ONE_DAY = 24 * 60 * 60 * 1000L;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    static final long ONE_DAY = 24 * 60 * 60 * 1000L;
+
     private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -47,6 +47,7 @@ public class Attendance extends AppCompatActivity {
     private CalendarView calendarView;
     private  Date d1, d2;
     SharedPreferences sharedPreferences;
+
     private int absent=0,present,year,month;
     private TextView prsnt,absnt;
     int count = 0;
@@ -59,9 +60,8 @@ public class Attendance extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_attendance);
 
-        mContext = Attendance.this;
         getSharedPreference();
-
+        mContext = Attendance.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
         calendarView = (CalendarView)findViewById(R.id.calendar);
@@ -71,7 +71,6 @@ public class Attendance extends AppCompatActivity {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         present = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
 //        documentReference = firebaseFirestore.collection("inmates").document("LH").collection("users").document("LH002").collection("messout").document("june").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 //            @Override
 //            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -105,11 +104,9 @@ public class Attendance extends AppCompatActivity {
 //                }
 //
 //                    });
-
         tine();
-
     }
-                public void getAttendace(){
+    public void getAttendace(){
 //                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
 //                    String s2 = "01 06 2020";
 //                    String s1 = "30 06 2020";
@@ -122,73 +119,69 @@ public class Attendance extends AppCompatActivity {
 //                    catch (Exception e){
 //                        Log.d(TAG, "getAttendace: "+e);
 //                    }
-                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-                    Query query = collectionReference.whereArrayContains("absents", "LH001");
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    count = count+1;
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                            absnt.setText(count+"");
-                        }
-                    });
-                }
-
-                public void tine() {
-                    String fromDate = 1 + " " + 6 + " " + 2020;
-                    String toDate = 30 + " " + 6 + " " + 2020;
-                    Date startDate = new Date();
-                    Date endDate = new Date();
-                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
-                    try {
-                        startDate = simpleDateFormat.parse(fromDate);
-                        endDate = simpleDateFormat.parse(toDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+       // CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+       // Query query = collectionReference.whereArrayContains("absents", "LH001");
+        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
+        Query query = collectionReference.whereArrayContains("absents", admissionNumber);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        count = count+1;
                     }
-                    Calendar start = Calendar.getInstance();
-                    start.setTime(startDate);
-                    Calendar end = Calendar.getInstance();
-                    end.setTime(endDate);
-                    Date date1 = start.getTime();
-                    Date date2 = end.getTime();
-
-                    CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-                    Query query = collectionReference.whereArrayContains("absents", "LH002").whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    count = count+1;
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                            absnt.setText(count+"");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "Error getting documents: ", e);
-                        }
-                    });
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+                absnt.setText(count+"");
+            }
+        });
+    }
+    public void tine() {
+        String fromDate = 1 + " " + 6 + " " + 2020;
+        String toDate = 30 + " " + 6 + " " + 2020;
+        Date startDate = new Date();
+        Date endDate = new Date();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+        try {
+            startDate = simpleDateFormat.parse(fromDate);
+            endDate = simpleDateFormat.parse(toDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar start = Calendar.getInstance();
+        start.setTime(startDate);
+        Calendar end = Calendar.getInstance();
+        end.setTime(endDate);
+        Date date1 = start.getTime();
+        Date date2 = end.getTime();
+
+       // CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+       // Query query = collectionReference.whereArrayContains("absents", "LH002").whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
+        CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
+        Query query = collectionReference.whereArrayContains("absents", admissionNumber).whereGreaterThanOrEqualTo("date", date1).whereLessThanOrEqualTo("date", date2);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        count = count+1;
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+                absnt.setText(count+"");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Error getting documents: ", e);
+            }
+        });
+    }
     public void getSharedPreference(){
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");
         admissionNumber = sharedPreferences.getString("admissionno", "");
     }
 }
-
-
-
-
-
-
-

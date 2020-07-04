@@ -1,15 +1,26 @@
 package com.example.hostelapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,33 +28,35 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 import models.User;
 
-public class Menu extends AppCompatActivity {
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    private static final String TAG = "Menu";
-    TextView breakfast;
-          TextView lunch;
-          TextView snacks;
-          TextView dinner;
-
-    private Date dateObj1;
-    private String currentdate;
-    private FirebaseFirestore firebaseFirestore;
-    private DocumentReference db;
-    private FirebaseAuth mAuth;
-    private String hostel = "";
-    private String username = "";
-    private String userID = "";
-    private String brkfst = "";
-    private String dinnr = "";
-    private String eveng = "";
-    private String lnch = "";
-    private Date today;
-    SharedPreferences sharedPreferences;
+    public class Menu extends AppCompatActivity {
+        public static final String MyPREFERENCES = "MyPrefs" ;
+        private static final String TAG = "Menu";
+        TextView breakfast;
+        TextView lunch;
+        TextView snacks;
+        TextView dinner;
+        private Date dateObj1;
+        private String currentdate;
+        private FirebaseFirestore firebaseFirestore;
+        private DocumentReference db;
+        private FirebaseAuth mAuth;
+        private String hostel = "";
+        private String username = "";
+        private String userID = "";
+        private String brkfst = "";
+        private String dinnr = "";
+        private String eveng = "";
+        private String lnch = "";
+        private Date today;
+        SharedPreferences sharedPreferences;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +78,6 @@ public class Menu extends AppCompatActivity {
             snacks = (TextView)findViewById(R.id.txtevening);
             dinner = (TextView)findViewById(R.id.txtdinner);
         }
-
         public void setData(){
             breakfast.setText(brkfst);
             dinner.setText(dinnr);
@@ -75,37 +87,33 @@ public class Menu extends AppCompatActivity {
 
         public void getData(){
             today = setDate();
+          //  firebaseFirestore.collection("inmates").document("LH").collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
             firebaseFirestore.collection("inmates").document(hostel).collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    if (e != null) {
-                        Log.w(TAG, "Listen failed.", e);
-                        return;
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            brkfst = document.get("breakfast").toString();
+                            dinnr = document.get("dinner").toString();
+                            eveng = document.get("eve").toString();
+                            lnch = document.get("lunch").toString();
+                        }
+                        setData();
                     }
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        brkfst = document.get("breakfast").toString();
-                        dinnr = document.get("dinner").toString();
-                        eveng = document.get("eve").toString();
-                        lnch = document.get("lunch").toString();
-                    }
-                    setData();
-                }
-            });
-        setData();
+                });
+                setData();
+            }
+            public Date setDate(){
+                Calendar start = Calendar.getInstance();
+                start.setTime(new Date());
+                start.set(Calendar.HOUR_OF_DAY, 0);
+                start.set(Calendar.MINUTE, 0);
+                start.set(Calendar.SECOND, 0);
+                start.set(Calendar.MILLISECOND, 0);
+                Date today = start.getTime();
+                return today;
+            }
         }
-
-    public Date setDate(){
-        Calendar start = Calendar.getInstance();
-        start.setTime(new Date());
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.set(Calendar.MINUTE, 0);
-        start.set(Calendar.SECOND, 0);
-        start.set(Calendar.MILLISECOND, 0);
-        Date today = start.getTime();
-        return today;
-    }
-    }
-
-
-
-

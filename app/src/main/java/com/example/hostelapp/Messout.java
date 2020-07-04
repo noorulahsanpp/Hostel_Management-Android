@@ -1,8 +1,6 @@
 package com.example.hostelapp;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -18,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.DatePicker;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,9 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,9 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import Utils.FirebaseMethods;
-
 public class Messout extends AppCompatActivity {
 
     private static final String TAG = "Messout";
@@ -51,7 +44,8 @@ public class Messout extends AppCompatActivity {
     private EditText days;
     private int mYear, mMonth, mDay;
     private Date dateObj1, dateObj2;
-    private String fromDate, toDate, hostel, admissionNo;
+    private String fromDate, toDate;
+    private String hostel, admissionNo;
     private int month1,month2;
 
     private Context mContext;
@@ -70,6 +64,10 @@ public class Messout extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide();
         setContentView(R.layout.activity_messout);
+        txtFrm = (TextView) findViewById(R.id.txtfrom);
+        txtTo = (TextView) findViewById(R.id.txtto);
+        Okbtn = (Button) findViewById(R.id.button3);
+        days = (EditText) findViewById(R.id.edittext13);
 
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
@@ -83,21 +81,18 @@ public class Messout extends AppCompatActivity {
         dd = new ArrayList<>();
         builder = new AlertDialog.Builder(this);
         getData();
-
         txtFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setFromDate();
             }
         });
-
         txtTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setToDate();
             }
         });
-
         Okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +104,6 @@ public class Messout extends AppCompatActivity {
                 String to1;
                 from1 = new SimpleDateFormat("EEE, MMM d").format(dateObj1);
                 to1 = new SimpleDateFormat("EEE, MMM d").format(dateObj2);
-
                 builder.setMessage("Do you want to mark messout from "+from1+" to "+to1+" ?" ).setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -127,15 +121,12 @@ public class Messout extends AppCompatActivity {
             }
         });
     }
-
     public void setFromDate(){
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
         final DatePickerDialog datePickerDialog =  new DatePickerDialog(Messout.this,new DatePickerDialog.OnDateSetListener() {
-
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 txtFrm.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
@@ -147,13 +138,11 @@ public class Messout extends AppCompatActivity {
                 catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
-
     public void setToDate(){
         if (txtFrm.getText() == " ") {
             toastMessage(" Please select from date");
@@ -164,11 +153,9 @@ public class Messout extends AppCompatActivity {
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-
             DatePickerDialog datePickerDialog = new DatePickerDialog(Messout.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
                     txtTo.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                     toDate = dayOfMonth + " " + (month + 1) + " " + year;
                     month2 = month;
@@ -195,14 +182,11 @@ public class Messout extends AppCompatActivity {
                     }
                 }
             }, mYear, mMonth, mDay);
-
             datePickerDialog.getDatePicker().setMinDate(dateObj1.getTime());
             datePickerDialog.show();
         }
     }
-
     public void setMessout(){
-
         String ndays = days.getText().toString();
         if (ndays.matches("")) {
             toastMessage("Select a valid date");
@@ -231,7 +215,6 @@ public class Messout extends AppCompatActivity {
             }
         }
     }
-
     public void validate(@NotNull Calendar start, Calendar end){
         for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
             if (dd.contains(date)){
@@ -257,15 +240,18 @@ public class Messout extends AppCompatActivity {
         Map<String, Object> messout = new HashMap<>();
         for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
             messout.put("date", date);
+            messout.put("absents", FieldValue.arrayUnion("LH002"));
             messout.put("absents", FieldValue.arrayUnion(admissionNo));
             messout.put("total_absentees", FieldValue.increment(1));
             collectionReference.document(date + "").set(messout, SetOptions.merge());
         }
         toastMessage(" Messout successfully marked");
         startActivity(new Intent(Messout.this, Home.class));
+//        getData();
     }
 
     public void getData(){
+
         Query query = collectionReference.whereArrayContains("absents", admissionNo);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -280,7 +266,6 @@ public class Messout extends AppCompatActivity {
             }
         });
     }
-
     public void toastMessage(String message){
         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
     }

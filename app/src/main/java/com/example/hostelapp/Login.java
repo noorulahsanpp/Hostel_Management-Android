@@ -2,12 +2,18 @@ package com.example.hostelapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.viewpager.widget.ViewPager;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,10 +27,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Timer;
+
+import Utils.BottomNavigationViewHelper;
 
 public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
@@ -33,14 +45,18 @@ public class Login extends AppCompatActivity {
     private static final String KEY_USERID = "user_dd";
     public static final String MyPREFERENCES = "MyPrefs" ;
 
+
     SharedPreferences sharedPreferences;
-    private TextView signUpTv;
+    private TextView signUpTv,forgot;
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
-    private String userID,loginPhone, loginAdmission, loginHostel, loginName;
+    private String userID,admissionNumber, loginAdmission, loginHostel;
+    private String loginPhone,loginName;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
+
+
 
 
     @Override
@@ -56,31 +72,39 @@ public class Login extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        if(auth.getCurrentUser()!=null)
-        {
+        if (auth.getCurrentUser() != null) {
             finish();
             startActivity(new Intent(Login.this, Home.class));
         }
 
-        signUpTv = findViewById(R.id.signupTv);
-        loginbtn = (Button) findViewById(R.id.button);
-        emailEt = (EditText)findViewById(R.id.editText1);
-        passwordEt = (EditText)findViewById(R.id.editText2);
 
+        signUpTv = findViewById(R.id.signupTv);
+        //setupBottomNavigationView();
+        loginbtn = (Button) findViewById(R.id.button);
+        forgot = findViewById(R.id.forgot);
+        emailEt = (EditText) findViewById(R.id.editText1);
+        passwordEt = (EditText) findViewById(R.id.editText2);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginUser();
             }
         });
-
         signUpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Verification.class));
             }
         });
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),forgotpassword.class));
+            }
+        });
+
     }
+
 
     private void loginUser()
     {
@@ -100,13 +124,14 @@ public class Login extends AppCompatActivity {
         }
         progressdialog.setMessage("Logging in...");
         progressdialog.show();
-
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 userID = auth.getCurrentUser().getUid();
-                getUserData(userID);
+              //  getAdmissionNo(userID);
+                getHostel(userID);
                 setSharedPreferences();
+                getUserData(userID);
                 progressdialog.dismiss();
                 Intent intent = new Intent(Login.this, Home.class);
                 startActivity(intent);
@@ -123,7 +148,6 @@ public class Login extends AppCompatActivity {
 
     private void getUserData(String userid)
     {
-        getHostel(userid);
         firebaseFirestore.collection("inmates").document(loginHostel).collection("users").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -153,15 +177,26 @@ public class Login extends AppCompatActivity {
 
     private void getHostel(String userid)
     {
-        firebaseFirestore.collection("login").whereEqualTo("user_id", userid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("login").document(userid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful())
                 {
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                       // Log.d(TAG, document.getId() + " => " + document.getData());
+                        loginAdmission = document.get("admission_number").toString();
                         loginHostel = document.get("hostel").toString();
+                        System.out.println(loginAdmission);
+                        System.out.println(loginHostel);
                     }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Unsuccessfull", Toast.LENGTH_LONG).show();
+                    }
+                    Intent intent = new Intent(Login.this, Home.class);
+                    intent.putExtra("admission_number", loginAdmission);
+                    intent.putExtra("hostel", loginHostel);
+                    startActivity(intent);
                 }
                 else
                 {
@@ -176,6 +211,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
+
     public void setSharedPreferences(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("userid", userID);
@@ -185,7 +221,6 @@ public class Login extends AppCompatActivity {
         editor.putString("name", loginName);
         editor.commit();
     }
-
 
 
 

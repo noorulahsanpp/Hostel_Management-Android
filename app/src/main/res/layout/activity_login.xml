@@ -36,38 +36,48 @@
             android:drawablePadding="5dp"
             android:background="@drawable/textbox"
             android:inputType="textPersonName" />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@id/editText2"
+            android:id="@+id/Textinput"
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="300dp"
+            android:layout_below="@+id/editText1"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="40dp"
+            android:paddingBottom="5dp"
+            android:layout_height="40dp"
+            app:hintEnabled="false"
+            android:background="@drawable/textbox"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textSize="15dp"
+                android:hint="Password"
+                android:background="@drawable/textbox"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-           android:layout_centerHorizontal="true"
+        <TextView
+            android:id="@+id/pswdicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp"
+            android:layout_below="@id/editText1"
+            android:textSize="25dp"
             android:layout_marginTop="15dp"
-            android:textSize="15dp"
-            android:padding="10dp"
-            android:width="300dp"
-           android:drawableLeft="@drawable/ic_action_lock"
-            android:hint="Password"
-            android:drawableTint="@color/tabs"
-            android:drawablePadding="5dp"
-            android:background="@drawable/textbox"
-            android:layout_below="@+id/editText1"
-            android:inputType="textPassword"
-            />
+            android:drawableLeft="@drawable/ic_action_lock"
+            android:drawableTint="@color/tabs"/>
+
         <TextView
             android:id="@+id/forgot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="237dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/editText2"
+            android:layout_below="@+id/Textinput"
             android:text="Forgot Password"
             android:textColor="@color/blue"/>
 
