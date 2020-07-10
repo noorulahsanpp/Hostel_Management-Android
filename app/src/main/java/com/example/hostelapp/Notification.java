@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class Notification extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 1;
 
    private ListView notification;
-
+    private String hostel = "";
 
    private String topic;
     private Timestamp timestamp;
@@ -65,6 +66,7 @@ public class Notification extends AppCompatActivity {
     private FirebaseMethods firebaseMethods;
     private DocumentReference documentReference;
     private CollectionReference collectionReference;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +79,16 @@ public class Notification extends AppCompatActivity {
         mContext = Notification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-         final List<HashMap<String, String>> listitems = new ArrayList<>();
-       final SimpleAdapter adapter = new SimpleAdapter(this,listitems,R.layout.list_items, new String[]{"First Line","Second Line","date"},new int[]{R.id.topic,R.id.description,R.id.date});
-
-
+        hostel = sharedPreferences.getString("hostel", "");
         notification = (ListView)findViewById(R.id.listview);
-        collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("notification");
+        mnotification();
+           }
+
+    private void mnotification() {
+
+        final List<HashMap<String, String>> listitems = new ArrayList<>();
+        final SimpleAdapter adapter = new SimpleAdapter(this,listitems,R.layout.list_items, new String[]{"First Line","Second Line","date"},new int[]{R.id.topic,R.id.description,R.id.date});
+        collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("notification");
         collectionReference.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -91,24 +97,18 @@ public class Notification extends AppCompatActivity {
 
                         topic = document.get("topic").toString();
                         description = document.get("description").toString();
-                         timestamp = document.getTimestamp("date");
-                       Date date = timestamp.toDate();
+                        timestamp = document.getTimestamp("date");
+                        Date date = timestamp.toDate();
                         String date1 = simpleDateFormat.format(date);
-
                         Map<Object, Object> topicdescription = new HashMap<>();
                         topicdescription.put(topic, description);
-
-
-                         Iterator it = topicdescription.entrySet().iterator();
-
-
-
-                            HashMap<String, String> resultMap = new HashMap<>();
-                            Map.Entry pair = (Map.Entry) it.next();
-                            resultMap.put("First Line", pair.getKey().toString());
-                            resultMap.put("Second Line",pair.getValue().toString());
-                            resultMap.put("date", date1);
-                            listitems.add(resultMap);
+                        Iterator it = topicdescription.entrySet().iterator();
+                        HashMap<String, String> resultMap = new HashMap<>();
+                        Map.Entry pair = (Map.Entry) it.next();
+                        resultMap.put("First Line", pair.getKey().toString());
+                        resultMap.put("Second Line",pair.getValue().toString());
+                        resultMap.put("date", date1);
+                        listitems.add(resultMap);
 
                         notification.setAdapter(adapter);
 
@@ -118,9 +118,8 @@ public class Notification extends AppCompatActivity {
                 }
             }
 
-        });    }
-
-
+        });
+    }
 
 
 }

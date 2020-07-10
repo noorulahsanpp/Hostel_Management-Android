@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs" ;
 
     SharedPreferences sharedPreferences;
-    private TextView signUpTv;
+    private TextView signUpTv,forgot;
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
@@ -72,6 +72,13 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),forgotpassword.class));
+            }
+        });
+
         signUpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +91,7 @@ public class Login extends AppCompatActivity {
         loginbtn = (Button) findViewById(R.id.button);
         emailEt = (EditText)findViewById(R.id.editText1);
         passwordEt = (EditText)findViewById(R.id.editText2);
+        forgot = findViewById(R.id.forgot);
     }
 
     private void loginUser()

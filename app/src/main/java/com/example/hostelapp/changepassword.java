@@ -44,74 +44,71 @@ public class changepassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
 
-        currentEt=findViewById(R.id.current);
-        newpswdEt=findViewById(R.id.newpswd);
-        confirmEt=findViewById(R.id.confirm);
-        changepswd=findViewById(R.id.button15);
+        currentEt = findViewById(R.id.current);
+        newpswdEt = findViewById(R.id.newpswd);
+        confirmEt = findViewById(R.id.confirm);
+        changepswd = findViewById(R.id.button15);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        popup();
 
 
         changepswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String newpassword = newpswdEt.getText().toString().trim();
-                final String confirm = confirmEt.getText().toString().trim();
-                final String current= currentEt.getText().toString().trim();
-
-               if(currentEt.getText().toString().length()==0) {
+                if (currentEt.getText().toString().length() == 0) {
                     currentEt.setError("Enter current password");
-                  //  currentEt.requestFocus();
                     return;
                 }
-                if(newpswdEt.getText().toString().length()==0)  {
+                if (newpswdEt.getText().toString().length() == 0) {
                     newpswdEt.setError("Enter new password");
-                 //   newpswdEt.requestFocus();
                     return;
                 }
-                if(confirmEt.getText().toString().length()==0) {
+                if (confirmEt.getText().toString().length() == 0) {
                     confirmEt.setError("Confirm new password");
-                 //   confirmEt.requestFocus();
                     return;
                 }
-                if(newpswdEt.getText().toString().equals(confirmEt.getText().toString())){
+                if (newpswdEt.getText().toString().equals(confirmEt.getText().toString())) {
                     changepwd();
-                }
-                else {
+                } else {
                     confirmEt.setError("Password mismatching");
                     confirmEt.requestFocus();
                     return;
 
                 }
-            }});
-
-
-       DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-       int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.9),(int)(height*.7));
-
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-       params.gravity= Gravity.CENTER;
-       params.x=0;
-        params.y=-20;
-       getWindow().setAttributes(params);
-
+            }
+        });
     }
+
+
+    private void popup() {
+
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+            int width = dm.widthPixels;
+            int height = dm.heightPixels;
+
+            getWindow().setLayout((int)(width*.9),(int)(height*.7));
+
+            WindowManager.LayoutParams params = getWindow().getAttributes();
+            params.gravity= Gravity.CENTER;
+            params.x=0;
+            params.y=-20;
+            getWindow().setAttributes(params);
+
+        }
+
+
 
     private void changepwd() {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     if(user!=null)
     {
-
         AuthCredential credential = EmailAuthProvider
                 .getCredential(user.getEmail(),currentEt.getText().toString());
-
 // Prompt the user to re-provide their sign-in credentials
         user.reauthenticate(credential)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -132,15 +129,12 @@ public class changepassword extends AppCompatActivity {
                                                 Log.d(TAG, "User password updated.");
                                                 Toast.makeText(getApplicationContext(), "Password changed successfully", Toast.LENGTH_LONG).show();
                                                 finish();
-
                                             }
                                             else{
                                                 Toast.makeText(getApplicationContext(), "Error password not updates", Toast.LENGTH_LONG).show();
-
                                             }
                                         }
                                     });
-
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Re-authentication failed ,Please try again", Toast.LENGTH_LONG).show();
@@ -148,7 +142,11 @@ public class changepassword extends AppCompatActivity {
                         }
                     }
                 });
-    }}
+    }
+    else{
+        Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
+    }
+    }
 
 
 }

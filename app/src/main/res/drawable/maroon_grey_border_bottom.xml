@@ -13,7 +13,7 @@
             android:width="3dp"
             android:color="@color/grey"></stroke>
         <solid
-            android:color = "@color/tabs"></solid>
+            android:color = "#C1BBBE"></solid>
 </shape>
 
     </item>

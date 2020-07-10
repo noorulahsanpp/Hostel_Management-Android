@@ -5,16 +5,17 @@
     <RelativeLayout
         android:layout_height="45dp"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentTop="true">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavViewBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/maroon_grey_border_top"
-            app:menu="@menu/bottom_navigation_menu"
-            app:itemIconSize="28dp"
-            app:itemIconTint="@color/headings"/>
+            android:background="@drawable/maroon_grey_border_bottom"/>
+
+        <!--app:menu="@menu/bottom_navigation_menu"
+        app:itemIconSize="28dp"
+        app:itemIconTint="#FFFFFF"-->
 
 
     </RelativeLayout>

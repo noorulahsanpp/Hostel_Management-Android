@@ -31,7 +31,41 @@ public class forgotpassword extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpassword);
+        popup();
 
+        emailEt=findViewById(R.id.emailEt);
+        send=findViewById(R.id.sendpswd);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+       mAuth = FirebaseAuth.getInstance();
+
+       send.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String email = emailEt.getText().toString();
+               forgotpswd(email);
+           }
+       });
+    }
+
+    private void forgotpswd(String email) {
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                progressdialog.show();
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(getApplicationContext(), "Password send to your email", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Email not exist", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
+    private void popup() {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -45,31 +79,5 @@ public class forgotpassword extends AppCompatActivity {
         params.x=0;
         params.y=-20;
         getWindow().setAttributes(params);
-
-        emailEt=findViewById(R.id.emailEt);
-        send=findViewById(R.id.sendpswd);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-       mAuth = FirebaseAuth.getInstance();
-
-       send.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               mAuth.sendPasswordResetEmail(emailEt.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                   @Override
-                   public void onComplete(@NonNull Task<Void> task) {
-                       progressdialog.show();
-                       if(task.isSuccessful())
-                       {
-                           Toast.makeText(getApplicationContext(), "Password send to your email", Toast.LENGTH_LONG).show();
-                       }
-                       else{
-                           Toast.makeText(getApplicationContext(), "Email not exist", Toast.LENGTH_LONG).show();
-                       }
-
-                   }
-               });
-           }
-       });
     }
 }

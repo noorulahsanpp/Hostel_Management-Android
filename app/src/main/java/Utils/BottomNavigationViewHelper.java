@@ -31,18 +31,18 @@ public class BottomNavigationViewHelper {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                   case R.id.ic_home:
+                 /*  case R.id.ic_home:
                        Intent intent1 = new Intent(context, Home.class); //activity_num 0
                       context.startActivity(intent1);
-                      break;
-                   case R.id.ic_notification:
+                      break;*/
+                /*   case R.id.ic_notification:
                         Intent intent2 = new Intent(context, Notification.class);//activity_num 1
                         context.startActivity(intent2);
-                        break;
-                    case R.id.ic_profile:
+                        break;*/
+                   /* case R.id.ic_profile:
                       Intent intent3 = new Intent(context, Profile.class);//activity_num 2
                       context.startActivity(intent3);
-                       break;
+                       break;*/
                 }
                 return false;
             }

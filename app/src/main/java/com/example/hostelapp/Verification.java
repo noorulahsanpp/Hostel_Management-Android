@@ -38,7 +38,7 @@ public class Verification extends AppCompatActivity {
     private Context mContext;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private Button check,login;
+    private Button check;
     private String adnumber,regn;
     private DocumentReference documentReference;
     private FirebaseMethods firebaseMethods;
@@ -51,15 +51,21 @@ public class Verification extends AppCompatActivity {
 
         num = findViewById(R.id.editText5);
         check = findViewById(R.id.button15);
-        login = findViewById(R.id.login);
         mContext = Verification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-        login.setOnClickListener(new View.OnClickListener() {
+
+        popup();
+
+        check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Verification.this,Login.class)); }
+                String number = num.getText().toString().trim();
+                verify(number);
+            }
         });
+    }
+    private void popup() {
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -74,47 +80,42 @@ public class Verification extends AppCompatActivity {
         params.x=0;
         params.y=-20;
         getWindow().setAttributes(params);
-
-
-
-        check.setOnClickListener(new View.OnClickListener() {
+    }
+    private void verify(String number) {
+        documentReference = firebaseFirestore.collection("registered").document(number);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
-                String number = num.getText().toString().trim();
-                documentReference = firebaseFirestore.collection("registered").document(number);
-                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()){
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
 
-                                    regn = document.get("app_registration").toString();
-                                    if(regn.equals("yes"))
-                                    {
-                                        Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();
+                        regn = document.get("app_registration").toString();
+                        if(regn.equals("yes"))
+                        {
+                            Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();
 
-                                    }
-                                    else {
-
-                                        Toast.makeText(getApplicationContext(), "" + document.getData(), Toast.LENGTH_LONG).show();
-                                        adnumber = document.getId().toString();
-
-                                        Intent intent = new Intent(Verification.this, UserRegistration.class);
-                                        intent.putExtra("adnumber", adnumber);
-                                        startActivity(intent);
-                                    }
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(),"Invalid registration number", Toast.LENGTH_LONG).show();
-                            }
                         }
                         else {
-                            Toast.makeText(getApplicationContext(),"Failed", Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getApplicationContext(), "" + document.getData(), Toast.LENGTH_LONG).show();
+                            adnumber = document.getId().toString();
+
+                            Intent intent = new Intent(Verification.this, UserRegistration.class);
+                            intent.putExtra("adnumber", adnumber);
+                            startActivity(intent);
                         }
                     }
-                });
+                    else {
+                        Toast.makeText(getApplicationContext(),"Invalid registration number", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Failed", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
+
+
 }

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".Home">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFF">
+
+
+
+
+<Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="@drawable/silver_style">
+
+        <RelativeLayout
+            android:id="@+id/relLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/hostel" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="HOSTEL APP"
+                android:layout_marginLeft="50dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/tabs"
+               />
+    <RelativeLayout
+        android:id = "@+id/notificationBadge"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_marginLeft="290dp"
+        android:layout_centerVertical = "true" >
+
+            <RelativeLayout
+                android:id= "@+id/badgeLayout"
+                android:layout_width = "wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height = "wrap_content">
+                <Button
+                    android:layout_width = "28dp"
+                    android:layout_height = "28dp"
+                    android:layout_centerVertical="true"
+                    android:background = "@drawable/ic_action_notification"
+                    android:backgroundTint="@color/tabs"/>
+            </RelativeLayout>
+            <TextView
+               android:id = "@+id/tvBadgeNumber"
+               android:layout_width = "wrap_content"
+               android:layout_height = "wrap_content"
+               android:layout_alignTop = "@+id/badgeLayout"
+               android:layout_alignEnd = "@id/badgeLayout"
+                android:background = "@drawable/item_count"
+               android:text = "0"
+               android:textColor = "#FFF"
+               android:textSize = "13dp"
+               android:textStyle = "bold"
+               android:layout_alignRight="@id/badgeLayout" />
+    </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/myCardView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="330dp"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="70dp"
+            app:cardPreventCornerOverlap="false">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:srcCompat="@android:drawable/btn_dialog"
+                tools:srcCompat="@drawable/ic_action_profile">
+
+            </ImageView>
+
+
+        </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+</Toolbar>
+
+
+        <ViewFlipper
+            android:id="@+id/viewflipper"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="45dp"
+            android:autoStart="true"
+            android:inAnimation="@android:anim/slide_in_left"
+            android:outAnimation="@android:anim/slide_out_right">
+
+
+        </ViewFlipper>
+
+    <RelativeLayout
+        android:id="@+id/relLayout3"
+        android:layout_marginTop="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fees"
+                android:layout_width="120dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="70dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <ImageView
+                    android:layout_width="106dp"
+                    android:layout_height="69dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/fees" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="37dp"
+                    android:layout_marginTop="70dp"
+                    android:text="fees"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/attendance"
+                android:layout_width="120dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="70dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <ImageView
+
+                    android:layout_width="64dp"
+                    android:layout_height="66dp"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/attendace" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="70dp"
+                    android:text="attendance"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sick"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="190dp"
+
+            android:layout_marginLeft="250dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="70dp"
+                android:text="sick"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                 />
+
+            <ImageView
+
+                android:layout_width="57dp"
+                android:layout_height="68dp"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/sick" />
+
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/menu"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="190dp"
+            android:layout_marginLeft="60dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
+
+
+            <ImageView
+
+                android:layout_width="71dp"
+                android:layout_height="84dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="-10dp"
+                android:src="@drawable/food" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="70dp"
+                android:text="menu"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/messout"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="310dp"
+            android:layout_marginLeft="150dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="70dp"
+                android:text="messout"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+            <ImageView
+
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="-15dp"
+                android:src="@drawable/calendar"/>
+
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="600dp"
+            android:drawableTop="@drawable/ic_action_profile"
+            android:background="@android:color/transparent"
+            android:text="Logout"
+            tools:visibility="visible" />
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
