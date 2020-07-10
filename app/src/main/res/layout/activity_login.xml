@@ -35,7 +35,7 @@
             android:drawableLeft="@drawable/ic_action_email"
             android:drawablePadding="5dp"
             android:background="@drawable/textbox"
-            android:inputType="textPersonName" />
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/editText2"

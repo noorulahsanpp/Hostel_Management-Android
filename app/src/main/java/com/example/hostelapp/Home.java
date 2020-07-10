@@ -1,16 +1,12 @@
 package com.example.hostelapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,24 +16,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import Utils.BottomNavigationViewHelper;
-import models.User;
 
 public class Home extends AppCompatActivity {
     private static final String TAG = "Home";
@@ -54,10 +43,10 @@ public class Home extends AppCompatActivity {
     private String userID;
     private String userName,hostel, admissionNumber, name;
     private TextView userNameView;
-    private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     private CardView fees,sick,attendance,messout,menu;
+    private Boolean exit = false;
 
     private ViewFlipper viewFlipper;
 
@@ -91,6 +80,8 @@ public class Home extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         getSharedPreference();
+        onTokenRefresh();
+
 
        /* profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,5 +186,30 @@ public class Home extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");
         admissionNumber = sharedPreferences.getString("admissionno", "");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+    }
+
+
+    public void onTokenRefresh() {
+        // Get updated InstanceID token.
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
     }
 }

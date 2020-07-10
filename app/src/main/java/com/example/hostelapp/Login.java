@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class Login extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class Login extends AppCompatActivity {
     private String userID,loginPhone, loginAdmission, loginHostel, loginName, loginEmail;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
+    private FirebaseMessaging firebaseMessaging;
 
 
     @Override
@@ -142,6 +144,7 @@ public class Login extends AppCompatActivity {
                         loginEmail = document.get("email").toString();
                     }
                     setSharedPreferences();
+                    cloudMessage();
                 }
 
             }
@@ -185,6 +188,23 @@ public class Login extends AppCompatActivity {
         editor.commit();
     }
 
+
+
+    public void cloudMessage(){
+        firebaseMessaging = FirebaseMessaging.getInstance();
+        firebaseMessaging.subscribeToTopic(loginHostel+"")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed to "+loginHostel;
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                        Log.d(TAG, msg);
+                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 
 
