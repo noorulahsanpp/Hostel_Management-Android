@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -54,6 +55,7 @@ public class Profile extends AppCompatActivity {
     private String userID, hostel, admissionNumber, nameSp, phoneSp;
     private StorageReference storageReference;
     SharedPreferences sharedPreferences;
+    private FirebaseMessaging firebaseMessaging;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,11 @@ public class Profile extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                unsubscribe();
                 mAuth.signOut();
                 finish();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
                 startActivity(new Intent(Profile.this, Login.class));
             }
         });
@@ -175,6 +180,15 @@ public class Profile extends AppCompatActivity {
         admissionNumber = sharedPreferences.getString("admissionno", "");
         nameSp = sharedPreferences.getString("name", "");
         phoneSp = sharedPreferences.getString("phone", "");
+    }
+    public void unsubscribe(){
+        firebaseMessaging = FirebaseMessaging.getInstance();
+        firebaseMessaging.unsubscribeFromTopic(hostel+"").addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(Profile.this, "Unsubscribed from "+hostel, Toast.LENGTH_SHORT);
+        }
+        });
     }
 }
 

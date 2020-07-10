@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +37,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -67,6 +67,9 @@ public class Home extends AppCompatActivity {
     private ImageView profilePicture;
     private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
+    private SharedPreferences sharedPreferences;
+    private CardView fees,sick,attendance,messout,menu;
+    private Boolean exit = false;
     SharedPreferences sharedPreferences;
     private CardView fees, sick, attendance, messout, menu;
     private DatabaseReference databaseReference;
@@ -104,8 +107,9 @@ public class Home extends AppCompatActivity {
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-
         getSharedPreference();
+        onTokenRefresh();
+
 
         StorageReference profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -151,7 +155,10 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this, Profile.class);
+                intent.putExtra("hostel", hostel);
+                intent.putExtra("admission_number", admissionNumber);
                 startActivity(intent);
+
 
 
             }
@@ -167,7 +174,6 @@ public class Home extends AppCompatActivity {
 
             }
         });
-
 
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,5 +339,30 @@ public class Home extends AppCompatActivity {
         public String getImageUrl() {
             return imageUrl;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+    }
+
+
+    public void onTokenRefresh() {
+        // Get updated InstanceID token.
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
     }
 }

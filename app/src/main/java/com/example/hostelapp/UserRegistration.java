@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class UserRegistration extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private TextView loginBtn;
     private FirebaseFirestore firebaseFirestore;
+
     private String userID, username, room, block, admisson,batch,dept,hostel;
     String localHostel = "";
 
@@ -259,4 +261,6 @@ public class UserRegistration extends AppCompatActivity {
         us.put("app_reg", "yes");
         documentReference.set(us, SetOptions.merge());
     }
+
+
 }
