@@ -18,7 +18,7 @@
         android:text="Sick"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textColor="@color/tabs" />
+        android:textColor="@color/maroon" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -93,7 +93,7 @@
             android:textColor="#FFFF"
             android:theme="@style/Button" />
 
-        <include layout="@layout/layout_bottom_navigation_view" />
+
 
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="1dp">
     <item
-        android:bottom = "-4dp"
+        android:bottom = "-2dp"
         android:top="-4dp"
         android:right="-4dp"
         android:left = "-4dp">
         <shape
             android:shape = "rectangle">
-        <stroke
-            android:width="3dp"
-            android:color="@color/grey"></stroke>
-        <solid
-            android:color = "#C1BBBE"></solid>
+            <stroke
+                android:width="3dp"
+                android:color="#8E8D8D" />
+            <solid android:color="@color/grey" />
 </shape>
 
     </item>

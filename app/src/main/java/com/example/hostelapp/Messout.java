@@ -64,14 +64,11 @@ public class Messout extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar().hide();
         setContentView(R.layout.activity_messout);
-        txtFrm = (TextView) findViewById(R.id.txtfrom);
-        txtTo = (TextView) findViewById(R.id.txtto);
-        Okbtn = (Button) findViewById(R.id.button3);
-        days = (EditText) findViewById(R.id.edittext13);
 
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
         initWidgets();
+        init();
         getSharedPreference();
 
         mContext = Messout.this;
@@ -81,6 +78,10 @@ public class Messout extends AppCompatActivity {
         dd = new ArrayList<>();
         builder = new AlertDialog.Builder(this);
         getData();
+
+    }
+
+    private void init() {
         txtFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +122,7 @@ public class Messout extends AppCompatActivity {
             }
         });
     }
+
     public void setFromDate(){
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);

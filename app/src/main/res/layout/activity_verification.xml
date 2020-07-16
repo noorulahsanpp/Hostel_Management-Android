@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:text="Student Verification"
             android:textSize="17dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/maroon"/>
         <TextView
             android:layout_width="350dp"
             android:layout_marginTop="180dp"
@@ -58,8 +58,7 @@
             android:layout_marginLeft="268dp"
             android:textSize="15dp"
             android:padding="10dp"
-            android:background="@drawable/edittextborder"
-            android:backgroundTint="@color/tabs"
+            android:background="@drawable/button_style"
             android:textColor="@color/headings"
             android:text="CHECK" />
 

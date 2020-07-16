@@ -31,7 +31,7 @@
             android:layout_marginTop="50dp"
             android:text="Messbill"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/tabs"
+            android:textColor="@color/maroon"
             android:textSize="40sp"
             android:theme="@style/TextView"
             tools:layout_editor_absoluteX="85dp"
@@ -343,7 +343,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="250dp"
             android:layout_marginTop="570dp"
-            android:background="@color/tabs"
+            android:background="@color/maroon"
             android:textColor="#FFFF"
             android:text="Pay Now" />
 

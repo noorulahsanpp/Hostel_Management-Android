@@ -13,10 +13,6 @@
         >
 
 
-
-
-        <include layout="@layout/layout_bottom_navigation_view" />
-
         <!--TextView
             android:id="@+id/textView6"
             android:layout_width="251dp"

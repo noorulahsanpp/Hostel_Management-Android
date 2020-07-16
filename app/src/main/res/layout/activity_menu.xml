@@ -55,26 +55,13 @@
 
         </RelativeLayout>
 
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relLayout2"
-            android:layout_below="@+id/relLayout1">
-            <include layout="@layout/layout_center_viewpage"/>
-        </RelativeLayout>
-
-
-        <include layout="@layout/layout_bottom_navigation_view"/>
-
         <TextView
             android:id="@+id/textView8"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            android:textColor="@color/tabs"
+            android:textColor="@color/maroon"
             android:textStyle="bold"
             android:text="Today's Menu"
             android:theme="@style/TextView"

@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/adamina"
             android:text="REGISTRATION"
-            android:textColor="@color/tabs"
+            android:textColor="@color/maroon"
             android:textSize="30dp"
             android:textStyle="bold" />
 
