@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -59,11 +60,7 @@ public class Login extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        if(auth.getCurrentUser()!=null)
-        {
-            finish();
-            startActivity(new Intent(Login.this, Home.class));
-        }
+
 
         initWidgets();
 
@@ -119,12 +116,23 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 userID = auth.getCurrentUser().getUid();
-
-                getHostel(userID);
-                progressdialog.dismiss();
-                Intent intent = new Intent(Login.this, Home.class);
-                startActivity(intent);
-
+                FirebaseUser user =auth.getCurrentUser();
+                try {
+                    if (user.isEmailVerified()){
+                        Log.d(TAG, "onSuccess: Email Verified");
+                        getHostel(userID);
+                        progressdialog.dismiss();
+                        Intent intent = new Intent(Login.this, Home.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        progressdialog.dismiss();
+                        Toast.makeText(getBaseContext(), "Email not verified \n Check your inbox.", Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (NullPointerException e){
+                    Log.e(TAG, "onSuccess: NullPointerException "+e.getMessage() );
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -196,8 +204,6 @@ public class Login extends AppCompatActivity {
         editor.commit();
     }
 
-
-
     public void cloudMessage(){
         firebaseMessaging = FirebaseMessaging.getInstance();
         firebaseMessaging.subscribeToTopic(loginHostel+"")
@@ -209,12 +215,7 @@ public class Login extends AppCompatActivity {
                             msg = "Subscribe failed";
                         }
                         Log.d(TAG, msg);
-                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
-
-
 }

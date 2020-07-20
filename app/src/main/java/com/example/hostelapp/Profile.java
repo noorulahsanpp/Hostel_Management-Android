@@ -95,9 +95,9 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 unsubscribe();
                 mAuth.signOut();
-                finish();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
+                finish();
                 startActivity(new Intent(Profile.this, Login.class));
             }
         });
@@ -191,7 +191,7 @@ public class Profile extends AppCompatActivity {
         firebaseMessaging.unsubscribeFromTopic(hostel+"").addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(Profile.this, "Unsubscribed from "+hostel, Toast.LENGTH_SHORT);
+                Log.d(TAG, "onSuccess: Unsubscribed from "+hostel);
         }
         });
     }

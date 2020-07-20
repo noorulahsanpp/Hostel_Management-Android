@@ -87,8 +87,7 @@ import models.User;
 
         public void getData(){
             today = setDate();
-          //  firebaseFirestore.collection("inmates").document("LH").collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            firebaseFirestore.collection("inmates").document(hostel).collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            firebaseFirestore.collection("inmates").document(""+hostel).collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {

@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -45,8 +46,6 @@ public class Home extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 0;
     public static final String MyPREFERENCES = "MyPrefs";
 
-
-
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private String userID;
@@ -62,8 +61,6 @@ public class Home extends AppCompatActivity {
     private List<Upload> mUploads;
     private ViewFlipper viewFlipper;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +68,15 @@ public class Home extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting");
-        //     setupBottomNavigationView();
-        //  mAuth.signOut();
+
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser()==null)
+        {
+            finish();
+            startActivity(new Intent(Home.this, Login.class));
+            return;
+        }
+
         mUploads = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -82,16 +86,9 @@ public class Home extends AppCompatActivity {
 
         initWidgets();
         init();
-
-
         onTokenRefresh();
         getSharedPreference();
-
-
-
-
-
-        }
+    }
 
     private void init() {
         StorageReference profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");
@@ -102,19 +99,13 @@ public class Home extends AppCompatActivity {
             }
         });
 
-
-
-
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this, Profile.class);
                 startActivity(intent);
-
-
             }
         });
-
 
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,27 +132,23 @@ public class Home extends AppCompatActivity {
 
                 Intent intent = new Intent(Home.this, Menu.class);
                 startActivity(intent);
-
             }
         });
-
         messout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, Messout.class));
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-       usingFirebaseDatabase();
+        usingFirebaseDatabase();
     }
 
     private void usingFirebaseDatabase() {
-
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -170,16 +157,14 @@ public class Home extends AppCompatActivity {
                     mUploads.add(upload);
                 }
                 usingFirebaseImages(mUploads);
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(Home.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
-
     }
+
 
     private void usingFirebaseImages(List<Upload> mUploads) {
         for (int i = 0; i < mUploads.size(); i++) {
@@ -191,9 +176,7 @@ public class Home extends AppCompatActivity {
     private void flipImages(String imageUrl) {
         ImageView imageView = new ImageView(this);
         Picasso.get().load(imageUrl).into(imageView);
-
         viewFlipper.addView(imageView);
-
         viewFlipper.setFlipInterval(2000);
         viewFlipper.startFlipping();
         viewFlipper.setAutoStart(true);
@@ -201,12 +184,9 @@ public class Home extends AppCompatActivity {
         viewFlipper.setInAnimation(in);
     }
 
-
-
     private void setProfilePicture(Uri uri) {
         Picasso.get().load(uri).into(profilePicture);
     }
-
 
     private void initWidgets() {
         viewFlipper = findViewById(R.id.viewflipper);
@@ -219,24 +199,12 @@ public class Home extends AppCompatActivity {
         sick = (CardView) findViewById(R.id.sick);
         menu = (CardView) findViewById(R.id.menu);
         messout = (CardView) findViewById(R.id.messout);
-
     }
 
-
-    /*  private void setupBottomNavigationView(){
-          Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
-          BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavViewBar);
-          BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-          BottomNavigationViewHelper.enableNavigation(Home.this,bottomNavigationView);
-         android.view.Menu menu = bottomNavigationView.getMenu();
-         MenuItem menuItem = menu.getItem( ACTIVITY_NUM );
-         menuItem.setChecked(true);
-
-      }*/
     @Override
     protected void onResume() {
         super.onResume();
-       getSharedPreference();
+        getSharedPreference();
     }
 
     public void getSharedPreference() {
@@ -244,7 +212,6 @@ public class Home extends AppCompatActivity {
         hostel = sharedPreferences.getString("hostel", "");
         admissionNumber = sharedPreferences.getString("admissionno", "");
     }
-
 
     @Override
     public void onBackPressed() {
@@ -260,18 +227,12 @@ public class Home extends AppCompatActivity {
                     exit = false;
                 }
             }, 3 * 1000);
-
         }
     }
-
 
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
     }
-
-
-
-
 }

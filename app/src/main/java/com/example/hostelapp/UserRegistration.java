@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -188,6 +189,7 @@ public class UserRegistration extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 mAuth = FirebaseAuth.getInstance();
                                 userID = mAuth.getCurrentUser().getUid();
+                                emailVerification();
 
                                 Map<String, Object> detail = new HashMap<>();
                                 detail.put("user_id", userID);
@@ -260,6 +262,21 @@ public class UserRegistration extends AppCompatActivity {
         Map<String, Object> us = new HashMap<>();
         us.put("app_reg", "yes");
         documentReference.set(us, SetOptions.merge());
+    }
+
+    public void emailVerification(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
     }
 
 
