@@ -82,7 +82,7 @@ public class Verification extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
     private void verify(String number) {
-        documentReference = firebaseFirestore.collection("registered").document(number);
+        documentReference = firebaseFirestore.collection("registered").document(""+number);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -90,17 +90,13 @@ public class Verification extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
 
-                        regn = document.get("app_registration").toString();
+                        regn = document.get("app_reg").toString();
                         if(regn.equals("yes"))
                         {
                             Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();
-
                         }
                         else {
-
-                            Toast.makeText(getApplicationContext(), "" + document.getData(), Toast.LENGTH_LONG).show();
                             adnumber = document.getId().toString();
-
                             Intent intent = new Intent(Verification.this, UserRegistration.class);
                             intent.putExtra("adnumber", adnumber);
                             startActivity(intent);

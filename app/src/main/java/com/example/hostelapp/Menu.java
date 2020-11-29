@@ -88,7 +88,7 @@ import models.User;
         public void getData(){
             today = setDate();
             firebaseFirestore.collection("inmates").document(""+hostel).collection("foodmenu").whereEqualTo("date",today).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
+                        @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
                             Log.w(TAG, "Listen failed.", e);
@@ -108,8 +108,8 @@ import models.User;
             public Date setDate(){
                 Calendar start = Calendar.getInstance();
                 start.setTime(new Date());
-                start.set(Calendar.HOUR_OF_DAY, 0);
-                start.set(Calendar.MINUTE, 0);
+                start.set(Calendar.HOUR_OF_DAY, 17);
+                start.set(Calendar.MINUTE, 30);
                 start.set(Calendar.SECOND, 0);
                 start.set(Calendar.MILLISECOND, 0);
                 Date today = start.getTime();

@@ -67,6 +67,7 @@ public class Profile extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
 
         // get access to the root folder of the storage
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -84,9 +85,6 @@ public class Profile extends AppCompatActivity {
         initWidgets();
         init();
         setDetails();
-
-
-
     }
 
     private void init() {
