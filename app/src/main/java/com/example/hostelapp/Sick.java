@@ -81,10 +81,12 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
             checkDinner.setEnabled(false);
         }
     }
+
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 
     public void initWidgets(){
         spinner = (Spinner)findViewById(R.id.spinner);

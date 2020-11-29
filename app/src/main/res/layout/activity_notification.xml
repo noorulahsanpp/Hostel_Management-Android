@@ -13,11 +13,8 @@
             <ListView
                 android:layout_marginTop="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listview"
-
-
-                >
+            android:layout_height="match_parent"
+            android:id="@+id/listview">
 
 
         </ListView>

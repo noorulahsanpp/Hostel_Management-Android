@@ -47,6 +47,7 @@ public class Home extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs";
 
     private FirebaseAuth mAuth;
+    private Button notification;
     private FirebaseFirestore firebaseFirestore;
     private String userID;
     private String userName, hostel, admissionNumber, name;
@@ -88,6 +89,7 @@ public class Home extends AppCompatActivity {
         init();
         onTokenRefresh();
         getSharedPreference();
+
     }
 
     private void init() {
@@ -140,6 +142,12 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(Home.this, Messout.class));
             }
         });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, Notification.class));
+            }
+        });
     }
 
     @Override
@@ -177,11 +185,11 @@ public class Home extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
         Picasso.get().load(imageUrl).into(imageView);
         viewFlipper.addView(imageView);
-        viewFlipper.setFlipInterval(2000);
         viewFlipper.startFlipping();
         viewFlipper.setAutoStart(true);
         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         viewFlipper.setInAnimation(in);
+        viewFlipper.setFlipInterval(2000);
     }
 
     private void setProfilePicture(Uri uri) {
@@ -192,8 +200,7 @@ public class Home extends AppCompatActivity {
         viewFlipper = findViewById(R.id.viewflipper);
         profilePicture = findViewById(R.id.imageView);
         userNameView = findViewById(R.id.textView5);
-
-        //  NotificationBtn = (Button) findViewById(R.id.button5);
+        notification = (Button) findViewById(R.id.notification);
         attendance = (CardView) findViewById(R.id.attendance);
         fees = (CardView) findViewById(R.id.fees);
         sick = (CardView) findViewById(R.id.sick);
