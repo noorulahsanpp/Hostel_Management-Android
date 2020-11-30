@@ -106,7 +106,7 @@ public class Attendance extends AppCompatActivity {
 //                    });
         tine();
     }
-    public void getAttendace(){
+    public void getAttendace() {
 //                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
 //                    String s2 = "01 06 2020";
 //                    String s1 = "30 06 2020";
@@ -119,8 +119,8 @@ public class Attendance extends AppCompatActivity {
 //                    catch (Exception e){
 //                        Log.d(TAG, "getAttendace: "+e);
 //                    }
-       // CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
-       // Query query = collectionReference.whereArrayContains("absents", "LH001");
+        // CollectionReference collectionReference = firebaseFirestore.collection("inmates").document("LH").collection("attendance");
+        // Query query = collectionReference.whereArrayContains("absents", "LH001");
         CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("attendance");
         Query query = collectionReference.whereArrayContains("absents", admissionNumber);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -128,12 +128,12 @@ public class Attendance extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        count = count+1;
+                        count = count + 1;
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
-                absnt.setText(count+"");
+                absnt.setText(count + "");
             }
         });
     }

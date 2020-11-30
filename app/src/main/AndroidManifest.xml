@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".login2"></activity>
         <activity
             android:name=".forgotpassword"
             android:theme="@style/AppTheme.PopMe" />
@@ -34,16 +34,14 @@
         <activity android:name=".Notification" />
         <activity android:name=".UserRegistration" />
         <activity android:name=".Menu" />
-        <activity android:name=".Home" >
+        <activity android:name=".Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login">
-        </activity>
-
+        <activity android:name=".Login" />
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>

@@ -38,18 +38,44 @@
             android:inputType="textPersonName"
             android:theme="@style/EditText" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Textinput"
             android:layout_marginTop="250dp"
             android:background="@drawable/textbox"
-            android:drawablePadding="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:paddingLeft="40dp"
+            android:paddingBottom="5dp"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textSize="15dp"
+                android:hint="Password"
+                android:background="@drawable/textbox"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/pswdicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp"
+            android:textSize="25dp"
+            android:layout_marginTop="250dp"
             android:drawableLeft="@drawable/ic_action_lock"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:theme="@style/EditText" />
+            android:drawableTint="@color/tabs"/>
+
+
+
+
+
+
 
         <EditText
             android:id="@+id/email"

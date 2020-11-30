@@ -52,7 +52,7 @@ import Utils.FirebaseMethods;
 public class Notification extends AppCompatActivity {
     private static final String TAG = "Notification";
     private static final int ACTIVITY_NUM = 1;
-
+    public static final String MyPREFERENCES = "MyPrefs" ;
    private ListView notification;
     private String hostel = "";
 
@@ -79,6 +79,8 @@ public class Notification extends AppCompatActivity {
         mContext = Notification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
+
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");
         notification = (ListView)findViewById(R.id.listview);
         mnotification();

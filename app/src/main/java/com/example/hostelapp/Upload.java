@@ -1,28 +1,26 @@
 package com.example.hostelapp;
 
 public class Upload {
-    private String mName;
-    private String mImageUrl;
+    private String name;
+    private String imageurl;
     public Upload() {
         //empty constructor needed
     }
-    public Upload(String name, String imageUrl) {
-        if (name.trim().equals("")) {
-            name = "No Name";
-        }
-        mName = name;
-        mImageUrl = imageUrl;
+    public Upload(String name, String imageurl) {
+
+        name = name;
+        imageurl = imageurl;
     }
     public String getName() {
-        return mName;
+        return name;
     }
     public void setName(String name) {
-        mName = name;
+        name = name;
     }
     public String getImageUrl() {
-        return mImageUrl;
+        return imageurl;
     }
-    public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+    public void setImageUrl(String imageurl) {
+        imageurl = imageurl;
     }
 }

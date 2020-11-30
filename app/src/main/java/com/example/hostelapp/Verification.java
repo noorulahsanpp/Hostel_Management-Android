@@ -90,7 +90,7 @@ public class Verification extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
 
-                        regn = document.get("app_registration").toString();
+                        regn = document.get("app_reg").toString();
                         if(regn.equals("yes"))
                         {
                             Toast.makeText(getApplicationContext(),"Already registered", Toast.LENGTH_LONG).show();
