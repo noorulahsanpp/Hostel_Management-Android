@@ -2,6 +2,7 @@ package com.example.hostelapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
    private CheckBox checkBreakfast, checkLunch, checkEvening, checkDinner;
    private boolean breakfast, lunch, evening, dinner;
    private FirebaseFirestore firebaseFirestore;
-    private String admissionNo = "", hostel = "";
+    private String admissionNo = "", hostel = "",room="",block="",name="";
    private String item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,8 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                 getData();
                 setData();
-//                startActivity(new Intent(Sick.this,Home.class));
+                Toast.makeText(getApplicationContext(), "Sick Marked For Today", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Sick.this,Home.class));
             }
         });
     }
@@ -133,20 +135,28 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         Map<String, Object> sick = new HashMap<>();
         if (item == "Custom"){
             if (breakfast){
-                sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
+                sick.put("breakfastadmno", FieldValue.arrayUnion(admissionNo));
+                sick.put("breakfastname", FieldValue.arrayUnion(name));
+                sick.put("breakfastroom", FieldValue.arrayUnion(room));
+                sick.put("breakfastblock", FieldValue.arrayUnion(block));
+                          }
+             if (lunch){
+                sick.put("lunchadmno", FieldValue.arrayUnion(admissionNo));
+                 sick.put("lunchname", FieldValue.arrayUnion(name));
+                 sick.put("lunchroom", FieldValue.arrayUnion(room));
+                 sick.put("lunchblock", FieldValue.arrayUnion(block));
             }
-            else if (lunch){
-                sick.put("lunch", FieldValue.arrayUnion(admissionNo));
+            if (evening){
+                sick.put("eveningadmno", FieldValue.arrayUnion(admissionNo));
+                sick.put("eveningname", FieldValue.arrayUnion(name));
+                sick.put("eveningroom", FieldValue.arrayUnion(room));
+                sick.put("eveningblock", FieldValue.arrayUnion(block));
             }
-            else if (evening){
-                sick.put("evening", FieldValue.arrayUnion(admissionNo));
-            }
-            else if (dinner){
-                sick.put("dinner", FieldValue.arrayUnion(admissionNo));
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(), "Invalid input", Toast.LENGTH_LONG).show();
+             if (dinner){
+                sick.put("dinneradmno", FieldValue.arrayUnion(admissionNo));
+                 sick.put("dinnername", FieldValue.arrayUnion(name));
+                 sick.put("dinnerroom", FieldValue.arrayUnion(room));
+                 sick.put("dinnerblock", FieldValue.arrayUnion(block));
             }
 
             if (breakfast||lunch||evening||dinner){
@@ -157,10 +167,22 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         }
         else{
             Date date = setDate();
-            sick.put("breakfast", FieldValue.arrayUnion(admissionNo));
-            sick.put("lunch", FieldValue.arrayUnion(admissionNo));
-            sick.put("evening", FieldValue.arrayUnion(admissionNo));
-            sick.put("dinner", FieldValue.arrayUnion(admissionNo));
+            sick.put("breakfastadmno", FieldValue.arrayUnion(admissionNo));
+            sick.put("breakfastname", FieldValue.arrayUnion(name));
+            sick.put("breakfastroom", FieldValue.arrayUnion(room));
+            sick.put("breakfastblock", FieldValue.arrayUnion(block));
+            sick.put("lunchadmno", FieldValue.arrayUnion(admissionNo));
+            sick.put("lunchname", FieldValue.arrayUnion(name));
+            sick.put("lunchroom", FieldValue.arrayUnion(room));
+            sick.put("lunchblock", FieldValue.arrayUnion(block));
+            sick.put("eveningadmno", FieldValue.arrayUnion(admissionNo));
+            sick.put("eveningname", FieldValue.arrayUnion(name));
+            sick.put("eveningroom", FieldValue.arrayUnion(room));
+            sick.put("eveningblock", FieldValue.arrayUnion(block));
+            sick.put("dinneradmno", FieldValue.arrayUnion(admissionNo));
+            sick.put("dinnername", FieldValue.arrayUnion(name));
+            sick.put("dinnerroom", FieldValue.arrayUnion(room));
+            sick.put("dinnerblock", FieldValue.arrayUnion(block));
             sick.put("date", date);
             collectionReference.document(date+"").set(sick, SetOptions.merge());
         }
@@ -180,6 +202,9 @@ public class Sick extends AppCompatActivity implements AdapterView.OnItemSelecte
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");
         admissionNo = sharedPreferences.getString("admissionno", "");
+        name = sharedPreferences.getString("name", "");
+        block = sharedPreferences.getString("block", "");
+        room = sharedPreferences.getString("room", "");
     }
 
 

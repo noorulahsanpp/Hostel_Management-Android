@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
     private Button loginbtn;
     private EditText emailEt,passwordEt;
     private FirebaseAuth auth;
-    private String userID,loginPhone, loginAdmission, loginHostel, loginName, loginEmail;
+    private String userID,loginPhone, loginAdmission, loginHostel, loginName, loginEmail,loginBlock,loginRoom;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressdialog;
     private FirebaseMessaging firebaseMessaging;
@@ -159,6 +159,9 @@ public class Login extends AppCompatActivity {
                         loginName = document.get("name").toString();
                         loginPhone = document.get("phone").toString();
                         loginEmail = document.get("email").toString();
+                        loginRoom = document.get("room").toString();
+                        loginBlock = document.get("block").toString();
+
                     }
                     setSharedPreferences();
                     cloudMessage();
@@ -199,6 +202,8 @@ public class Login extends AppCompatActivity {
         editor.putString("userid", userID);
         editor.putString("hostel", loginHostel);
         editor.putString("admissionno", loginAdmission);
+        editor.putString("block", loginBlock);
+        editor.putString("room", loginRoom);
         editor.putString("phone", loginPhone);
         editor.putString("name", loginName);
         editor.putString("email", loginEmail);
