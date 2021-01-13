@@ -32,8 +32,11 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import Utils.FirebaseMethods;
 
@@ -42,9 +45,10 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     public static final String MyPREFERENCES = "MyPrefs" ;
     private static final String TAG = "";
     Spinner month, year;
-    TextView mess, rent, extras, common, due, total, gtotal;
+    TextView mess, rent, extras, common, due, total, gtotal,duedate,status;
     Button payBtn;
     String monthIndex,selectedYear;
+    String messfee ,absent="0";
     String phoneNumber;
     private Context mContext;
     private FirebaseAuth mAuth;
@@ -52,7 +56,9 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     private FirebaseMethods firebaseMethods;
     SharedPreferences sharedPreferences;
     private String hostel, admissionNumber, email;
-    int totalFee = 2500;
+    int totalFee = 2500,presentdays;
+    public static String date;
+    int kk = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,22 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                payWithStripe();
-                startPayment();
+
+                DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).collection("fees").document(date);
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if(documentSnapshot.exists()) {
+                        Toast.makeText(getApplicationContext(),"Already Paid For this", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            //                payWithStripe();
+                            startPayment();
+                        }
+                    }
+                });
+
             }
         });
 
@@ -139,10 +159,12 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
             // silently fail...
         }
         year = (Spinner) findViewById(R.id.spinneryear);
+        status = (TextView) findViewById(R.id.txtstatus);
         rent = (TextView) findViewById(R.id.rent);
         extras = (TextView) findViewById(R.id.extras);
         common = (TextView) findViewById(R.id.common);
-        due = (TextView) findViewById(R.id.txtdue);
+    //    due = (TextView) findViewById(R.id.txtdue);
+        duedate = (TextView) findViewById(R.id.txtduedate);
         total = (TextView) findViewById(R.id.txttotal);
         gtotal = (TextView) findViewById(R.id.txtgrand);
         mess = (TextView) findViewById(R.id.mess);
@@ -152,14 +174,13 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     {
         ArrayList<String> years = new ArrayList<String>();
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int j = 2018; j <= thisYear; j++) {
+        for (int j = 2018; j <= 2025; j++) {
             years.add(Integer.toString(j));
         }
 
 
         ArrayAdapter<String> yearadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
         year.setAdapter(yearadapter);
-
         List<String> monthsList = new ArrayList<String>();
         String[] months = new DateFormatSymbols().getMonths();
         for (int i = 0; i < months.length; i++) {
@@ -181,30 +202,73 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
                 break;
             }}
 
-        String date = selectedYear + "-0" + monthIndex;
+        date = selectedYear + "-0" + monthIndex;
         System.out.println(date);
+
+
+
+        Calendar cal = Calendar.getInstance();
+        int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        getabs();
        // DocumentReference documentReference= firebaseFirestore.collection("inmates").document("LH").collection("fee").document(date);
-        DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel).collection("fee").document(date);
+        DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel+"").collection("fee").document(date+"");
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    String grandtotal = document.get("veg").toString();
-                    gtotal.setText(grandtotal);
+                    messfee = document.get("veg").toString();
+                    String Common = document.get("common").toString();
+                    String  Rent = document.get("rent").toString();
+                  String Duedate = document.get("duedate").toString();
+                    common.setText(Common+"");
+                    rent.setText(Rent+"");
+                    extras.setText("75");
+               //     due.setText(duedate);
+                    int ttotal = (presentdays*Integer.parseInt(messfee))+Integer.parseInt(Common)+Integer.parseInt(Rent)+75;
+                    total.setText(ttotal+"");
+                    duedate.setText(Duedate+"");
+                    presentdays = days - Integer.parseInt(absent);
+                    kk = presentdays * Integer.parseInt(messfee);
+                    mess.setText(kk+"");
+
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), "Doesn't Exist", Toast.LENGTH_LONG).show();
                     gtotal.setText("");
+                    common.setText("");
+                    rent.setText("");
+                    mess.setText("");
+                    extras.setText("");
+                    total.setText("");
+                    gtotal.setText("");
+                    duedate.setText("");
+                    status.setText("");
+                    duedate.setText("");
                 }
             }
         });
+        DocumentReference documentReference1 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("fees").document(date+"");
+        documentReference1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot.exists()) {
+                    status.setText("Paid");
+                }
+            else{
+                status.setText("Pending");
+            }
+            }
+            });
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 
     public void getSharedPreference(){
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
@@ -222,5 +286,19 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
     @Override
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, "Payment Failed", Toast.LENGTH_LONG).show();
+    }
+
+    public void getabs(){
+        DocumentReference documentReference2 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("attendance").document(date+"");
+        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot.exists()){
+                    absent = documentSnapshot.get("daysabsent").toString();
+                }
+
+            }
+        });
     }
 }

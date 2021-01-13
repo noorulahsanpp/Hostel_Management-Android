@@ -1,5 +1,7 @@
 package com.example.hostelapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,8 +32,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,12 +53,14 @@ public class Home extends AppCompatActivity {
     private static final String KEY_USERID = "user_dd";
     private static final int ACTIVITY_NUM = 0;
     public static final String MyPREFERENCES = "MyPrefs";
+    private static CollectionReference collectionReference;
 
     private FirebaseAuth mAuth;
     private Button notification;
-    private FirebaseFirestore firebaseFirestore;
+
+    private static FirebaseFirestore firebaseFirestore;
     private String userID;
-    private String userName, hostel, admissionNumber, name;
+    private static String userName, hostel, admissionNumber, name;
     private TextView userNameView;
     private ImageView profilePicture;
     private Task<DocumentSnapshot> documentReference;
@@ -61,12 +71,13 @@ public class Home extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private List<Upload> mUploads;
     private ViewFlipper viewFlipper;
-
+    static  TextView TVnotificationBadge;
+    static int newnotification , count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide();
+      getSupportActionBar().hide();
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting");
 
@@ -91,6 +102,67 @@ public class Home extends AppCompatActivity {
         getSharedPreference();
 
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+//
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        final MenuItem menuItem = menu.findItem(R.id.ic_action_notification);
+//        View actionView = menuItem.getActionView();
+//        TVnotificationBadge =actionView.findViewById(R.id.cart_badge);
+//        TVnotificationBadge.setVisibility(View.INVISIBLE);
+//        getquantity();
+//        actionView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onOptionsItemSelected(menuItem);
+//            }
+//        });
+//               return true;
+//
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == R.id.ic_action_notification) {
+//            TVnotificationBadge.setVisibility(View.INVISIBLE);
+//            updateProducts();
+//            startActivity(new Intent(this,Notification.class));
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+    public static void updateProducts(){
+        firebaseFirestore.collection("inmates").document(hostel).collection("notification").document().update(
+                "status","viewed");
+    }
+
+    public static void getquantity() {
+
+        collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("notification");
+        collectionReference.whereEqualTo("status","notviewed").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                count = count+1;
+                newnotification = count;
+            }
+        });
+        setupBadge();
+    }
+    public static void setupBadge() {
+
+        if (TVnotificationBadge != null) {
+            if (newnotification == 0) {
+                TVnotificationBadge.setVisibility(View.INVISIBLE);
+            } else {
+                TVnotificationBadge.setVisibility(View.VISIBLE);
+                TVnotificationBadge.setText(String.valueOf(newnotification));
+
+            }
+        }
+    }
+
+
 
     private void init() {
         StorageReference profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");
@@ -142,12 +214,12 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(Home.this, Messout.class));
             }
         });
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Home.this, Notification.class));
-            }
-        });
+//        notification.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(Home.this, Notification.class));
+//            }
+//        });
     }
 
     @Override
@@ -200,7 +272,7 @@ public class Home extends AppCompatActivity {
         viewFlipper = findViewById(R.id.viewflipper);
         profilePicture = findViewById(R.id.imageView);
         userNameView = findViewById(R.id.textView5);
-        notification = (Button) findViewById(R.id.notification);
+
         attendance = (CardView) findViewById(R.id.attendance);
         fees = (CardView) findViewById(R.id.fees);
         sick = (CardView) findViewById(R.id.sick);
