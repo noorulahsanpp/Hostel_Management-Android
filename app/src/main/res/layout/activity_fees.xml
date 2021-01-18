@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,15 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/silver_style">
-
-        <!--RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/relLayout1">
-        <include layout="@layout/layout_top_tabs"/>
-
-        </RelativeLayout-->
-
 
 
         <TextView
@@ -36,6 +28,8 @@
             android:theme="@style/TextView"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="37dp" />
+
+
 
         <TextView
             android:id="@+id/txtmonth"
@@ -284,15 +278,15 @@
             android:textSize="15sp" />
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/txtdue"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="230dp"-->
-<!--            android:layout_marginTop="480dp"-->
-<!--            android:text="0"-->
-<!--            android:textSize="15sp"-->
-<!--            android:theme="@style/TextView" />-->
+        <TextView
+            android:id="@+id/txtdue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="480dp"
+            android:text=""
+            android:textSize="15sp"
+            android:theme="@style/TextView" />
 
 
         <CheckBox
@@ -306,15 +300,15 @@
             android:text="Pay Due"
             android:textStyle="bold"
             android:textColor="@color/maroon" />
-<!--        <TextView-->
-<!--            android:id="@+id/textView24"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="70dp"-->
-<!--            android:layout_marginTop="480dp"-->
-<!--            android:text="Due                       :"-->
-<!--            android:theme="@style/TextView"-->
-<!--            android:textSize="15sp"/>-->
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="480dp"
+            android:text="Due                       :"
+            android:theme="@style/TextView"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/grand"
@@ -335,7 +329,7 @@
             android:text="0"
             android:theme="@style/TextView"
             android:textSize="15sp"
-           />
+            />
 
         <Button
             android:id="@+id/btnpay"
@@ -347,9 +341,6 @@
             android:textColor="#FFFF"
             android:text="Pay Now" />
 
-
-
-        <include layout="@layout/layout_bottom_navigation_view" />
 
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
