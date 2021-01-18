@@ -51,7 +51,7 @@ public class Profile extends AppCompatActivity {
     private TextView  emailTv, phoneTv;
     private TextView name,admno;
     private Button  editProfile;
-    private LinearLayout changePassword,logout;
+    private LinearLayout changePassword,logout,Lnrfaq,Lnraboutus,Lnrcontactus;
     private String userID, hostel, admissionNumber, nameSp, phoneSp;
     private StorageReference storageReference;
     SharedPreferences sharedPreferences;
@@ -107,6 +107,24 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        Lnrfaq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),FAQ.class));
+            }
+        });
+        Lnrcontactus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Contactus.class));
+            }
+        });
+        Lnraboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Aboutus.class));
+            }
+        });
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +158,9 @@ public class Profile extends AppCompatActivity {
         phoneTv = findViewById(R.id.phone);
         changePassword = findViewById(R.id.linear3);
         logout = findViewById(R.id.linear2);
+        Lnrfaq = findViewById(R.id.linearfaq);
+        Lnraboutus = findViewById(R.id.aboutuslinear);
+        Lnrcontactus = findViewById(R.id.contactuslinear);
     }
 
     public void setDetails(){
