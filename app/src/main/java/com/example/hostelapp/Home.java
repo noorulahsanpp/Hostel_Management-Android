@@ -79,7 +79,6 @@ public class Home extends AppCompatActivity {
         }
 
         mUploads = new ArrayList<>();
-        mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userID = mAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();

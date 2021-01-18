@@ -156,7 +156,6 @@ public class Fees extends AppCompatActivity implements  AdapterView.OnItemSelect
             years.add(Integer.toString(j));
         }
 
-
         ArrayAdapter<String> yearadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
         year.setAdapter(yearadapter);
 
