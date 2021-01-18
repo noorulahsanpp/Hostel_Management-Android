@@ -54,12 +54,14 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'    //noinspection GradleCompatible
     implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'sun.bob:mcalendarview:1.0.0'
-    implementation 'com.applandeo:material-calendar-view:1.4.0'
+   implementation 'sun.bob:mcalendarview:1.0.0'
+    implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
     implementation 'com.borjabravo:readmoretextview:2.0.1'
-    implementation 'com.prolificinteractive:material-calendarview:1.4.2'
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+//    implementation 'com.prolificinteractive:material-calendarview:1.4.2'
     //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.roomorama:caldroid:3.0.1'
 
 //    Stripe
     implementation 'com.stripe:stripe-android:16.1.1'

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">HostelApp</string>
     <string name="password">Password</string>
-
+    <string name="customize">Customize</string>
+    <string name="show_dialog">Show Dialog</string>
+    <string name="undo">Undo</string>
 
 </resources>
