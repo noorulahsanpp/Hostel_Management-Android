@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Profile">
-
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="wrap_content"
@@ -14,8 +16,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/relLayout1"
+            android:layout_height="190dp"
+            android:id="@+id/linear"
             android:orientation="vertical"
             android:showDividers="end">
 
@@ -93,10 +95,9 @@
                     <ImageView
                         android:id="@+id/edit"
                         android:layout_width="wrap_content"
-                        android:tint="#FFFFFF"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_action_photo"
-                        />
+                        app:tint="#FFFFFF" />
 
                 </RelativeLayout>
                 </RelativeLayout>
@@ -116,15 +117,14 @@
         </LinearLayout>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relLayout1">
-            <include layout="@layout/layout_top_tabs"/>
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/relLayout1">-->
+<!--            <include layout="@layout/layout_top_tabs"/>-->
+<!--            -->
+<!--        </RelativeLayout>-->
 
-
-
-        </RelativeLayout>
         <TextView
             android:id="@+id/emailicon"
             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
            android:drawableLeft="@drawable/ic_action_email"
             android:drawableTint="@color/tabs"
             android:textSize="18sp"
-            android:layout_marginTop="280dp"
+            android:layout_marginTop="240dp"
 
             />
         <TextView
@@ -144,7 +144,7 @@
             android:drawableLeft="@drawable/ic_action_phone"
             android:drawableTint="@color/tabs"
             android:textSize="18sp"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="330dp"
 
             />
         <TextView
@@ -155,7 +155,7 @@
             android:drawableLeft="@drawable/ic_action_logout"
             android:drawableTint="@color/tabs"
             android:textSize="18sp"
-            android:layout_marginTop="480dp"
+            android:layout_marginTop="417dp"
 
             />
         <TextView
@@ -166,7 +166,40 @@
             android:drawableLeft="@drawable/ic_action_lock"
             android:drawableTint="@color/tabs"
             android:textSize="18sp"
-            android:layout_marginTop="580dp"
+            android:layout_marginTop="510dp"
+
+            />
+        <TextView
+            android:id="@+id/faqicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_faq"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="585dp"
+
+            />
+        <TextView
+            android:id="@+id/abouticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_about"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="645dp"
+
+            />
+        <TextView
+            android:id="@+id/contacticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_action_contact"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="700dp"
 
             />
 
@@ -174,9 +207,11 @@
 
 <LinearLayout
     android:layout_width="match_parent"
+    android:layout_below="@+id/linear"
+    android:id="@+id/emaillinear"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="260dp">
+    android:layout_marginTop="20dp">
     <TextView
         android:id="@+id/emailid"
         android:layout_width="wrap_content"
@@ -217,9 +252,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:id="@+id/linear1"
+            android:layout_below="@id/emaillinear"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="360dp">
+            android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/phoneno"
             android:layout_width="wrap_content"
@@ -255,7 +291,7 @@
             android:layout_below="@id/linear1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
             <TextView
                 android:id="@+id/logoutTv"
                 android:layout_width="wrap_content"
@@ -291,7 +327,7 @@
             android:layout_below="@id/linear2"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
             <TextView
                 android:id="@+id/ChangePassword"
                 android:layout_width="wrap_content"
@@ -319,7 +355,84 @@
                 android:background="@color/black"/-->
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/linear3"
+            android:layout_marginTop="20dp"
+            android:background="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linearfaq"
+            android:layout_below="@id/linear3"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="35dp">
+            <TextView
+                android:id="@+id/faq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="FAQs"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="#938E8E"/>
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/aboutuslinear"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearfaq"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/aboutus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="About Us"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="#938E8E"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/contactuslinear"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aboutuslinear"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/contactus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Contact Us"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="#938E8E"/>
+
+        </LinearLayout>
 
 
 
@@ -343,5 +456,5 @@
 
 
     </RelativeLayout>
-
+</ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
