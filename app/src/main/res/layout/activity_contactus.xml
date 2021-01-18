@@ -19,7 +19,7 @@
             android:lines="8"
             android:inputType="textMultiLine"
             android:maxLines="20"
-            android:hint="Describe your probelem"
+            android:hint="Describe your problem"
             android:layout_marginTop="80dp"
             android:layout_centerHorizontal="true"
             android:textSize="15dp"
