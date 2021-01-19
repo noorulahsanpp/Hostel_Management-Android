@@ -52,7 +52,6 @@ public class forgotpassword extends AppCompatActivity {
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                progressdialog.show();
                 if(task.isSuccessful())
                 {
                     Toast.makeText(getApplicationContext(), "Password send to your email", Toast.LENGTH_LONG).show();
