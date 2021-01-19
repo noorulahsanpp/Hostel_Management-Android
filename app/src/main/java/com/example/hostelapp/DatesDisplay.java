@@ -26,13 +26,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import Utils.FirebaseMethods;
 
@@ -104,9 +107,11 @@ public class DatesDisplay extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String date = document.getId();
+                        Date date = document.getTimestamp("date").toDate();
+                        SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMMM yyyy");
+                        String strDate= formatter.format(date);
                         count = count + 1;
-                        dates.add(date);
+                        dates.add(strDate);
                     }
                     absnt.setText(count+"");
                     presentdays = days -count;
