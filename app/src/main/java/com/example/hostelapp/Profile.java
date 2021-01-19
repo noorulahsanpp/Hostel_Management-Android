@@ -52,7 +52,7 @@ public class Profile extends AppCompatActivity {
     private TextView name,admno;
     private Button  editProfile;
     private LinearLayout changePassword,logout,Lnrfaq,Lnraboutus,Lnrcontactus;
-    private String userID, hostel, admissionNumber, nameSp, phoneSp;
+    private String userID, hostel, admissionNumber, nameSp, phoneSp,emailSp;
     private StorageReference storageReference;
     SharedPreferences sharedPreferences;
     private FirebaseMessaging firebaseMessaging;
@@ -180,7 +180,7 @@ public class Profile extends AppCompatActivity {
     public void setDetails(){
         name.setText(nameSp);
         admno.setText(admissionNumber);
-        emailTv.setText(nameSp);
+        emailTv.setText(emailSp);
         phoneTv.setText(phoneSp);
     }
 
@@ -218,6 +218,7 @@ public class Profile extends AppCompatActivity {
         admissionNumber = sharedPreferences.getString("admissionno", "");
         nameSp = sharedPreferences.getString("name", "");
         phoneSp = sharedPreferences.getString("phone", "");
+        emailSp = sharedPreferences.getString("email", "");
     }
     public void unsubscribe(){
         firebaseMessaging = FirebaseMessaging.getInstance();
