@@ -44,6 +44,7 @@ public class forgotpassword extends AppCompatActivity {
            public void onClick(View v) {
                String email = emailEt.getText().toString();
                forgotpswd(email);
+               finish();
            }
        });
     }

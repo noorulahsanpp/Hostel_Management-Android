@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import Utils.FirebaseMethods;
 
 public class Fees extends AppCompatActivity implements  PaymentResultListener {
@@ -46,6 +51,7 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
     public static final String MyPREFERENCES = "MyPrefs" ;
     private static final String TAG = "";
     Spinner year;
+    CheckBox paydue;
     TextView mess, rent, extras, common, due, total, gtotal,duedate,status,month;
     Button payBtn;
     String monthIndex,selectedYear;
@@ -57,10 +63,10 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
     private FirebaseMethods firebaseMethods;
     SharedPreferences sharedPreferences;
     private String hostel, admissionNumber, email;
-    int totalFee = 2500,presentdays,smonth,syear;
+    int totalFee,presentdays,smonth,syear;
     public static String date;
     int kk = 0;
-
+    int grandtotal=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +77,6 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
         mContext = Fees.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseMethods = new FirebaseMethods(mContext);
-
         initWidgets();
         //   setAdapter();
         getSharedPreference();
@@ -87,7 +92,13 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
                             public void onDateSet(int selectedMonth, int selectedYear) {
                                 smonth = selectedMonth+1;
                                 syear = selectedYear;
-                                month.setText(smonth+"/"+syear);
+                                if(smonth>9){
+                                    date = syear + "-" + smonth;
+                                }
+                                else{
+                                    date = syear + "-0" + smonth;
+                                }
+                                month.setText(date+"");
                                 showtotal();
                             }
                         }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
@@ -97,28 +108,48 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
                         .setActivatedYear(actyear)
                         .setMaxYear(actyear)
                         .setMinMonth(Calendar.FEBRUARY)
-                        .setTitle("Select Month and Year")
+                        .setTitle("Choose a Month")
                         .setMonthRange(Calendar.JANUARY, Calendar.DECEMBER)
                         .setOnMonthChangedListener(new MonthPickerDialog.OnMonthChangedListener() {
                             @Override
                             public void onMonthChanged(int selectedMonth) {
-                                smonth = selectedMonth+1;
+
                             } })
                         .setOnYearChangedListener(new MonthPickerDialog.OnYearChangedListener() {
                             @Override
                             public void onYearChanged(int selectedYear) {
-                                syear = selectedYear+1;
                             } })
                         .build()
                         .show();
             }
         });
 
+        paydue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked ) {
+                    due.setText("1500");
+                    grandtotal = 1500 + totalFee;
+                    gtotal.setText(grandtotal + "");
+                }
+                else {
+                    due.setText("");
+                    gtotal.setText(totalFee+"");
+                }
+            }
+        });
+        paydue.setEnabled(false);
+        due.setEnabled(false);
 
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(smonth>9){
+                    date = syear + "-" + smonth;
+                }
+                else{
+                    date = syear + "-0" + smonth;
+                }
                 DocumentReference documentReference = firebaseFirestore.collection("inmates").document(hostel).collection("users").document(admissionNumber).collection("fees").document(date);
                 documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -141,7 +172,12 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
     public void showtotal(){
         Calendar cal = Calendar.getInstance();
         int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        date = syear + "-0" + smonth;
+        if(smonth>9){
+            date = syear + "-" + smonth;
+        }
+        else{
+            date = syear + "-0" + smonth;
+        }
         getabs();
         // DocumentReference documentReference= firebaseFirestore.collection("inmates").document("LH").collection("fee").document(date);
         DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel+"").collection("fee").document(date+"");
@@ -154,17 +190,16 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
                     String Common = document.get("common").toString();
                     String  Rent = document.get("rent").toString();
                     String Duedate = document.get("duedate").toString();
+                    presentdays = days - Integer.parseInt(absent);
+                    kk = presentdays * Integer.parseInt(messfee);
+                    totalFee = (presentdays*Integer.parseInt(messfee))+Integer.parseInt(Common)+Integer.parseInt(Rent)+75;
+                    mess.setText(kk+"");
                     common.setText(Common+"");
                     rent.setText(Rent+"");
                     extras.setText("75");
-                    //     due.setText(duedate);
-                    int ttotal = (presentdays*Integer.parseInt(messfee))+Integer.parseInt(Common)+Integer.parseInt(Rent)+75;
-                    total.setText(ttotal+"");
+                    total.setText(totalFee+"");
+                    gtotal.setText(totalFee+"");
                     duedate.setText(Duedate+"");
-                    presentdays = days - Integer.parseInt(absent);
-                    kk = presentdays * Integer.parseInt(messfee);
-                    mess.setText(kk+"");
-
                 }
                 else
                 {
@@ -189,9 +224,13 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
                 DocumentSnapshot documentSnapshot = task.getResult();
                 if (documentSnapshot.exists()) {
                     status.setText("Paid");
+                    paydue.setEnabled(false);
+                    due.setEnabled(false);
                 }
                 else{
                     status.setText("Pending");
+                    paydue.setEnabled(true);
+                    due.setEnabled(true);
                 }
             }
         });
@@ -199,7 +238,7 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
     }
     public void payWithStripe(){
         Intent intent= new Intent(Fees.this, CheckoutActivityJava.class);
-        intent.putExtra("amount", totalFee);
+        intent.putExtra("amount", grandtotal+"");
         startActivity(intent);
     }
 
@@ -234,7 +273,7 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
 //            options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
             options.put("theme.color", "#3399cc");
             options.put("currency", "INR");
-            options.put("amount", "50000");//pass amount in currency subunits
+            options.put("amount", grandtotal+"");//pass amount in currency subunits
             options.put("prefill.email", email+"");
             options.put("prefill.contact",phoneNumber+"");
             checkout.open(activity, options);
@@ -245,14 +284,14 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
 
     private void initWidgets() {
 
-
+paydue = findViewById(R.id.paydue);
         month = findViewById(R.id.month);
         year = (Spinner) findViewById(R.id.spinneryear);
         status = (TextView) findViewById(R.id.txtstatus);
         rent = (TextView) findViewById(R.id.rent);
         extras = (TextView) findViewById(R.id.extras);
         common = (TextView) findViewById(R.id.common);
-        //    due = (TextView) findViewById(R.id.txtdue);
+        due = (TextView) findViewById(R.id.txtdue);
         duedate = (TextView) findViewById(R.id.txtduedate);
         total = (TextView) findViewById(R.id.txttotal);
         gtotal = (TextView) findViewById(R.id.txtgrand);
@@ -370,6 +409,11 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
     @Override
     public void onPaymentSuccess(String s) {
         Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show();
+        DocumentReference documentReference1 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("fees").document(date+"");
+        Map<String, Object> status = new HashMap<>();
+        status.put("status","paid");
+        documentReference1.set(status);
+        finish();
     }
 
     @Override
