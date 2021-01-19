@@ -104,41 +104,10 @@ public class Home extends AppCompatActivity {
         getSharedPreference();
 
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        final MenuItem menuItem = menu.findItem(R.id.ic_action_notification);
-//        View actionView = menuItem.getActionView();
-//        TVnotificationBadge =actionView.findViewById(R.id.cart_badge);
-//        TVnotificationBadge.setVisibility(View.INVISIBLE);
-//        getquantity();
-//        actionView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onOptionsItemSelected(menuItem);
-//            }
-//        });
-//               return true;
-//
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        if (item.getItemId() == R.id.ic_action_notification) {
-//            TVnotificationBadge.setVisibility(View.INVISIBLE);
-//            updateProducts();
-//            startActivity(new Intent(this,Notification.class));
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
     public static void updateProducts(){
         firebaseFirestore.collection("inmates").document(hostel).collection("notification").document().update(
                 "status","viewed");
     }
-
 
     private void init() {
         StorageReference profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");

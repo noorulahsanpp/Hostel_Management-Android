@@ -51,7 +51,7 @@ public class edit_email extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // Get auth credentials from the user for re-authentication
                 AuthCredential credential = EmailAuthProvider
-                        .getCredential(emailSp, password.getText().toString()); // Current Login Credentials \\
+                        .getCredential(emailSp+"", password.getText().toString()+""); // Current Login Credentials \\
                 // Prompt the user to re-provide their sign-in credentials
                 user.reauthenticate(credential)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -60,7 +60,7 @@ public class edit_email extends AppCompatActivity {
                                 //Now change your email address \\
                                 //----------------Code for Changing Email Address----------\\
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                user.updateEmail(newMail)
+                                user.updateEmail(newMail+"")
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -69,7 +69,6 @@ public class edit_email extends AppCompatActivity {
                                                 }
                                             }
                                         });
-                                //----------------------------------------------------------\\
                             }
                         });
 

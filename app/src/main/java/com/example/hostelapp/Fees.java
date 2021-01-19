@@ -244,6 +244,7 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
 
 
     public void startPayment() {
+        grandtotal = Integer.parseInt(gtotal.getText().toString())*100;
         Checkout checkout = new Checkout();
         checkout.setKeyID("rzp_test_NoNpIryvAqtM1p");
         /**
@@ -298,106 +299,6 @@ paydue = findViewById(R.id.paydue);
         mess = (TextView) findViewById(R.id.mess);
         payBtn = findViewById(R.id.btnpay);
     }
-//    private void setAdapter()
-//    {
-//        ArrayList<String> years = new ArrayList<String>();
-//        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-//        for (int j = 2018; j <= 2025; j++) {
-//            years.add(Integer.toString(j));
-//        }
-//
-//
-//        ArrayAdapter<String> yearadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
-//        year.setAdapter(yearadapter);
-//        List<String> monthsList = new ArrayList<String>();
-//        String[] months = new DateFormatSymbols().getMonths();
-//        for (int i = 0; i < months.length; i++) {
-//            monthsList.add(months[i]);
-//        }
-//        ArrayAdapter<String> monthadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, months);
-//        month.setAdapter(monthadapter);
-//        month.setOnItemSelectedListener(this);
-//        year.setOnItemSelectedListener(this);
-//    }
-//    @Override
-//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        selectedYear = year.getSelectedItem().toString();
-//        String months1 = month.getSelectedItem().toString();
-//        String[] months = new DateFormatSymbols().getMonths();
-//        for (int i = 0; i < months.length; i++) {
-//            if (months1 == months[i]) {
-//                monthIndex = String.valueOf(i+1);
-//                break;
-//            }}
-//
-//        date = selectedYear + "-0" + monthIndex;
-//        System.out.println(date);
-//
-//
-//
-//        Calendar cal = Calendar.getInstance();
-//        int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-//        getabs();
-//        // DocumentReference documentReference= firebaseFirestore.collection("inmates").document("LH").collection("fee").document(date);
-//        DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel+"").collection("fee").document(date+"");
-//        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                DocumentSnapshot document = task.getResult();
-//                if (document.exists()) {
-//                    messfee = document.get("veg").toString();
-//                    String Common = document.get("common").toString();
-//                    String  Rent = document.get("rent").toString();
-//                    String Duedate = document.get("duedate").toString();
-//                    common.setText(Common+"");
-//                    rent.setText(Rent+"");
-//                    extras.setText("75");
-//                    //     due.setText(duedate);
-//                    int ttotal = (presentdays*Integer.parseInt(messfee))+Integer.parseInt(Common)+Integer.parseInt(Rent)+75;
-//                    total.setText(ttotal+"");
-//                    duedate.setText(Duedate+"");
-//                    presentdays = days - Integer.parseInt(absent);
-//                    kk = presentdays * Integer.parseInt(messfee);
-//                    mess.setText(kk+"");
-//
-//                }
-//                else
-//                {
-//                    Toast.makeText(getApplicationContext(), "Doesn't Exist", Toast.LENGTH_LONG).show();
-//                    gtotal.setText("");
-//                    common.setText("");
-//                    rent.setText("");
-//                    mess.setText("");
-//                    extras.setText("");
-//                    total.setText("");
-//                    gtotal.setText("");
-//                    duedate.setText("");
-//                    status.setText("");
-//                    duedate.setText("");
-//                }
-//            }
-//        });
-//        DocumentReference documentReference1 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("fees").document(date+"");
-//        documentReference1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                DocumentSnapshot documentSnapshot = task.getResult();
-//                if (documentSnapshot.exists()) {
-//                    status.setText("Paid");
-//                }
-//                else{
-//                    status.setText("Pending");
-//                }
-//            }
-//        });
-//
-//    }
-//    @Override
-//    public void onNothingSelected(AdapterView<?> parent) {
-//
-//    }
-
-
     public void getSharedPreference(){
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");

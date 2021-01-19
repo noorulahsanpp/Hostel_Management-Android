@@ -120,9 +120,7 @@ public class Notification extends AppCompatActivity {
                         resultMap.put("Second Line",pair.getValue().toString());
                         resultMap.put("date", date1);
                         listitems.add(resultMap);
-
                         notification.setAdapter(adapter);
-
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -131,19 +129,7 @@ public class Notification extends AppCompatActivity {
 
         });
     }
-
-
 }
-  /*  private void setupBottomNavigationView() {
-        // Log.d(TAG,"setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(Notification.this, bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-
-    }*/
 
 
 
