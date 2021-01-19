@@ -72,9 +72,10 @@ public class Notification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Notifications");
         setContentView(R.layout.activity_notification);
-     //   setupBottomNavigationView();
+
 
         mContext = Notification.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -85,7 +86,15 @@ public class Notification extends AppCompatActivity {
         notification = (ListView)findViewById(R.id.listview);
         mnotification();
            }
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void mnotification() {
 
         final List<HashMap<String, String>> listitems = new ArrayList<>();

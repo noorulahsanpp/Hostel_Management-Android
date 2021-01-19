@@ -14,7 +14,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_style">
+        android:background="#FFFFFF">
 
 
 <!--        <FrameLayout style="?attr/actionButtonStyle"-->
@@ -53,7 +53,7 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:id="@+id/toolbar"
-    android:background="@drawable/maroon_grey_border_bottom">
+    android:background="@color/tabs">
 
         <RelativeLayout
             android:id="@+id/relLayout1"
@@ -74,10 +74,17 @@
                 android:layout_marginLeft="50dp"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:textSize="15dp"
-                android:textColor="@color/maroon"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
                />
-
+            <Button android:id="@+id/notification"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+              android:layout_alignParentRight="true"
+                android:layout_marginRight="60dp"
+                android:layout_centerVertical="true"
+                android:drawableTop= "@drawable/ic_action_notification"
+                android:background="@android:color/transparent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/myCardView"
@@ -111,9 +118,10 @@
         <ViewFlipper
             android:id="@+id/viewflipper"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="240dp"
             android:layout_below="@+id/toolbar"
             android:autoStart="true"
+            android:background="@color/tabs"
             android:inAnimation="@android:anim/slide_in_left"
             android:outAnimation="@android:anim/slide_out_right">
 
@@ -122,31 +130,31 @@
 
     <RelativeLayout
         android:id="@+id/relLayout3"
-        android:layout_marginTop="250dp"
+        android:layout_below="@id/viewflipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/fees"
                 android:layout_width="190dp"
-                android:layout_height="110dp"
+                android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="10dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
                 <ImageView
                     android:layout_width="90dp"
                     android:layout_height="69dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="0dp"
                     android:src="@drawable/fees" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="90dp"
-                    android:text="Fee \nPayment"
+                    android:layout_marginTop="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Fee Payment"
                     android:textColor="#000000"
                     android:textSize="23sp" />
 
@@ -162,7 +170,7 @@
                 android:layout_width="190dp"
                 android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="315dp"
+                android:layout_marginTop="270dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp">
 
@@ -170,13 +178,13 @@
 
                     android:layout_width="65dp"
                     android:layout_height="84dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
                     android:src="@drawable/attendace" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="73dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_gravity="center_horizontal"
                     android:text="Attendance"
                     android:textColor="#000"
                     android:textSize="23sp"
@@ -190,7 +198,7 @@
             android:layout_width="190dp"
             android:layout_height="120dp"
             android:layout_marginLeft="210dp"
-            android:layout_marginTop="315dp"
+            android:layout_marginTop="270dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
 
@@ -198,14 +206,14 @@
 
                 android:layout_width="65dp"
                 android:layout_height="84dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
                 android:src="@drawable/complain" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="73dp"
-                android:text="Complaints \n     and \n Suggestions"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Complaints"
                 android:textColor="#000"
                 android:textSize="20sp"
                 />
@@ -217,8 +225,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/sick"
             android:layout_width="190dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="190dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="140dp"
             android:layout_marginLeft="210dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
@@ -226,9 +234,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
-                android:text="sick"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Sick"
                 android:textColor="@color/black"
                 android:textSize="23sp"
                  />
@@ -237,8 +245,7 @@
 
                 android:layout_width="57dp"
                 android:layout_height="68dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_horizontal"
                 android:src="@drawable/sick" />
 
 
@@ -246,8 +253,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/menu"
             android:layout_width="190dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="190dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="140dp"
             android:layout_marginLeft="10dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
@@ -257,14 +264,14 @@
 
                 android:layout_width="71dp"
                 android:layout_height="84dp"
-               android:layout_gravity="center_vertical"
+               android:layout_gravity="center_horizontal"
                 android:layout_marginTop="-10dp"
                 android:src="@drawable/food" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"
                 android:text="Food menu"
                 android:textColor="@color/black"
                 android:textSize="23sp"
@@ -275,17 +282,17 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/messout"
             android:layout_width="190dp"
-            android:layout_height="110dp"
+            android:layout_height="120dp"
             android:layout_marginLeft="210dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="70dp"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"
                 android:text="Messout"
                 android:textColor="@color/black"
                 android:textSize="23sp"
@@ -294,8 +301,8 @@
             <ImageView
 
                 android:layout_width="70dp"
-                android:layout_height="100dp"
-                 android:layout_gravity="center_vertical"
+                android:layout_height="90dp"
+                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/calendar"/>
 
 

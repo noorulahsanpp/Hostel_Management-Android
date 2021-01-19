@@ -42,8 +42,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
+
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
@@ -57,7 +60,7 @@ public class Home extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Button notification;
-
+    int month, year;
     private static FirebaseFirestore firebaseFirestore;
     private String userID;
     private static String userName, hostel, admissionNumber, name;
@@ -66,13 +69,12 @@ public class Home extends AppCompatActivity {
     private Task<DocumentSnapshot> documentReference;
     private StorageReference storageReference;
     private SharedPreferences sharedPreferences;
-    private CardView fees,sick,attendance,messout,menu;
+    private CardView fees,sick,attendance,messout,menu,complaints;
     private Boolean exit = false;
     private DatabaseReference mDatabaseRef;
     private List<Upload> mUploads;
     private ViewFlipper viewFlipper;
-    static  TextView TVnotificationBadge;
-    static int newnotification , count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,32 +139,6 @@ public class Home extends AppCompatActivity {
                 "status","viewed");
     }
 
-    public static void getquantity() {
-
-        collectionReference = firebaseFirestore.collection("inmates").document(hostel).collection("notification");
-        collectionReference.whereEqualTo("status","notviewed").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                count = count+1;
-                newnotification = count;
-            }
-        });
-        setupBadge();
-    }
-    public static void setupBadge() {
-
-        if (TVnotificationBadge != null) {
-            if (newnotification == 0) {
-                TVnotificationBadge.setVisibility(View.INVISIBLE);
-            } else {
-                TVnotificationBadge.setVisibility(View.VISIBLE);
-                TVnotificationBadge.setText(String.valueOf(newnotification));
-
-            }
-        }
-    }
-
-
 
     private void init() {
         StorageReference profileRef = storageReference.child("users/" + mAuth.getCurrentUser().getUid() + "/profile_picture/profile.jpg");
@@ -184,7 +160,44 @@ public class Home extends AppCompatActivity {
         attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home.this, Attendance.class));
+                Calendar today = Calendar.getInstance();
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(Home.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth+1;
+                                year = selectedYear;
+                                Intent i = new Intent(getApplicationContext(), DatesDisplay.class);
+                                i.putExtra("month",month+"");
+                                i.putExtra("year",year+"");
+                                startActivity(i);
+                            }
+                            }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
+
+builder.setActivatedMonth(Calendar.JULY)
+                                    .setMinYear(1990)
+       .setActivatedYear(2017)
+       .setMaxYear(2030)
+       .setMinMonth(Calendar.FEBRUARY)
+       .setTitle("Select trading month")
+       .setMonthRange(Calendar.FEBRUARY, Calendar.NOVEMBER)
+                            // .setMaxMonth(Calendar.OCTOBER)
+                            // .setYearRange(1890, 1890)
+                            // .setMonthAndYearRange(Calendar.FEBRUARY, Calendar.OCTOBER, 1890, 1890)
+                            //.showMonthOnly()
+                            // .showYearOnly()
+       .setOnMonthChangedListener(new MonthPickerDialog.OnMonthChangedListener() {
+                                @Override
+                                public void onMonthChanged(int selectedMonth) {
+                                    month = selectedMonth+1;
+                                } })
+       .setOnYearChangedListener(new MonthPickerDialog.OnYearChangedListener() {
+                                        @Override
+                                        public void onYearChanged(int selectedYear) {
+                                            year = selectedYear+1;
+                                        } })
+        .build()
+                                                    .show();
             }
         });
         fees.setOnClickListener(new View.OnClickListener() {
@@ -214,12 +227,18 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(Home.this, Messout.class));
             }
         });
-//        notification.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(Home.this, Notification.class));
-//            }
-//        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, Notification.class));
+            }
+        });
+        complaints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, Complaints.class));
+            }
+        });
     }
 
     @Override
@@ -272,8 +291,9 @@ public class Home extends AppCompatActivity {
         viewFlipper = findViewById(R.id.viewflipper);
         profilePicture = findViewById(R.id.imageView);
         userNameView = findViewById(R.id.textView5);
-
+        notification = findViewById(R.id.notification);
         attendance = (CardView) findViewById(R.id.attendance);
+        complaints =  findViewById(R.id.complaints);
         fees = (CardView) findViewById(R.id.fees);
         sick = (CardView) findViewById(R.id.sick);
         menu = (CardView) findViewById(R.id.menu);

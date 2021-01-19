@@ -11,7 +11,7 @@
    android:paddingTop="16dp">
 
             <ListView
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listview">
@@ -19,16 +19,4 @@
 
         </ListView>
 
-    <!--include layout="@layout/layout_bottom_navigation_view"/-->
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="311dp"
-        android:layout_height="100dp"
-        android:text="Notification"
-
-        android:textSize="40sp"
-
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="53dp"/>
     </RelativeLayout>

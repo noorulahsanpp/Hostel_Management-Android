@@ -15,11 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/topic"
-        android:textSize="17sp"
+        android:textSize="16sp"
          android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginRight="150dp"
-        android:paddingTop="10sp"
+        android:layout_marginRight="60dp"
+        android:paddingTop="5sp"
         android:drawableLeft="@drawable/ic_action_bulletin"
         android:drawablePadding="5sp"
             />
@@ -27,11 +26,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="270dp"
-        android:paddingTop="10sp"
-        android:paddingRight="5sp"
+        android:layout_alignParentRight="true"
+        android:paddingTop="20sp"
         android:id="@+id/date"
-        android:textSize="15sp"/>
+        android:textSize="10sp"/>
 </RelativeLayout>
 
     <RelativeLayout
@@ -41,14 +39,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/description"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:trimExpandedText="@string/read_less"
         app:trimCollapsedText="@string/read_more"
         app:trimMode="trimModeLength"
         app:trimLength="70"
         android:layout_marginLeft="20dp"
-        android:paddingTop="8sp"
-        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="8sp"
         app:colorClickableText="@color/tabs"
         android:textStyle="normal"/>
         <!--TextView
