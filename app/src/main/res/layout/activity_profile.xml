@@ -12,7 +12,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#F7F8FA">
+        android:background="@color/lightsilver">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -295,7 +295,7 @@
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
                 android:paddingTop="5dp"
-                android:backgroundTint="#F7F8FA"
+                android:backgroundTint="@color/lightsilver"
                 android:layout_marginLeft="50dp"
                 android:drawablePadding="28dp"
                 android:textSize="15sp"
@@ -331,7 +331,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
-                android:backgroundTint="#F7F8FA"
+                android:backgroundTint="@color/lightsilver"
                 android:layout_marginLeft="50dp"
                 android:text="Log out from Hostel App"
                 android:textSize="15sp"
@@ -367,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
-                android:backgroundTint="#F7F8FA"
+                android:backgroundTint="@color/lightsilver"
                 android:layout_marginLeft="50dp"
                 android:text="Reset current password"
                 android:textSize="15sp"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatesDisplay">
+    tools:context=".DatesDisplay"
+    android:background="@color/lightsilver">
 
 
     <RelativeLayout
@@ -14,38 +15,43 @@
         android:id="@+id/rel"
         android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No. of present  :"
-            android:theme="@style/TextView" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="No. of present  :"-->
+<!--            android:theme="@style/TextView" />-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="No. of absents  :"
+            android:textSize="25dp"
             android:theme="@style/TextView" />
 
-        <TextView
-            android:id="@+id/txtpresent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
-            android:theme="@style/TextView"/>
+<!--        <TextView-->
+<!--            android:id="@+id/txtpresent"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="160dp"-->
+<!--            android:theme="@style/TextView"/>-->
         <TextView
             android:id="@+id/txtabsent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:layout_marginLeft="160dp"
+            android:textSize="25dp"
+            android:layout_marginLeft="210dp"
             android:theme="@style/TextView"/>
 
 
     </RelativeLayout>
     <ListView
         android:layout_below="@+id/rel"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/listview_border"
         android:layout_height="wrap_content"
         android:id="@+id/listview" />
 

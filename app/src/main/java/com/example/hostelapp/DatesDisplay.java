@@ -64,7 +64,7 @@ public class DatesDisplay extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Attendance");
         listView = findViewById(R.id.listview);
-        prsnt = findViewById(R.id.txtpresent);
+      //  prsnt = findViewById(R.id.txtpresent);
         absnt=findViewById(R.id.txtabsent);
         mContext = DatesDisplay.this;
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -116,7 +116,7 @@ public class DatesDisplay extends AppCompatActivity {
                     }
                     absnt.setText(count+"");
                     presentdays = days -count;
-                    prsnt.setText( String.valueOf(presentdays));
+               //     prsnt.setText( String.valueOf(presentdays));
                         ArrayList<HashMap<String, Object>> list = new ArrayList<>();
                         for (int i = 0; i < dates.size(); i++) {
                             HashMap<String, Object> map = new HashMap<>();

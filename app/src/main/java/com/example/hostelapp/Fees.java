@@ -178,8 +178,18 @@ public class Fees extends AppCompatActivity implements  PaymentResultListener {
         else{
             date = syear + "-0" + smonth;
         }
-        getabs();
-        // DocumentReference documentReference= firebaseFirestore.collection("inmates").document("LH").collection("fee").document(date);
+        DocumentReference documentReference2 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("attendance").document(date+"");
+        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot.exists()){
+                    absent = documentSnapshot.get("daysabsent").toString();
+                }
+
+            }
+        });
+
         DocumentReference documentReference= firebaseFirestore.collection("inmates").document(hostel+"").collection("fee").document(date+"");
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -322,17 +332,4 @@ paydue = findViewById(R.id.paydue);
         Toast.makeText(this, "Payment Failed", Toast.LENGTH_LONG).show();
     }
 
-    public void getabs(){
-        DocumentReference documentReference2 = firebaseFirestore.collection("inmates").document(hostel+"").collection("users").document(admissionNumber+"").collection("attendance").document(date+"");
-        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot = task.getResult();
-                if (documentSnapshot.exists()){
-                    absent = documentSnapshot.get("daysabsent").toString();
-                }
-
-            }
-        });
-    }
 }
