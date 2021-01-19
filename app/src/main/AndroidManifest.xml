@@ -17,9 +17,10 @@
         <activity android:name=".Contactus" />
         <activity android:name=".FAQ" />
         <activity android:name=".Complaints" />
-        <activity android:name=".Attendance3" />
-        <activity android:name=".Attendance2" />
-        <activity android:name=".Attendance1" />
+        <activity android:name=".edit_email"
+            android:theme="@style/AppTheme.PopMe"/>
+        <activity android:name=".edit_phone"
+            android:theme="@style/AppTheme.PopMe"/>
         <activity android:name=".CheckoutActivityJava" />
         <activity android:name=".Payment" />
         <activity
@@ -34,7 +35,8 @@
         <activity android:name=".Profile" />
         <activity
             android:name=".Sick"
-            android:theme="@style/AppTheme.PopMe" />
+            android:theme="@style/AppTheme.PopMe"
+            />
         <activity
             android:name=".Messout"
             android:theme="@style/AppTheme.PopMe" />

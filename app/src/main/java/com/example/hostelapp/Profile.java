@@ -48,7 +48,7 @@ public class Profile extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private ImageView profilePicture,edit;
-    private TextView  emailTv, phoneTv;
+    private TextView  emailTv, phoneTv,editPhoneTv,editEmailTv;
     private TextView name,admno;
     private Button  editProfile;
     private LinearLayout changePassword,logout,Lnrfaq,Lnraboutus,Lnrcontactus;
@@ -133,6 +133,18 @@ public class Profile extends AppCompatActivity {
                 startActivityForResult(openGallery, 1000 );
             }
         });
+        editPhoneTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),edit_phone.class));
+            }
+        });
+        editEmailTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),edit_email.class));
+            }
+        });
     }
 
     @Override
@@ -159,6 +171,8 @@ public class Profile extends AppCompatActivity {
         changePassword = findViewById(R.id.linear3);
         logout = findViewById(R.id.linear2);
         Lnrfaq = findViewById(R.id.linearfaq);
+        editEmailTv = findViewById(R.id.editemail);
+        editPhoneTv = findViewById(R.id.editphone);
         Lnraboutus = findViewById(R.id.aboutuslinear);
         Lnrcontactus = findViewById(R.id.contactuslinear);
     }

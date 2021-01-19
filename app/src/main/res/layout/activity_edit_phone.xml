@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".edit_email">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+
+        <EditText
+            android:id="@+id/editphone"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:hint="Enter New Phone Number"
+            android:inputType="textPersonName"
+            android:background="@drawable/edittextborder"
+            android:theme="@style/EditText" />
+
+        <Button
+            android:id="@+id/editPhoneBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="268dp"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:background="@drawable/button_style"
+            android:textColor="@color/headings"
+            android:text="EDIT" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

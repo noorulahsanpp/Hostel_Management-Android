@@ -161,6 +161,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar today = Calendar.getInstance();
+                int actyear =today.get(Calendar.YEAR);
                 MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(Home.this,
                         new MonthPickerDialog.OnDateSetListener() {
                             @Override
@@ -174,13 +175,13 @@ public class Home extends AppCompatActivity {
                             }
                             }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
 
-builder.setActivatedMonth(Calendar.JULY)
-                                    .setMinYear(1990)
-       .setActivatedYear(2017)
-       .setMaxYear(2030)
+builder.setActivatedMonth(Calendar.JANUARY)
+                                    .setMinYear(2018)
+       .setActivatedYear(actyear)
+       .setMaxYear(actyear)
        .setMinMonth(Calendar.FEBRUARY)
-       .setTitle("Select trading month")
-       .setMonthRange(Calendar.FEBRUARY, Calendar.NOVEMBER)
+       .setTitle("Select Month and Year")
+       .setMonthRange(Calendar.JANUARY, Calendar.DECEMBER)
                             // .setMaxMonth(Calendar.OCTOBER)
                             // .setYearRange(1890, 1890)
                             // .setMonthAndYearRange(Calendar.FEBRUARY, Calendar.OCTOBER, 1890, 1890)
