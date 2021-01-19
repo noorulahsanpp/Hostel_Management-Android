@@ -10,31 +10,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#FFFFFF">
 
-
+        <TextView
+            android:id="@+id/oldEmail"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:inputType="textPersonName"
+            android:background="@drawable/edittextborder"
+            android:theme="@style/EditText" />
         <EditText
-            android:id="@+id/editEmail"
+            android:id="@+id/editemail"
             android:layout_width="231dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="60dp"
+            android:layout_centerHorizontal="true"
             android:hint="Enter New Email Address"
             android:inputType="textPersonName"
             android:background="@drawable/edittextborder"
             android:theme="@style/EditText" />
-
+        <EditText
+            android:id="@+id/passwrdET"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:layout_centerHorizontal="true"
+            android:hint="Enter your password"
+            android:inputType="textPersonName"
+            android:background="@drawable/edittextborder"
+            android:theme="@style/EditText" />
         <Button
             android:id="@+id/EditBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="231dp"
             android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="268dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="160dp"
             android:textSize="15dp"
             android:padding="10dp"
             android:background="@drawable/button_style"
             android:textColor="@color/headings"
-            android:text="EDIT" />
-
+            android:text="Edit Email" />
+    </RelativeLayout>
 
     </RelativeLayout>
 

@@ -71,7 +71,7 @@ Button submit;
         Date date = setDate();
         CollectionReference collectionReference = firebaseFirestore.collection("inmates").document(hostel+"").collection("complaints");
         Map<String, Object> complaints = new HashMap<>();
-        complaints.put("admission no",admissionNumber);
+        complaints.put("admissionno",admissionNumber);
         complaints.put("topic",topic);
         complaints.put("name",name);
         complaints.put("room",roomno);

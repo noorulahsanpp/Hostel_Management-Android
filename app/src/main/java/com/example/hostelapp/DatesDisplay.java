@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -144,12 +145,19 @@ public class DatesDisplay extends AppCompatActivity {
             }
         });
 
-
-
     }
     public void getSharedPreference(){
         sharedPreferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         hostel = sharedPreferences.getString("hostel", "");
         admissionNumber = sharedPreferences.getString("admissionno", "");
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
