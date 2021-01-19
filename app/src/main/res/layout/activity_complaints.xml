@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Complaints">
+
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#70146E"
+        android:text="Submit a Complaint"
+        android:layout_centerHorizontal="true"
+        android:textSize="40sp" />
+    <ImageView
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_width="170dp"
+        android:layout_height="150dp"
+        android:src="@drawable/complaintsbox"
+        />
+    <EditText
+        android:id="@+id/topic"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+            android:layout_marginLeft="100dp"
+        android:layout_centerHorizontal="true"
+        android:hint="TOPIC"
+        android:layout_marginTop="280dp"
+        android:textSize="15dp"
+        android:padding="10dp"
+        android:width="300dp"
+        android:drawablePadding="5dp"
+        android:background="@drawable/textbox" />
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:lines="8"
+        android:inputType="textMultiLine"
+        android:maxLines="20"
+        android:hint="DESRIPTION"
+        android:layout_marginTop="340dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:padding="10dp"
+        android:width="300dp"
+        android:drawablePadding="5dp"
+        android:background="@drawable/textbox" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_centerHorizontal="true"
+        android:text="SUBMIT"
+        android:theme="@style/Button"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_style" />
+</RelativeLayout>
