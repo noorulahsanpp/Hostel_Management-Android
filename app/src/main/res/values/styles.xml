@@ -21,7 +21,20 @@
         <item name="android:ems">10</item>
 
     </style>
+    <style name="MonthPickerDialogStyle" >
+        <item name="monthBgColor">#fff</item>
+        <item name="monthBgSelectedColor">@color/colorAccent</item>
+        <item name="monthFontColorSelected">#fff</item>
+        <item name="monthFontColorNormal">#000000</item>
+        <item name="monthFontColorDisabled">#33000000</item>
 
+        <item name="headerBgColor">@color/colorAccent</item>
+        <item name="headerFontColorSelected">#fff</item>
+        <item name="headerFontColorNormal">#85FFFFFF</item>
+        <item name="headerTitleColor">#fff</item>
+
+        <item name="dialogActionButtonColor">@color/colorAccent</item>
+    </style>
 
     <style name = "TextView" parent="android:Widget.TextView">
         <item name ="android:fontFamily">@font/adamina</item>

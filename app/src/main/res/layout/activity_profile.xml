@@ -12,7 +12,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/lightsilver">
+        android:background="#F7F8FA">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -148,6 +148,30 @@
 
             />
         <TextView
+            android:id="@+id/editphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_action_edit"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="330dp"
+
+            />
+        <TextView
+            android:id="@+id/editemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_action_edit"
+            android:drawableTint="@color/tabs"
+            android:textSize="18sp"
+            android:layout_marginTop="240dp"
+
+            />
+        <TextView
             android:id="@+id/logouticon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -271,7 +295,7 @@
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
                 android:paddingTop="5dp"
-                android:backgroundTint="@color/lightsilver"
+                android:backgroundTint="#F7F8FA"
                 android:layout_marginLeft="50dp"
                 android:drawablePadding="28dp"
                 android:textSize="15sp"
@@ -307,7 +331,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
-                android:backgroundTint="@color/lightsilver"
+                android:backgroundTint="#F7F8FA"
                 android:layout_marginLeft="50dp"
                 android:text="Log out from Hostel App"
                 android:textSize="15sp"
@@ -343,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/textbox"
-                android:backgroundTint="@color/lightsilver"
+                android:backgroundTint="#F7F8FA"
                 android:layout_marginLeft="50dp"
                 android:text="Reset current password"
                 android:textSize="15sp"

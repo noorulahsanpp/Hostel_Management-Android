@@ -17,7 +17,7 @@
             android:id="@+id/dates"
             android:textSize="17sp"
             android:textColor="@color/black"
-            android:paddingTop="10sp"
+            android:padding="10sp"
             android:drawablePadding="5sp"
             />
 

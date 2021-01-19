@@ -32,11 +32,11 @@
             android:textSize="15sp"
             app:trimExpandedText="@string/read_less"
             app:trimCollapsedText="@string/read_more"
-            app:trimMode="trimModeLength"
+            app:trimMode="trimModeLine"
             app:trimLength="70"
             android:layout_marginLeft="20dp"
             android:paddingTop="8sp"
-            android:paddingBottom="5sp"
+            android:paddingBottom="8sp"
             app:colorClickableText="@color/tabs"
             android:textStyle="normal"/>
     </RelativeLayout>

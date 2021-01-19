@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Aboutus">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/hostel"
+            />
+
+        <TextView
+            android:layout_marginTop="190dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="About Us"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/maroon"/>
+        <TextView
+            android:layout_width="350dp"
+            android:layout_marginTop="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="#605D5D"
+            android:gravity="center"
+            android:text="This application is developed for College of Engineering Trivandrum. This application is designed and developed by Noorul Ahsan, Pinky Abraham, Pooja P Suku and Suneesh VJ."/>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>
