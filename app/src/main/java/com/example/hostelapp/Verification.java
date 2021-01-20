@@ -77,6 +77,8 @@ public class Verification extends AppCompatActivity {
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity= Gravity.CENTER;
+        params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        params.dimAmount = 0.5f;
         params.x=0;
         params.y=-20;
         getWindow().setAttributes(params);

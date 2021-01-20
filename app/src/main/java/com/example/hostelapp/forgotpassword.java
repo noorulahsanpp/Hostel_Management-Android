@@ -72,12 +72,14 @@ public class forgotpassword extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.9),(int)(height*.6));
+        getWindow().setLayout((int)(width*.9),(int)(height*.5));
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity= Gravity.CENTER;
         params.x=0;
         params.y=-20;
+        params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        params.dimAmount = 0.5f;
         getWindow().setAttributes(params);
     }
 }

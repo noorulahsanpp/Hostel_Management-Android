@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="@color/lightsilver">
 
         <EditText
             android:id="@+id/description"
@@ -26,7 +26,8 @@
             android:padding="10dp"
             android:width="300dp"
             android:drawablePadding="5dp"
-            android:background="@drawable/textbox" />
+            android:background="@drawable/textbox"
+            android:backgroundTint="#E4E4E4"/>
         <TextView
             android:id="@+id/faqTv"
             android:layout_width="wrap_content"

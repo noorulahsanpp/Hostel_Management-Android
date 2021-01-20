@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Complaints"
+    android:background="@color/lightsilver"
     >
 
 
@@ -37,7 +38,8 @@
         android:padding="10dp"
         android:width="300dp"
         android:drawablePadding="5dp"
-        android:background="@drawable/textbox" />
+        android:background="@drawable/textbox"
+        android:backgroundTint="#F5F6F8"/>
     <EditText
         android:id="@+id/description"
         android:layout_width="300dp"
@@ -52,7 +54,8 @@
         android:padding="10dp"
         android:width="300dp"
         android:drawablePadding="5dp"
-        android:background="@drawable/textbox" />
+        android:background="@drawable/textbox"
+        android:backgroundTint="#F5F6F8"/>
 
     <Button
         android:id="@+id/submit"
